@@ -19,7 +19,36 @@ const translations = {
         "personalize-keepsake": "Personalize your keepsake",
         "personal-message": "Personal message",
         "message-preview": "Preview your message",
-        "nfc-hint": "Tap item to open gallery"
+        "nfc-hint": "Tap item to open gallery",
+        "currency": "$",
+        "currency-symbol": "USD",
+        "products": {
+            "valentine-heart": {
+                "title": "Valentine's Heart",
+                "subtitle": "5-photo portrait keepsake",
+                "message": "My dearest love, you are the light of my life and the reason my heart beats with joy every single day."
+            },
+            "mothers-blessing": {
+                "title": "Mother's Blessing",
+                "subtitle": "3-photo memory frame",
+                "message": "Mom, your love has shaped me into who I am today. Thank you for being my guiding light."
+            },
+            "daughters-treasure": {
+                "title": "Daughter's Treasure",
+                "subtitle": "4-photo keepsake box",
+                "message": "To my precious daughter, you are my greatest joy and my heart's treasure."
+            },
+            "birthday-celebration": {
+                "title": "Birthday Celebration",
+                "subtitle": "6-photo memory book",
+                "message": "Happy birthday! May this new year bring you endless joy and beautiful memories."
+            },
+            "limited-edition": {
+                "title": "Limited Edition",
+                "subtitle": "Exclusive 7-photo keepsake",
+                "message": "A rare and beautiful keepsake, crafted with love for special moments."
+            }
+        }
     },
     tr: {
         shop: "Mağaza",
@@ -40,86 +69,113 @@ const translations = {
         "personalize-keepsake": "Anı objenizi kişiselleştirin",
         "personal-message": "Kişisel mesaj",
         "message-preview": "Mesajınızı önizleyin",
-        "nfc-hint": "Galeriyi açmak için öğeye dokunun"
+        "nfc-hint": "Galeriyi açmak için öğeye dokunun",
+        "currency": "₺",
+        "currency-symbol": "TRY",
+        "products": {
+            "valentine-heart": {
+                "title": "Sevgililer Kalbi",
+                "subtitle": "5 fotoğraflı portre anı objesi",
+                "message": "En sevgili aşkım, sen hayatımın ışığısın ve kalbimin her gün sevinçle atmasının sebebisin."
+            },
+            "mothers-blessing": {
+                "title": "Annenin Kutsaması",
+                "subtitle": "3 fotoğraflı anı çerçevesi",
+                "message": "Anne, sevgin beni bugünkü halime getirdi. Rehber ışığım olduğun için teşekkürler."
+            },
+            "daughters-treasure": {
+                "title": "Kızın Hazinesi",
+                "subtitle": "4 fotoğraflı anı kutusu",
+                "message": "Değerli kızıma, sen benim en büyük sevincim ve kalbimin hazinesisin."
+            },
+            "birthday-celebration": {
+                "title": "Doğum Günü Kutlaması",
+                "subtitle": "6 fotoğraflı anı defteri",
+                "message": "Mutlu yıllar! Bu yeni yıl sana sonsuz sevinç ve güzel anılar getirsin."
+            },
+            "limited-edition": {
+                "title": "Sınırlı Baskı",
+                "subtitle": "Özel 7 fotoğraflı anı objesi",
+                "message": "Özel anlar için sevgiyle hazırlanmış nadir ve güzel bir anı objesi."
+            }
+        }
     }
 };
 
 // Current language
 let currentLanguage = 'en';
 
+// Helper functions for translations
+function getProductInfo(product, field) {
+    const translationKey = product.translationKey;
+    if (translations[currentLanguage] && 
+        translations[currentLanguage].products && 
+        translations[currentLanguage].products[translationKey]) {
+        return translations[currentLanguage].products[translationKey][field];
+    }
+    // Fallback to English
+    if (translations.en && translations.en.products && translations.en.products[translationKey]) {
+        return translations.en.products[translationKey][field];
+    }
+    return '';
+}
+
+function formatPrice(price) {
+    const currency = translations[currentLanguage]?.currency || '$';
+    return `${currency}${price}`;
+}
+
 // Sample product data
 const products = [
     {
         id: 1,
-        title: "Valentine's heart",
-        subtitle: "5-photo portrait keepsake",
+        translationKey: "valentine-heart",
         basePrice: 24,
         personalizationPrice: 8,
         occasion: "valentine",
         image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
-        message: "My dearest love, you are the light of my life and the reason my heart beats with joy every single day.",
         isNew: true,
         isLimited: false
     },
     {
         id: 2,
-        title: "Mother's blessing",
-        subtitle: "3-photo memory frame",
+        translationKey: "mothers-blessing",
         basePrice: 19,
         personalizationPrice: 6,
         occasion: "mother",
         image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
-        message: "To the most wonderful mother in the world, thank you for your endless love and support.",
         isNew: false,
         isLimited: true
     },
     {
         id: 3,
-        title: "Daughter's treasure",
-        subtitle: "Custom photo locket",
+        translationKey: "daughters-treasure",
         basePrice: 32,
         personalizationPrice: 10,
         occasion: "daughter",
         image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=300&fit=crop",
-        message: "My beautiful daughter, you are growing into an amazing woman and I'm so proud of you.",
         isNew: true,
         isLimited: false
     },
     {
         id: 4,
-        title: "Birthday celebration",
-        subtitle: "Photo memory box",
+        translationKey: "birthday-celebration",
         basePrice: 28,
         personalizationPrice: 8,
         occasion: "birthday",
         image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=300&fit=crop",
-        message: "Happy birthday! May this new year bring you endless joy and wonderful memories.",
         isNew: false,
         isLimited: false
     },
     {
         id: 5,
-        title: "Love letter",
-        subtitle: "Engraved wooden frame",
+        translationKey: "limited-edition",
         basePrice: 22,
         personalizationPrice: 7,
         occasion: "valentine",
         image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
-        message: "Write a short love note or personal message...",
         isNew: false,
         isLimited: true
-    },
-    {
-        id: 6,
-        title: "Family memories",
-        subtitle: "Multi-photo keepsake",
-        basePrice: 35,
-        personalizationPrice: 12,
-        occasion: "mother",
-        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=300&fit=crop",
-        message: "To our amazing family, thank you for all the beautiful memories we've created together.",
-        isNew: true,
-        isLimited: false
     }
 ];
 
@@ -248,25 +304,28 @@ function createProductCard(product) {
     card.className = 'product-card';
     card.dataset.productId = product.id;
 
+    // Get translated content
+    const title = getProductInfo(product, 'title');
+    const subtitle = getProductInfo(product, 'subtitle');
+    const message = getProductInfo(product, 'message');
+    
     const occasionBadge = product.occasion.split(' ').map(word => 
         word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     ).join(' ');
-    const isPlaceholder = product.message.includes('Write a short love note');
-    const messagePreview = isPlaceholder ? product.message : product.message.split('\n').slice(0, 2).join(' ');
+    
+    const messagePreview = message.split('\n').slice(0, 2).join(' ');
 
     card.innerHTML = `
         <div class="product-image-container">
-            <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23fafafa'/><circle cx='200' cy='120' r='30' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M170 150 L200 120 L230 150' fill='none' stroke='%23ddd' stroke-width='2'/><text x='200' y='200' font-family='serif' font-size='14' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.image}" alt="${product.title}" loading="lazy">
+            <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23fafafa'/><circle cx='200' cy='120' r='30' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M170 150 L200 120 L230 150' fill='none' stroke='%23ddd' stroke-width='2'/><text x='200' y='200' font-family='serif' font-size='14' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.image}" alt="${title}" loading="lazy">
             <div class="occasion-badge">${occasionBadge}</div>
         </div>
         <div class="product-content">
-            <div class="product-title">${product.title.split(' ').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            ).join(' ')}</div>
-            <div class="product-subtitle">${product.subtitle}</div>
+            <div class="product-title">${title}</div>
+            <div class="product-subtitle">${subtitle}</div>
             <div class="price-row">
-                <span class="base-price">$${product.basePrice}</span>
-                <span class="personalization-price">• Personalization +$${product.personalizationPrice}</span>
+                <span class="base-price">${formatPrice(product.basePrice)}</span>
+                <span class="personalization-price">• Personalization +${formatPrice(product.personalizationPrice)}</span>
             </div>
             <div class="message-preview">${messagePreview}</div>
             <div class="cta-row">
@@ -314,13 +373,18 @@ function openQuickView(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
+    // Get translated content
+    const title = getProductInfo(product, 'title');
+    const subtitle = getProductInfo(product, 'subtitle');
+    const message = getProductInfo(product, 'message');
+
     // Populate modal
     document.getElementById('modalImage').src = product.image;
-    document.getElementById('modalProductTitle').textContent = product.title;
-    document.getElementById('modalProductSubtitle').textContent = product.subtitle;
-    document.getElementById('modalBasePrice').textContent = `$${product.basePrice}`;
-    document.getElementById('modalPersonalizationPrice').textContent = `• Personalization +$${product.personalizationPrice}`;
-    document.getElementById('personalMessage').value = product.message.includes('Write a short love note') ? '' : product.message;
+    document.getElementById('modalProductTitle').textContent = title;
+    document.getElementById('modalProductSubtitle').textContent = subtitle;
+    document.getElementById('modalBasePrice').textContent = formatPrice(product.basePrice);
+    document.getElementById('modalPersonalizationPrice').textContent = `• Personalization +${formatPrice(product.personalizationPrice)}`;
+    document.getElementById('personalMessage').value = message;
 
     // Show modal
     modalOverlay.classList.add('visible');
@@ -500,6 +564,9 @@ function switchLanguage(lang) {
     if (messagePreview && translations[lang] && translations[lang]['message-preview']) {
         messagePreview.textContent = translations[lang]['message-preview'];
     }
+    
+    // Refresh product grid with new translations
+    renderProducts();
 }
 
 // Add some demo functionality
