@@ -1,3 +1,52 @@
+// Translation data
+const translations = {
+    en: {
+        shop: "Shop",
+        all: "All",
+        valentine: "Valentine",
+        mother: "Mother",
+        daughter: "For daughter",
+        birthday: "Birthday",
+        limited: "Limited",
+        recommended: "Recommended",
+        new: "New",
+        "price-low": "Price ↑",
+        "price-high": "Price ↓",
+        personalize: "Personalize",
+        "send-gift": "Send as gift",
+        "personalize-buy": "Personalize & buy",
+        checkout: "Checkout",
+        "personalize-keepsake": "Personalize your keepsake",
+        "personal-message": "Personal message",
+        "message-preview": "Preview your message",
+        "nfc-hint": "Tap item to open gallery"
+    },
+    tr: {
+        shop: "Mağaza",
+        all: "Tümü",
+        valentine: "Sevgililer",
+        mother: "Anneler",
+        daughter: "Kızlar için",
+        birthday: "Doğum günü",
+        limited: "Sınırlı",
+        recommended: "Önerilen",
+        new: "Yeni",
+        "price-low": "Fiyat ↑",
+        "price-high": "Fiyat ↓",
+        personalize: "Kişiselleştir",
+        "send-gift": "Hediye olarak gönder",
+        "personalize-buy": "Kişiselleştir ve satın al",
+        checkout: "Sepete ekle",
+        "personalize-keepsake": "Anı objenizi kişiselleştirin",
+        "personal-message": "Kişisel mesaj",
+        "message-preview": "Mesajınızı önizleyin",
+        "nfc-hint": "Galeriyi açmak için öğeye dokunun"
+    }
+};
+
+// Current language
+let currentLanguage = 'en';
+
 // Sample product data
 const products = [
     {
@@ -226,7 +275,7 @@ function createProductCard(product) {
             </div>
             <div class="nfc-hint">
                 <span class="nfc-icon">📱</span>
-                <span>Tap item to open gallery</span>
+                <span data-translate="nfc-hint">Tap item to open gallery</span>
             </div>
         </div>
     `;
@@ -392,8 +441,77 @@ function simulateNFCTap(productId) {
     }
 }
 
+// Language switching functions
+function switchLanguage(lang) {
+    currentLanguage = lang;
+    
+    // Update language buttons
+    document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === lang) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Update all translatable elements
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.dataset.translate;
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+    
+    // Update modal title
+    const modalTitle = document.querySelector('.modal-title');
+    if (modalTitle && translations[lang] && translations[lang]['personalize-keepsake']) {
+        modalTitle.textContent = translations[lang]['personalize-keepsake'];
+    }
+    
+    // Update modal form label
+    const formLabel = document.querySelector('.personalization-form label');
+    if (formLabel && translations[lang] && translations[lang]['personal-message']) {
+        formLabel.textContent = translations[lang]['personal-message'];
+    }
+    
+    // Update modal buttons
+    const personalizeBtn = document.querySelector('.btn-primary');
+    const sendGiftBtn = document.querySelector('.btn-secondary');
+    if (personalizeBtn && translations[lang] && translations[lang]['personalize-buy']) {
+        personalizeBtn.textContent = translations[lang]['personalize-buy'];
+    }
+    if (sendGiftBtn && translations[lang] && translations[lang]['send-gift']) {
+        sendGiftBtn.textContent = translations[lang]['send-gift'];
+    }
+    
+    // Update checkout button
+    const checkoutBtn = document.querySelector('.checkout-btn');
+    if (checkoutBtn && translations[lang] && translations[lang]['checkout']) {
+        checkoutBtn.textContent = translations[lang]['checkout'];
+    }
+    
+    // Update NFC hint
+    const nfcHint = document.querySelector('.nfc-hint');
+    if (nfcHint && translations[lang] && translations[lang]['nfc-hint']) {
+        nfcHint.textContent = translations[lang]['nfc-hint'];
+    }
+    
+    // Update message preview
+    const messagePreview = document.querySelector('.message-preview');
+    if (messagePreview && translations[lang] && translations[lang]['message-preview']) {
+        messagePreview.textContent = translations[lang]['message-preview'];
+    }
+}
+
 // Add some demo functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize language switching
+    document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            switchLanguage(lang);
+        });
+    });
+    
     // Simulate NFC taps for demo
     setTimeout(() => {
         console.log('Demo: Simulate NFC tap by calling simulateNFCTap(productId)');

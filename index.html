@@ -18,7 +18,11 @@
                 <span class="logo-text">yourfavontheway</span>
             </div>
             <div class="header-right">
-                <span class="shop-label">Shop</span>
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="en">EN</button>
+                    <button class="language-btn" data-lang="tr">TR</button>
+                </div>
+                <span class="shop-label" data-translate="shop">Shop</span>
                 <button class="cart-icon" aria-label="Shopping cart">
                     <span class="cart-count">0</span>
                     🛒
@@ -32,22 +36,22 @@
         <!-- Filter Chips -->
         <section class="filter-section">
             <div class="filter-chips">
-                <button class="filter-chip active" data-filter="all">All</button>
-                <button class="filter-chip" data-filter="valentine">Valentine</button>
-                <button class="filter-chip" data-filter="mother">Mother</button>
-                <button class="filter-chip" data-filter="daughter">For daughter</button>
-                <button class="filter-chip" data-filter="birthday">Birthday</button>
-                <button class="filter-chip" data-filter="limited">Limited</button>
+                <button class="filter-chip active" data-filter="all" data-translate="all">All</button>
+                <button class="filter-chip" data-filter="valentine" data-translate="valentine">Valentine</button>
+                <button class="filter-chip" data-filter="mother" data-translate="mother">Mother</button>
+                <button class="filter-chip" data-filter="daughter" data-translate="daughter">For daughter</button>
+                <button class="filter-chip" data-filter="birthday" data-translate="birthday">Birthday</button>
+                <button class="filter-chip" data-filter="limited" data-translate="limited">Limited</button>
             </div>
         </section>
 
         <!-- Sort Options -->
         <section class="sort-section">
             <div class="sort-options">
-                <button class="sort-option active" data-sort="recommended">Recommended</button>
-                <button class="sort-option" data-sort="new">New</button>
-                <button class="sort-option" data-sort="price-low">Price ↑</button>
-                <button class="sort-option" data-sort="price-high">Price ↓</button>
+                <button class="sort-option active" data-sort="recommended" data-translate="recommended">Recommended</button>
+                <button class="sort-option" data-sort="new" data-translate="new">New</button>
+                <button class="sort-option" data-sort="price-low" data-translate="price-low">Price ↑</button>
+                <button class="sort-option" data-sort="price-high" data-translate="price-high">Price ↓</button>
             </div>
         </section>
 
@@ -63,7 +67,7 @@
             <div class="selected-filters">
                 <span class="filter-summary">2 items selected</span>
             </div>
-            <button class="checkout-btn">Checkout</button>
+            <button class="checkout-btn" data-translate="checkout">Checkout</button>
         </div>
     </div>
 
@@ -71,7 +75,7 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-drawer" id="modalDrawer">
             <div class="modal-header">
-                <h3 class="modal-title">Personalize your keepsake</h3>
+                <h3 class="modal-title" data-translate="personalize-keepsake">Personalize your keepsake</h3>
                 <button class="modal-close" id="modalClose">×</button>
             </div>
             <div class="modal-content">
@@ -87,11 +91,11 @@
                     </div>
                 </div>
                 <div class="personalization-form">
-                    <label for="personalMessage">Your message</label>
+                    <label for="personalMessage" data-translate="personal-message">Your message</label>
                     <textarea id="personalMessage" placeholder="Write a short love note or personal message..."></textarea>
                     <div class="form-actions">
-                        <button class="btn-secondary">Send as gift</button>
-                        <button class="btn-primary">Personalize & buy</button>
+                        <button class="btn-secondary" data-translate="send-gift">Send as gift</button>
+                        <button class="btn-primary" data-translate="personalize-buy">Personalize & buy</button>
                     </div>
                 </div>
             </div>

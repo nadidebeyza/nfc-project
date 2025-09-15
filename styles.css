@@ -64,6 +64,38 @@ body {
     gap: 12px;
 }
 
+.language-selector {
+    display: flex;
+    gap: 4px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.language-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 10px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.language-btn:hover {
+    background: #e9ecef;
+    color: #333333;
+}
+
+.language-btn.active {
+    background: #000000;
+    color: #ffffff;
+    font-weight: 600;
+}
+
 .shop-label {
     font-family: 'Source Serif Pro', serif;
     font-size: 12px;
