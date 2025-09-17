@@ -259,6 +259,26 @@ body {
     overflow: hidden;
 }
 
+.product-image-container.dual-images {
+    display: flex;
+    gap: 2px;
+}
+
+.dual-images .image-left,
+.dual-images .image-right {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.dual-images .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
 .product-image {
     width: 100%;
     height: 100%;

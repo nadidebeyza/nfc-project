@@ -6,7 +6,10 @@ const translations = {
         valentine: "Valentine",
         mother: "Mother",
         daughter: "For daughter",
+        son: "For son",
+        friend: "Friend",
         birthday: "Birthday",
+        pet: "Pet",
         limited: "Limited",
         recommended: "Recommended",
         new: "New",
@@ -43,6 +46,21 @@ const translations = {
                 "subtitle": "6-photo memory book",
                 "message": "Happy birthday! May this new year bring you endless joy and beautiful memories."
             },
+            "sons-pride": {
+                "title": "Son's Pride",
+                "subtitle": "4-photo memory frame",
+                "message": "To my amazing son, you make me so proud every single day."
+            },
+            "friendship-bond": {
+                "title": "Friendship Bond",
+                "subtitle": "3-photo keepsake box",
+                "message": "Thank you for being the most wonderful friend I could ever ask for."
+            },
+            "pet-companion": {
+                "title": "Pet Companion",
+                "subtitle": "2-photo memory frame",
+                "message": "My beloved companion, you bring so much joy to my life every day."
+            },
             "limited-edition": {
                 "title": "Limited Edition",
                 "subtitle": "Exclusive 7-photo keepsake",
@@ -56,7 +74,10 @@ const translations = {
         valentine: "Sevgililer",
         mother: "Anneler",
         daughter: "Kızlar için",
+        son: "Erkekler için",
+        friend: "Arkadaş",
         birthday: "Doğum günü",
+        pet: "Evcil Hayvan",
         limited: "Sınırlı",
         recommended: "Önerilen",
         new: "Yeni",
@@ -93,6 +114,21 @@ const translations = {
                 "subtitle": "6 fotoğraflı anı defteri",
                 "message": "Mutlu yıllar! Bu yeni yıl sana sonsuz sevinç ve güzel anılar getirsin."
             },
+            "sons-pride": {
+                "title": "Oğlun Gururu",
+                "subtitle": "4 fotoğraflı anı çerçevesi",
+                "message": "Harika oğluma, her gün beni çok gururlandırıyorsun."
+            },
+            "friendship-bond": {
+                "title": "Dostluk Bağı",
+                "subtitle": "3 fotoğraflı anı kutusu",
+                "message": "İstediğim en harika arkadaş olduğun için teşekkürler."
+            },
+            "pet-companion": {
+                "title": "Evcil Hayvan Arkadaşı",
+                "subtitle": "2 fotoğraflı anı çerçevesi",
+                "message": "Sevgili arkadaşım, hayatıma her gün çok sevinç katıyorsun."
+            },
             "limited-edition": {
                 "title": "Sınırlı Baskı",
                 "subtitle": "Özel 7 fotoğraflı anı objesi",
@@ -127,55 +163,108 @@ function formatPrice(price) {
 
 // Sample product data
 const products = [
+    // Valentine product (images 1 & 8)
     {
         id: 1,
         translationKey: "valentine-heart",
         basePrice: 24,
         personalizationPrice: 8,
         occasion: "valentine",
-        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+        images: [
+            "products/valentine/product-image-1.png",
+            "products/valentine/product-image-8.png"
+        ],
+        image: "products/valentine/product-image-1.png", // Main image for display
         isNew: true,
-        isLimited: false
+        isLimited: true
     },
+    // Mother product (images 2 & 3 from valentine folder)
     {
         id: 2,
         translationKey: "mothers-blessing",
         basePrice: 19,
         personalizationPrice: 6,
         occasion: "mother",
-        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+        images: [
+            "products/valentine/product-image-2.png",
+            "products/valentine/product-image-3.png"
+        ],
+        image: "products/valentine/product-image-2.png", // Main image for display
         isNew: false,
-        isLimited: true
+        isLimited: false
     },
+    // Daughter product (1 image)
     {
         id: 3,
         translationKey: "daughters-treasure",
-        basePrice: 32,
-        personalizationPrice: 10,
+        basePrice: 22,
+        personalizationPrice: 7,
         occasion: "daughter",
-        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=300&fit=crop",
+        images: [
+            "products/daughter/product-image-7.png"
+        ],
+        image: "products/daughter/product-image-7.png",
         isNew: true,
         isLimited: false
     },
+    // Son product (images 4 & 5)
     {
         id: 4,
+        translationKey: "sons-pride",
+        basePrice: 23,
+        personalizationPrice: 8,
+        occasion: "son",
+        images: [
+            "products/son/product-image-4.png",
+            "products/son/product-image-5.png"
+        ],
+        image: "products/son/product-image-4.png", // Main image for display
+        isNew: false,
+        isLimited: true
+    },
+    // Friend product (images 4 & 5)
+    {
+        id: 5,
+        translationKey: "friendship-bond",
+        basePrice: 20,
+        personalizationPrice: 6,
+        occasion: "friend",
+        images: [
+            "products/friend/product-image-4.png",
+            "products/friend/product-image-5.png"
+        ],
+        image: "products/friend/product-image-4.png", // Main image for display
+        isNew: true,
+        isLimited: false
+    },
+    // Birthday product (images 4 & 5)
+    {
+        id: 6,
         translationKey: "birthday-celebration",
         basePrice: 28,
         personalizationPrice: 8,
         occasion: "birthday",
-        image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=300&fit=crop",
-        isNew: false,
-        isLimited: false
-    },
-    {
-        id: 5,
-        translationKey: "limited-edition",
-        basePrice: 22,
-        personalizationPrice: 7,
-        occasion: "valentine",
-        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+        images: [
+            "products/birthday/product-image-4.png",
+            "products/birthday/product-image-5.png"
+        ],
+        image: "products/birthday/product-image-4.png", // Main image for display
         isNew: false,
         isLimited: true
+    },
+    // Pet product (1 image)
+    {
+        id: 7,
+        translationKey: "pet-companion",
+        basePrice: 18,
+        personalizationPrice: 5,
+        occasion: "pet",
+        images: [
+            "products/pet/product-image-6.png"
+        ],
+        image: "products/pet/product-image-6.png",
+        isNew: false,
+        isLimited: false
     }
 ];
 
@@ -315,11 +404,33 @@ function createProductCard(product) {
     
     const messagePreview = message.split('\n').slice(0, 2).join(' ');
 
+    // Create image container based on number of images
+    let imageContainerHTML = '';
+    if (product.images && product.images.length > 1) {
+        // Show 2 images side by side
+        imageContainerHTML = `
+            <div class="product-image-container dual-images">
+                <div class="image-left">
+                    <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'><rect width='200' height='300' fill='%23fafafa'/><circle cx='100' cy='120' r='20' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M85 140 L100 120 L115 140' fill='none' stroke='%23ddd' stroke-width='2'/><text x='100' y='200' font-family='serif' font-size='12' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.images[0]}" alt="${title}" loading="lazy">
+                </div>
+                <div class="image-right">
+                    <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'><rect width='200' height='300' fill='%23fafafa'/><circle cx='100' cy='120' r='20' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M85 140 L100 120 L115 140' fill='none' stroke='%23ddd' stroke-width='2'/><text x='100' y='200' font-family='serif' font-size='12' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.images[1]}" alt="${title}" loading="lazy">
+                </div>
+                <div class="occasion-badge">${occasionBadge}</div>
+            </div>
+        `;
+    } else {
+        // Show single image
+        imageContainerHTML = `
+            <div class="product-image-container">
+                <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23fafafa'/><circle cx='200' cy='120' r='30' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M170 150 L200 120 L230 150' fill='none' stroke='%23ddd' stroke-width='2'/><text x='200' y='200' font-family='serif' font-size='14' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.image}" alt="${title}" loading="lazy">
+                <div class="occasion-badge">${occasionBadge}</div>
+            </div>
+        `;
+    }
+
     card.innerHTML = `
-        <div class="product-image-container">
-            <img class="product-image loading" src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23fafafa'/><circle cx='200' cy='120' r='30' fill='none' stroke='%23ddd' stroke-width='2'/><path d='M170 150 L200 120 L230 150' fill='none' stroke='%23ddd' stroke-width='2'/><text x='200' y='200' font-family='serif' font-size='14' fill='%23aaa' text-anchor='middle'>Keepsake</text></svg>" data-src="${product.image}" alt="${title}" loading="lazy">
-            <div class="occasion-badge">${occasionBadge}</div>
-        </div>
+        ${imageContainerHTML}
         <div class="product-content">
             <div class="product-title">${title}</div>
             <div class="product-subtitle">${subtitle}</div>
@@ -347,22 +458,26 @@ function createProductCard(product) {
     });
 
     // Image loading
-    const img = card.querySelector('.product-image');
+    const images = card.querySelectorAll('.product-image');
     
-    // Load the actual image after a delay to show the placeholder
+    // Load the actual images after a delay to show the placeholder
     setTimeout(() => {
-        if (img.dataset.src) {
-            img.src = img.dataset.src;
-        }
+        images.forEach(img => {
+            if (img.dataset.src) {
+                img.src = img.dataset.src;
+            }
+        });
     }, 2000);
     
-    img.addEventListener('load', function() {
-        this.classList.remove('loading');
-    });
+    images.forEach(img => {
+        img.addEventListener('load', function() {
+            this.classList.remove('loading');
+        });
 
-    img.addEventListener('error', function() {
-        // Keep the placeholder image if the real image fails to load
-        this.classList.remove('loading');
+        img.addEventListener('error', function() {
+            // Keep the placeholder image if the real image fails to load
+            this.classList.remove('loading');
+        });
     });
 
     return card;
@@ -584,3 +699,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Demo: Simulate NFC tap by calling simulateNFCTap(productId)');
     }, 1000);
 });
+

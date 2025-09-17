@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Love Story - yourfavontheway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="valentine-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="story-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="yourfav_logo.png" alt="yourfavontheway" class="logo-image">
+                <span class="logo-text">yourfavontheway</span>
+            </div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="en">EN</button>
+                    <button class="language-btn" data-lang="tr">TR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Story Content -->
+    <main class="story-main">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="decorative-border top"></div>
+                <button class="edit-story-btn" id="editStoryBtn">
+                    <span data-translate="edit-story">Edit Story</span>
+                </button>
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img id="heroImage" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop&crop=face" alt="Couple Photo">
+                    <button class="edit-image-btn" onclick="editSection('hero')">📷</button>
+                </div>
+                <div class="hero-text">
+                    <p class="hero-subtitle" data-translate="from-lover">To my dearest love, on our special day</p>
+                    <h1 class="hero-title" id="heroTitle" contenteditable="true" data-translate="hero-title">Happy Anniversary, my forever Valentine</h1>
+                </div>
+            </div>
+            <div class="decorative-border bottom"></div>
+        </section>
+
+        <!-- Journey Section -->
+        <section class="journey-section" id="journey">
+            <div class="section-content">
+                <div class="journey-text">
+                    <p class="journey-intro" id="journeyIntro" contenteditable="true" data-translate="journey-intro">Another year together, another year of growing in love, another year of choosing each other every single day</p>
+                    <h2 class="section-title" data-translate="journey-title">Our Anniversary Journey</h2>
+                </div>
+                <div class="journey-image">
+                    <img id="journeyImage" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop" alt="Couple Journey">
+                    <button class="edit-image-btn" onclick="editSection('journey')">📷</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memories Gallery Section -->
+        <section class="memories-section" id="memories">
+            <div class="section-content">
+                <h2 class="section-title" data-translate="memories-title">Anniversary Memories</h2>
+                <p class="memories-subtitle" data-translate="memories-subtitle">Our precious moments together</p>
+                
+                <!-- Memory Categories Filter -->
+                <div class="memory-filters">
+                    <button class="filter-btn active" data-filter="all" data-translate="all-memories">All Memories</button>
+                    <button class="filter-btn" data-filter="photos" data-translate="photos">Photos</button>
+                    <button class="filter-btn" data-filter="videos" data-translate="videos">Videos</button>
+                    <button class="filter-btn" data-filter="favorites" data-translate="favorites">Favorites</button>
+                </div>
+                
+                <!-- Memories Gallery -->
+                <div class="memories-gallery" id="memoriesGallery">
+                    <!-- Memory items will be dynamically generated -->
+                </div>
+                
+                <!-- Add Memory Button -->
+                <div class="add-memory-container" id="addMemoryContainer" style="display: none;">
+                    <button class="add-memory-btn" onclick="addMemory()">
+                        <span class="add-icon">+</span>
+                        <span data-translate="add-memory">Add Memory</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Words Section -->
+        <section class="words-section" id="words">
+            <div class="section-content">
+                <div class="decorative-border left"></div>
+                <div class="words-content">
+                    <h2 class="section-title" data-translate="words-title">Words from the Heart</h2>
+                    <blockquote class="heart-quote">
+                        <p id="heartQuote" contenteditable="true" data-translate="heart-quote">"Another year of loving you, another year of being loved by you, another year of our beautiful story together"</p>
+                        <cite id="heartQuoteAuthor" contenteditable="true" data-translate="heart-quote-author">- Your Forever Valentine</cite>
+                    </blockquote>
+                </div>
+                <div class="decorative-border right"></div>
+            </div>
+        </section>
+
+        <!-- Milestones Section -->
+        <section class="milestones-section" id="milestones">
+            <div class="section-content">
+                <h2 class="section-title" id="milestonesTitle" contenteditable="true" data-translate="milestones-title">Our Anniversary Milestones</h2>
+                <div class="milestones-timeline" id="milestonesTimeline">
+                    <!-- Milestone items will be dynamically generated -->
+                </div>
+                <button class="add-milestone-btn" id="addMilestoneBtn" onclick="addMilestone()" style="display: none;">
+                    <span class="add-icon">+</span>
+                    <span data-translate="add-milestone">Add Milestone</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Promise Section -->
+        <section class="promise-section" id="promise">
+            <div class="section-content">
+                <div class="promise-image">
+                    <img id="promiseImage" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=400&fit=crop" alt="Couple Promise">
+                    <button class="edit-image-btn" onclick="editSection('promise')">📷</button>
+                </div>
+                <div class="promise-content">
+                    <h2 class="section-title" data-translate="promise-title">To Another Year Together</h2>
+                    <h3 class="promise-subtitle" data-translate="promise-subtitle">My Anniversary Promise</h3>
+                    <p class="promise-text" id="promiseText" contenteditable="true" data-translate="promise-text">As we celebrate another year of love, I promise to continue choosing you every day, to grow with you through all of life's seasons, and to make every day feel like Valentine's Day with you by my side.</p>
+                    <p class="promise-signature" id="promiseSignature" contenteditable="true" data-translate="promise-signature">Happy Anniversary, my forever Valentine</p>
+                    <p class="story-date" id="storyDate" contenteditable="true">February 14, 2025</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="edit-section">Edit Section</h3>
+                <button class="modal-close" id="closeEditModal">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="edit-form" id="editForm">
+                    <div class="form-group">
+                        <label for="sectionTitle" data-translate="section-title">Section Title</label>
+                        <input type="text" id="sectionTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sectionText" data-translate="section-text">Text Content</label>
+                        <textarea id="sectionText" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-translate="section-image">Section Image</label>
+                        <div class="image-upload-area" id="imageUploadArea">
+                            <div class="upload-placeholder">
+                                <span class="upload-icon">📷</span>
+                                <p data-translate="upload-instruction">Click to add image</p>
+                                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelEdit" data-translate="cancel">Cancel</button>
+                        <button type="submit" class="btn-primary" data-translate="save-changes">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Memory Modal -->
+    <div class="modal-overlay" id="addMemoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="add-memory">Add Memory</h3>
+                <button class="modal-close" id="closeMemoryModal">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="memory-form" id="memoryForm">
+                    <div class="form-group">
+                        <label for="memoryTitle" data-translate="memory-title">Memory Title</label>
+                        <input type="text" id="memoryTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memoryDescription" data-translate="memory-description">Description</label>
+                        <textarea id="memoryDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label data-translate="memory-media">Memory Media</label>
+                        <div class="media-upload-area" id="memoryMediaUploadArea">
+                            <div class="upload-placeholder">
+                                <span class="upload-icon">📷</span>
+                                <p data-translate="upload-instruction">Click to add photos or videos</p>
+                                <input type="file" id="memoryMediaInput" accept="image/*,video/*" multiple style="display: none;">
+                            </div>
+                        </div>
+                        <div class="media-preview" id="memoryMediaPreview"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memoryCategory" data-translate="memory-category">Category</label>
+                        <select id="memoryCategory">
+                            <option value="general" data-translate="general">General</option>
+                            <option value="travel" data-translate="travel">Travel</option>
+                            <option value="celebration" data-translate="celebration">Celebration</option>
+                            <option value="daily" data-translate="daily">Daily Life</option>
+                            <option value="special" data-translate="special">Special Moments</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memoryDate" data-translate="memory-date">Date</label>
+                        <input type="date" id="memoryDate">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelMemory" data-translate="cancel">Cancel</button>
+                        <button type="submit" class="btn-primary" data-translate="save-memory">Save Memory</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Milestone Modal -->
+    <div class="modal-overlay" id="addMilestoneModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-translate="add-milestone">Add Milestone</h3>
+                <button class="modal-close" id="closeMilestoneModal">×</button>
+            </div>
+            <div class="modal-body">
+                <form class="milestone-form" id="milestoneForm">
+                    <div class="form-group">
+                        <label for="milestoneTitle" data-translate="milestone-title">Milestone Title</label>
+                        <input type="text" id="milestoneTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="milestoneYear" data-translate="milestone-year">Year</label>
+                        <input type="number" id="milestoneYear" min="1900" max="2100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="milestoneDescription" data-translate="milestone-description">Description</label>
+                        <textarea id="milestoneDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelMilestone" data-translate="cancel">Cancel</button>
+                        <button type="submit" class="btn-primary" data-translate="save-milestone">Save Milestone</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Lightbox Modal -->
+    <div class="modal-overlay" id="memoryLightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="closeLightbox">×</button>
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+            <div class="lightbox-media" id="lightboxMedia"></div>
+            <div class="lightbox-info" id="lightboxInfo">
+                <h3 id="lightboxTitle"></h3>
+                <p id="lightboxDescription"></p>
+                <div class="lightbox-meta">
+                    <span id="lightboxDate"></span>
+                    <span id="lightboxCategory"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="valentine-script.js"></script>
+</body>
+</html>
+
