@@ -346,6 +346,15 @@ function loadStoryData() {
         
         storyData = savedData;
     }
+    
+    // Check for personal message from main page
+    const personalMessage = localStorage.getItem('personalMessage');
+    if (personalMessage && personalMessage.trim()) {
+        // Add the personal message to the heart quote or create a new memory
+        storyData.words.quote = `"${personalMessage}"`;
+        // Clear the message from localStorage after using it
+        localStorage.removeItem('personalMessage');
+    }
 }
 
 function saveStoryData() {

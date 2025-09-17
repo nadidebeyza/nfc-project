@@ -440,7 +440,7 @@ function createProductCard(product) {
             </div>
             <div class="message-preview">${messagePreview}</div>
             <div class="cta-row">
-                <button class="btn-primary" onclick="openQuickView(${product.id})">Personalize</button>
+                <button class="btn-primary" onclick="goToValentinePage()">Personalize</button>
                 <button class="btn-secondary">Buy as gift</button>
             </div>
             <div class="nfc-hint">
@@ -699,4 +699,25 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Demo: Simulate NFC tap by calling simulateNFCTap(productId)');
     }, 1000);
 });
+
+// Function to redirect to Valentine page
+function goToValentinePage() {
+    // Get the personal message from the textarea
+    const personalMessage = document.getElementById('personalMessage').value;
+    
+    // Store the message in localStorage to use in valentine page
+    if (personalMessage.trim()) {
+        localStorage.setItem('personalMessage', personalMessage);
+    }
+    
+    // Close the modal
+    const modalOverlay = document.getElementById('modalOverlay');
+    if (modalOverlay) {
+        modalOverlay.classList.remove('visible');
+        document.body.style.overflow = '';
+    }
+    
+    // Redirect to valentine page
+    window.location.href = 'valentine.html';
+}
 
