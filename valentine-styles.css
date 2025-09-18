@@ -21,6 +21,7 @@ html {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 /* Edit button styles removed - using inline styles only */
@@ -36,6 +37,7 @@ body {
     min-height: 100vh;
     letter-spacing: 0.01em;
     opacity: 0;
+    overflow-y: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
@@ -210,10 +212,7 @@ button:focus,
     }
 }
 
-/* Edit Mode Visual Indicators */
-.edit-mode {
-    overflow: auto !important;
-}
+/* Edit Mode Visual Indicators - overflow restriction removed for better scrolling */
 
 .edit-mode::before {
     content: "Edit Mode Active";
@@ -584,7 +583,7 @@ button:focus,
 
 /* Main Content */
 .story-main {
-    margin-top: 0 !important;
+    margin-top: 56px !important;
     padding: 0;
 }
 
