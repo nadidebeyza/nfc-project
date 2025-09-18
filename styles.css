@@ -694,3 +694,54 @@ button:focus-visible,
     outline: 2px solid #1a1a1a;
     outline-offset: 2px;
 }
+
+/* Fixed Story Button */
+.story-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 50% !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    z-index: 9999 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    backdrop-filter: blur(10px) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+}
+
+.story-button:hover {
+    background: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.story-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for story button */
+@media (min-width: 768px) {
+    .story-button {
+        bottom: 30px !important;
+        right: 30px !important;
+        width: 60px;
+        height: 60px;
+        font-size: 26px;
+    }
+}

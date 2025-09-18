@@ -312,7 +312,7 @@ let storyData = {
     promise: {
         text: "As we celebrate another year of love, I promise to continue choosing you every day, to grow with you through all of life's seasons, and to make every day feel like Valentine's Day with you by my side.",
         signature: "Happy Anniversary, my forever Valentine",
-        date: "February 14, 2025",
+        date: null, // Will be set to current date when loaded
         image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=400&fit=crop"
     }
 };
@@ -355,6 +355,14 @@ function loadStoryData() {
         // Clear the message from localStorage after using it
         localStorage.removeItem('personalMessage');
     }
+    
+    // Always set current date as default (user can still edit it)
+    const currentDate = new Date().toLocaleDateString(currentLanguage === 'tr' ? 'tr-TR' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    storyData.promise.date = currentDate;
 }
 
 function saveStoryData() {
@@ -443,8 +451,15 @@ function renderStory() {
     }
     
     const storyDate = document.getElementById('storyDate');
-    if (storyDate && storyData.promise.date) {
-        storyDate.textContent = storyData.promise.date;
+    if (storyDate) {
+        // Always use current date (user can edit it)
+        const currentDate = new Date().toLocaleDateString(currentLanguage === 'tr' ? 'tr-TR' : 'en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        storyDate.textContent = currentDate;
+        storyData.promise.date = currentDate;
     }
     
     const promiseImage = document.getElementById('promiseImage');
@@ -492,13 +507,12 @@ function createMemoryItem(memory, index) {
                 `<img src="${mediaUrl}" alt="${memory.title}">`
             }
             ${mediaCount ? `<div class="media-count">+${mediaCount - 1}</div>` : ''}
-            <div class="media-type">${mediaType === 'video' ? '🎥' : '📷'}</div>
         </div>
         <div class="memory-content">
-            <h3 class="memory-title">${memory.title}</h3>
-            <p class="memory-description">${memory.description}</p>
+            <h3 class="memory-title" contenteditable="false" data-memory-index="${index}" data-field="title">${memory.title}</h3>
+            <p class="memory-description" contenteditable="false" data-memory-index="${index}" data-field="description">${memory.description}</p>
             <div class="memory-meta">
-                <span class="memory-date">${formatDate(memory.date)}</span>
+                <span class="memory-date" contenteditable="false" data-memory-index="${index}" data-field="date">${formatDate(memory.date)}</span>
                 <span class="memory-category">${categoryText}</span>
             </div>
         </div>
@@ -550,23 +564,93 @@ function createMilestoneItem(milestone, index) {
 
 // Event listeners
 function setupEventListeners() {
+    console.log('Setting up event listeners...');
+    
     // Edit story button
-    editStoryBtn.addEventListener('click', toggleEditMode);
+    if (editStoryBtn) {
+        editStoryBtn.addEventListener('click', toggleEditMode);
+        console.log('Edit story button listener added');
+    } else {
+        console.error('Edit story button not found!');
+    }
     
     // Modal close buttons
-    document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
-    document.getElementById('closeMemoryModal').addEventListener('click', closeAddMemoryModal);
-    document.getElementById('closeMilestoneModal').addEventListener('click', closeAddMilestoneModal);
+    const closeEditModalBtn = document.getElementById('closeEditModal');
+    const closeMemoryModalBtn = document.getElementById('closeMemoryModal');
+    const closeMilestoneModalBtn = document.getElementById('closeMilestoneModal');
+    
+    if (closeEditModalBtn) {
+        closeEditModalBtn.addEventListener('click', closeEditModal);
+        console.log('Close edit modal listener added');
+    } else {
+        console.error('Close edit modal button not found!');
+    }
+    
+    if (closeMemoryModalBtn) {
+        closeMemoryModalBtn.addEventListener('click', closeAddMemoryModal);
+        console.log('Close memory modal listener added');
+    } else {
+        console.error('Close memory modal button not found!');
+    }
+    
+    if (closeMilestoneModalBtn) {
+        closeMilestoneModalBtn.addEventListener('click', closeAddMilestoneModal);
+        console.log('Close milestone modal listener added');
+    } else {
+        console.error('Close milestone modal button not found!');
+    }
     
     // Form submissions
-    document.getElementById('editForm').addEventListener('submit', handleEditSection);
-    document.getElementById('memoryForm').addEventListener('submit', handleAddMemory);
-    document.getElementById('milestoneForm').addEventListener('submit', handleAddMilestone);
+    const editForm = document.getElementById('editForm');
+    const memoryForm = document.getElementById('memoryForm');
+    const milestoneForm = document.getElementById('milestoneForm');
+    
+    if (editForm) {
+        editForm.addEventListener('submit', handleEditSection);
+        console.log('Edit form listener added');
+    } else {
+        console.error('Edit form not found!');
+    }
+    
+    if (memoryForm) {
+        memoryForm.addEventListener('submit', handleAddMemory);
+        console.log('Memory form listener added');
+    } else {
+        console.error('Memory form not found!');
+    }
+    
+    if (milestoneForm) {
+        milestoneForm.addEventListener('submit', handleAddMilestone);
+        console.log('Milestone form listener added');
+    } else {
+        console.error('Milestone form not found!');
+    }
     
     // Cancel buttons
-    document.getElementById('cancelEdit').addEventListener('click', closeEditModal);
-    document.getElementById('cancelMemory').addEventListener('click', closeAddMemoryModal);
-    document.getElementById('cancelMilestone').addEventListener('click', closeAddMilestoneModal);
+    const cancelEditBtn = document.getElementById('cancelEdit');
+    const cancelMemoryBtn = document.getElementById('cancelMemory');
+    const cancelMilestoneBtn = document.getElementById('cancelMilestone');
+    
+    if (cancelEditBtn) {
+        cancelEditBtn.addEventListener('click', closeEditModal);
+        console.log('Cancel edit listener added');
+    } else {
+        console.error('Cancel edit button not found!');
+    }
+    
+    if (cancelMemoryBtn) {
+        cancelMemoryBtn.addEventListener('click', closeAddMemoryModal);
+        console.log('Cancel memory listener added');
+    } else {
+        console.error('Cancel memory button not found!');
+    }
+    
+    if (cancelMilestoneBtn) {
+        cancelMilestoneBtn.addEventListener('click', closeAddMilestoneModal);
+        console.log('Cancel milestone listener added');
+    } else {
+        console.error('Cancel milestone button not found!');
+    }
     
     // Image upload
     setupImageUpload();
@@ -574,13 +658,62 @@ function setupEventListeners() {
     // Content editable save
     setupContentEditableSave();
     
+    // Image click handler for edit mode only
+    document.body.addEventListener('click', function(e) {
+        if (e.target.tagName === 'IMG') {
+            const img = e.target;
+            
+            // Skip if image is inside a memory lightbox
+            if (img.closest('.lightbox-media')) {
+                return;
+            }
+            
+            // Only work in edit mode
+            if (document.body.classList.contains('edit-mode')) {
+                e.preventDefault();
+                e.stopPropagation();
+                replaceImage(img);
+            }
+        }
+    });
+    
     // Memory filters
     setupMemoryFilters();
     
     // Lightbox event listeners
-    document.getElementById('closeLightbox').addEventListener('click', closeMemoryLightbox);
-    document.getElementById('lightboxPrev').addEventListener('click', () => navigateLightbox('prev'));
-    document.getElementById('lightboxNext').addEventListener('click', () => navigateLightbox('next'));
+    const closeLightboxBtn = document.getElementById('closeLightbox');
+    const lightboxPrevBtn = document.getElementById('lightboxPrev');
+    const lightboxNextBtn = document.getElementById('lightboxNext');
+    const memoryLightbox = document.getElementById('memoryLightbox');
+    
+    if (closeLightboxBtn) {
+        closeLightboxBtn.addEventListener('click', closeMemoryLightbox);
+    }
+    if (lightboxPrevBtn) {
+        lightboxPrevBtn.addEventListener('click', () => navigateLightbox('prev'));
+    }
+    if (lightboxNextBtn) {
+        lightboxNextBtn.addEventListener('click', () => navigateLightbox('next'));
+    }
+    
+    // Close lightbox on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (memoryLightbox && memoryLightbox.classList.contains('visible')) {
+                closeMemoryLightbox();
+            }
+        }
+    });
+    
+    // Close lightbox on overlay click
+    if (memoryLightbox) {
+        memoryLightbox.addEventListener('click', function(e) {
+            if (e.target === memoryLightbox) {
+                closeMemoryLightbox();
+            }
+        });
+    }
+    
     
     // Close modals on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
@@ -592,22 +725,54 @@ function setupEventListeners() {
     });
 }
 
+// Replace image function
+function replaceImage(imageElement) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (imageElement) {
+                    imageElement.src = e.target.result;
+                    console.log('Image replaced successfully');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    input.click();
+}
+
 // Edit mode
 function toggleEditMode() {
     const contentEditableElements = document.querySelectorAll('[contenteditable="true"]');
+    const memoryTextElements = document.querySelectorAll('.memory-title, .memory-description, .memory-date');
     const editButtons = document.querySelectorAll('.edit-image-btn');
     const addMemoryContainer = document.getElementById('addMemoryContainer');
     const addMilestoneBtn = document.getElementById('addMilestoneBtn');
+    const sectionControls = document.querySelectorAll('.section-controls');
+    const body = document.body;
     
     if (editStoryBtn.textContent.includes('Edit')) {
         // Enable edit mode
-        contentEditableElements.forEach(el => {
-            el.style.border = '2px dashed rgba(0, 0, 0, 0.2)';
-            el.style.backgroundColor = 'rgba(0, 0, 0, 0.02)';
+        body.classList.add('edit-mode');
+        
+        // Enable contenteditable for all editable elements
+        contentEditableElements.forEach(element => {
+            element.setAttribute('contenteditable', 'true');
         });
         
-        editButtons.forEach(btn => {
-            btn.style.display = 'flex';
+        // Enable contenteditable for memory text elements
+        memoryTextElements.forEach(element => {
+            element.setAttribute('contenteditable', 'true');
+        });
+        
+        // Show section controls
+        sectionControls.forEach(control => {
+            control.style.display = 'flex';
         });
         
         // Show add buttons
@@ -618,14 +783,22 @@ function toggleEditMode() {
     } else {
         // Save and disable edit mode
         saveContentEditableElements();
+        saveMemoryTextElements();
+        body.classList.remove('edit-mode');
         
-        contentEditableElements.forEach(el => {
-            el.style.border = '2px solid transparent';
-            el.style.backgroundColor = 'transparent';
+        // Disable contenteditable for all editable elements
+        contentEditableElements.forEach(element => {
+            element.setAttribute('contenteditable', 'false');
         });
         
-        editButtons.forEach(btn => {
-            btn.style.display = 'none';
+        // Disable contenteditable for memory text elements
+        memoryTextElements.forEach(element => {
+            element.setAttribute('contenteditable', 'false');
+        });
+        
+        // Hide section controls
+        sectionControls.forEach(control => {
+            control.style.display = 'none';
         });
         
         // Hide add buttons
@@ -688,10 +861,50 @@ function saveContentEditableElements() {
     saveStoryData();
 }
 
+function saveMemoryTextElements() {
+    // Save memory text changes
+    const memoryTextElements = document.querySelectorAll('.memory-title, .memory-description, .memory-date');
+    
+    memoryTextElements.forEach(element => {
+        const memoryIndex = parseInt(element.dataset.memoryIndex);
+        const field = element.dataset.field;
+        
+        if (memoryIndex >= 0 && memoryIndex < storyData.memories.length && field) {
+            if (field === 'title') {
+                storyData.memories[memoryIndex].title = element.textContent;
+            } else if (field === 'description') {
+                storyData.memories[memoryIndex].description = element.textContent;
+            } else if (field === 'date') {
+                // Parse the date text and convert to proper date format
+                const dateText = element.textContent.trim();
+                try {
+                    // Try to parse the date and convert to ISO format
+                    const parsedDate = new Date(dateText);
+                    if (!isNaN(parsedDate.getTime())) {
+                        storyData.memories[memoryIndex].date = parsedDate.toISOString().split('T')[0];
+                    }
+                } catch (e) {
+                    console.warn('Invalid date format:', dateText);
+                }
+            }
+        }
+    });
+    
+    // Save to localStorage
+    saveStoryData();
+}
+
 function setupContentEditableSave() {
     document.querySelectorAll('[contenteditable="true"]').forEach(element => {
         element.addEventListener('blur', function() {
             saveContentEditableElements();
+        });
+    });
+    
+    // Also handle memory text elements
+    document.querySelectorAll('.memory-title, .memory-description, .memory-date').forEach(element => {
+        element.addEventListener('blur', function() {
+            saveMemoryTextElements();
         });
     });
 }
@@ -1012,6 +1225,7 @@ function filterMemories(filter) {
 let currentLightboxIndex = 0;
 let currentLightboxMemories = [];
 
+
 function openMemoryLightbox(memory, index) {
     currentLightboxIndex = index;
     currentLightboxMemories = storyData.memories;
@@ -1045,9 +1259,46 @@ function openMemoryLightbox(memory, index) {
 }
 
 function closeMemoryLightbox() {
+    console.log('Closing memory lightbox...');
     const lightbox = document.getElementById('memoryLightbox');
-    lightbox.classList.remove('visible');
-    document.body.style.overflow = '';
+    if (lightbox) {
+        // Immediately reset all styles to prevent transition delays
+        document.body.style.overflow = '';
+        document.body.style.filter = '';
+        document.body.style.backdropFilter = '';
+        document.body.style.webkitBackdropFilter = '';
+        document.body.style.transform = '';
+        document.body.style.opacity = '';
+        document.body.style.background = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.bottom = '';
+        
+        // Remove visible class immediately
+        lightbox.classList.remove('visible');
+        console.log('Lightbox visible class removed');
+        
+        // Reset any potential modal overlay effects
+        document.body.classList.remove('modal-open', 'lightbox-open', 'memory-lightbox-open');
+        document.documentElement.classList.remove('modal-open', 'lightbox-open', 'memory-lightbox-open');
+        
+        // Reset any potential backdrop effects on other elements
+        const elementsWithBackdrop = document.querySelectorAll('[style*="backdrop-filter"], [style*="filter"]');
+        elementsWithBackdrop.forEach(el => {
+            if (el !== lightbox) {
+                el.style.backdropFilter = '';
+                el.style.webkitBackdropFilter = '';
+                el.style.filter = '';
+            }
+        });
+        
+        // Force immediate reflow
+        document.body.offsetHeight;
+        
+        console.log('Memory lightbox closed and page reset immediately');
+    }
 }
 
 function navigateLightbox(direction) {
@@ -1062,6 +1313,7 @@ function navigateLightbox(direction) {
     openMemoryLightbox(memory, currentLightboxIndex);
 }
 
+
 // Utility functions
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -1070,6 +1322,46 @@ function formatDate(dateString) {
         month: 'long',
         day: 'numeric'
     });
+}
+
+// Section management
+function removeSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    
+    const sectionTitle = section.querySelector('.section-title')?.textContent || sectionId;
+    
+    if (confirm(`Are you sure you want to remove the "${sectionTitle}" section? This action cannot be undone.`)) {
+        section.style.transition = 'all 0.3s ease';
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+            section.remove();
+            
+            // Show success message
+            const message = document.createElement('div');
+            message.textContent = 'Section removed successfully';
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-family: 'Source Serif Pro', serif;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            `;
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }, 300);
+    }
 }
 
 // Global functions for onclick handlers
@@ -1081,6 +1373,106 @@ window.deleteMilestone = deleteMilestone;
 window.openMemoryLightbox = openMemoryLightbox;
 window.closeMemoryLightbox = closeMemoryLightbox;
 window.navigateLightbox = navigateLightbox;
+window.removeSection = removeSection;
+
+
+// Performance and UX enhancements
+function setupSmoothScrolling() {
+    // Add smooth scroll to all internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+function setupImageOptimization() {
+    // Add loading states to images
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('load', function() {
+            this.classList.remove('loading');
+        });
+        
+        img.addEventListener('error', function() {
+            this.classList.remove('loading');
+            // Add fallback image or placeholder
+            this.style.background = 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)';
+        });
+        
+        // Add loading class initially
+        if (!img.complete) {
+            img.classList.add('loading');
+        }
+    });
+}
+
+function setupPerformanceMonitoring() {
+    // Monitor page performance
+    if ('performance' in window) {
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                if (perfData) {
+                    console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+                }
+            }, 0);
+        });
+    }
+    
+    // Add intersection observer for lazy loading
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+}
+
+function setupScrollAnimations() {
+    // Add intersection observer for scroll animations
+    if ('IntersectionObserver' in window) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+    } else {
+        // Fallback for older browsers
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('visible');
+        });
+    }
+}
 
 // Language switching
 function setupLanguageSwitching() {
@@ -1113,16 +1505,34 @@ document.addEventListener('DOMContentLoaded', function() {
     editModal = document.getElementById('editModal');
     addMemoryModal = document.getElementById('addMemoryModal');
     addMilestoneModal = document.getElementById('addMilestoneModal');
-    
+
+    // Disable contenteditable by default
+    const contentEditableElements = document.querySelectorAll('[contenteditable="true"]');
+    contentEditableElements.forEach(element => {
+        element.setAttribute('contenteditable', 'false');
+    });
+
     // Load saved data or use default
     loadStoryData();
-    
+
     // Render the story
     renderStory();
-    
+
     // Setup event listeners
     setupEventListeners();
-    
+
     // Setup language switching
     setupLanguageSwitching();
+
+    // Add smooth scroll behavior for better UX
+    setupSmoothScrolling();
+
+    // Add image loading optimization
+    setupImageOptimization();
+
+    // Add performance monitoring
+    setupPerformanceMonitoring();
+
+    // Add scroll animations
+    setupScrollAnimations();
 });

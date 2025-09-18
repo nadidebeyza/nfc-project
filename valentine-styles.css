@@ -5,21 +5,60 @@
     box-sizing: border-box;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Prevent horizontal overflow */
+* {
+    max-width: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* Edit button styles removed - using inline styles only */
+
 body {
     font-family: 'Source Serif Pro', Georgia, serif;
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    color: #000000;
-    line-height: 1.6;
+    background: linear-gradient(135deg, #fafbfc 0%, #ffffff 100%);
+    color: #1a1a1a;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     min-height: 100vh;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Header */
 .story-header {
     position: fixed;
-    top: 0;
+    top: 0 !important;
     left: 0;
     right: 0;
     background: rgba(255, 255, 255, 0.95);
@@ -28,6 +67,8 @@ body {
     z-index: 100;
     height: 56px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .header-content {
@@ -57,6 +98,14 @@ body {
     font-size: 24px;
     color: #000000;
     letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+}
+
+.logo-text:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: -2px -4px;
 }
 
 .header-actions {
@@ -97,32 +146,341 @@ body {
     font-weight: 600;
 }
 
-.edit-story-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #000000;
+/* Section Controls */
+.section-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 20;
+}
+
+/* Header and Hero should not have section controls */
+.story-header .section-controls,
+.hero-section .section-controls {
+    display: none !important;
+}
+
+.section-remove-btn {
+    background: rgba(220, 53, 69, 0.9);
     color: #ffffff;
     border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-remove-btn:hover {
+    background: rgba(220, 53, 69, 1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Editable Elements */
+[contenteditable="true"] {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+[contenteditable="true"]:hover {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Focus states for better accessibility */
+button:focus,
+.filter-btn:focus,
+.language-btn:focus,
+.edit-story-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .memory-item {
+        border: 2px solid #000000;
+    }
+    
+    .filter-btn {
+        border: 2px solid #000000;
+    }
+    
+    .section-title::after {
+        background: #000000;
+    }
+}
+
+/* Edit Mode Visual Indicators */
+.edit-mode {
+    overflow: auto !important;
+}
+
+.edit-mode::before {
+    content: "Edit Mode Active";
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(34, 197, 94, 0.7));
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    animation: editModeIndicator 0.5s ease-out;
+}
+
+@keyframes editModeIndicator {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Make contenteditable elements non-editable by default */
+[contenteditable="true"] {
+    border: none;
+    background: transparent;
+    outline: none;
+    cursor: default;
+}
+
+/* Only make them editable in edit mode */
+.edit-mode [contenteditable="true"] {
+    border: 2px dashed rgba(34, 197, 94, 0.4);
+    background: rgba(34, 197, 94, 0.05);
     border-radius: 8px;
-    padding: 16px 24px;
-    font-family: 'Source Serif Pro', serif;
+    padding: 8px 12px;
+    margin: 4px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 20px;
+    cursor: text;
+}
+
+.edit-mode [contenteditable="true"]:hover {
+    border-color: rgba(34, 197, 94, 0.6);
+    background: rgba(34, 197, 94, 0.08);
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+}
+
+.edit-mode [contenteditable="true"]:focus {
+    border-color: rgba(34, 197, 94, 0.8);
+    background: rgba(34, 197, 94, 0.1);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+    outline: none;
+}
+
+/* Edit mode section controls */
+.edit-mode .section-controls {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Edit mode buttons styling */
+.edit-mode .edit-image-btn {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.edit-mode .edit-image-btn:hover {
+    background: rgba(0, 0, 0, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Edit mode memory actions */
+.edit-mode .memory-actions {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.edit-mode .action-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.edit-mode .action-btn:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: rgba(34, 197, 94, 0.8);
+}
+
+/* Edit mode add buttons */
+.edit-mode .add-memory-btn {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     gap: 8px;
-    z-index: 100;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.edit-mode .add-memory-btn:hover {
+    background: rgba(0, 0, 0, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.edit-mode .add-milestone-btn {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-mode .add-milestone-btn:hover {
+    background: rgba(0, 0, 0, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Edit mode section remove button */
+.edit-mode .section-remove-btn {
+    background: transparent;
+    color: #666;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-mode .section-remove-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    transform: translateY(-2px);
+}
+
+/* Edit mode memories section spacing */
+.edit-mode .memories-section .memories-subtitle {
+    margin-bottom: 40px !important;
+}
+
+.edit-mode .memories-section .memory-filters {
+    margin-top: 20px !important;
+}
+
+/* Ensure non-editable elements are clearly non-editable in edit mode */
+.edit-mode .memory-filters,
+.edit-mode .filter-btn,
+.edit-mode .section-controls,
+.edit-mode .add-memory-btn,
+.edit-mode .add-milestone-btn,
+.edit-mode .edit-image-btn,
+.edit-mode .section-remove-btn {
+    pointer-events: auto;
+    user-select: none;
+}
+
+/* Make it clear that only contenteditable elements can be edited */
+.edit-mode [contenteditable="true"] {
+    cursor: text;
+}
+
+.edit-mode [contenteditable="true"]:hover::after {
+    content: " ✏️";
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+/* Edit Story Button */
+.edit-story-btn {
+    position: fixed !important;
+    top: 70px !important;
+    right: 25px !important;
+    bottom: auto !important;
+    left: auto !important;
+    color: rgb(255, 255, 255) !important;
+    font-family: "Source Serif Pro", serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    z-index: 9999 !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
+    background: rgb(0, 0, 0) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 6px 8px !important;
+    transition: 0.3s !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .edit-story-btn:hover {
     background: #333333;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
 }
+
 
 .edit-icon {
     font-size: 14px;
@@ -130,7 +488,7 @@ body {
 
 /* Main Content */
 .story-main {
-    margin-top: 56px;
+    margin-top: 0 !important;
     padding: 0;
 }
 
@@ -140,6 +498,14 @@ section {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .section-content {
@@ -149,66 +515,80 @@ section {
 
 .section-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
+    font-size: 40px;
     font-weight: 600;
-    color: #000000;
+    color: #1a1a1a;
     text-align: center;
-    margin-bottom: 40px;
-    letter-spacing: 0.5px;
+    margin-bottom: 48px;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d1d5db, transparent);
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    padding: 60px 20px;
+    background: #ffffff;
+    padding: 80px 20px;
     text-align: center;
     position: relative;
 }
 
-.decorative-border {
-    position: absolute;
-    background: #000000;
-    opacity: 0.1;
-}
-
-.decorative-border.top {
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 2px;
-}
-
-.decorative-border.bottom {
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 2px;
-}
 
 .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
-    max-width: 800px;
+    gap: 70px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 60px 0;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-image {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-image:hover {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.18);
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.hero-image img.loading {
+    opacity: 0.7;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .edit-image-btn {
@@ -221,12 +601,17 @@ section {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    display: flex;
+    display: none !important;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.2s ease;
+    z-index: 15;
+}
+
+.edit-mode .edit-image-btn {
+    display: flex;
 }
 
 .edit-image-btn:hover {
@@ -239,19 +624,23 @@ section {
 }
 
 .hero-subtitle {
-    font-size: 16px;
-    color: #666666;
-    margin-bottom: 20px;
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 24px;
     font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    opacity: 0.9;
 }
 
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 600;
-    color: #000000;
-    line-height: 1.2;
-    letter-spacing: 0.5px;
+    color: #1a1a1a;
+    line-height: 1.1;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Journey Section */
@@ -319,26 +708,47 @@ section {
 
 .filter-btn {
     background: #ffffff;
-    color: #333333;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    padding: 8px 16px;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 10px 20px;
     font-family: 'Source Serif Pro', serif;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+.filter-btn:hover::before {
+    left: 100%;
 }
 
 .filter-btn:hover {
-    background: #f8f9fa;
-    border-color: #d0d0d0;
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .filter-btn.active {
-    background: #000000;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     color: #ffffff;
-    border-color: #000000;
+    border-color: #1a1a1a;
+    box-shadow: 0 4px 16px rgba(26, 26, 26, 0.2);
+    transform: translateY(-1px);
 }
 
 /* Memories Gallery */
@@ -351,17 +761,20 @@ section {
 
 .memory-item {
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 
+                0 0 0 1px rgba(255, 255, 255, 0.8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .memory-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 
+                0 0 0 1px rgba(255, 255, 255, 0.9);
 }
 
 .memory-media {
@@ -448,11 +861,16 @@ section {
 .memory-actions {
     position: absolute;
     top: 10px;
-    right: 10px;
-    display: flex;
+    left: 10px;
+    display: none;
     gap: 8px;
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.edit-mode .memory-actions {
+    display: flex;
 }
 
 .memory-item:hover .memory-actions {
@@ -729,6 +1147,11 @@ section {
 .modal-overlay.visible {
     opacity: 1;
     visibility: visible;
+}
+
+/* Disable transitions when closing */
+.modal-overlay:not(.visible) {
+    transition: none !important;
 }
 
 .modal-content {
@@ -1111,6 +1534,63 @@ section {
     line-height: 1;
 }
 
+
+/* Make images clickable only in edit mode */
+.edit-mode img {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.edit-mode img:hover {
+    transform: scale(1.02);
+}
+
+/* Edit mode image styling */
+.edit-mode img {
+    border: 2px dashed rgba(34, 197, 94, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.edit-mode img:hover {
+    border-color: rgba(34, 197, 94, 0.6);
+    background: rgba(34, 197, 94, 0.05);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+/* Edit mode memory text styling */
+.edit-mode .memory-title,
+.edit-mode .memory-description,
+.edit-mode .memory-date {
+    border: 2px dashed rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.05);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 4px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 20px;
+    cursor: text;
+}
+
+.edit-mode .memory-title:hover,
+.edit-mode .memory-description:hover,
+.edit-mode .memory-date:hover {
+    border-color: rgba(34, 197, 94, 0.6);
+    background: rgba(34, 197, 94, 0.08);
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+}
+
+.edit-mode .memory-title:focus,
+.edit-mode .memory-description:focus,
+.edit-mode .memory-date:focus {
+    border-color: rgba(34, 197, 94, 0.8);
+    background: rgba(34, 197, 94, 0.1);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+    outline: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
@@ -1153,35 +1633,79 @@ section {
         display: none;
     }
     
-    .edit-story-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 14px 20px;
-        font-size: 13px;
+    /* Edit story button responsive styles removed */
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        gap: 50px;
+        padding: 40px 0;
     }
+    
+    .hero-image {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .hero-title {
+        font-size: 42px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+    }
+    
+    .memories-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    /* Edit story button responsive styles removed */
 }
 
 @media (max-width: 480px) {
     section {
-        padding: 60px 16px;
+        padding: 50px 16px;
     }
     
     .hero-section {
-        padding: 40px 16px;
+        padding: 60px 16px;
     }
     
-    .hero-title {
-        font-size: 28px;
-    }
-    
-    .section-title {
-        font-size: 24px;
+    .hero-content {
+        gap: 40px;
+        padding: 30px 0;
     }
     
     .hero-image {
-        width: 200px;
-        height: 200px;
+        width: 240px;
+        height: 240px;
     }
+    
+    .hero-title {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    .memories-gallery {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    /* Edit story button responsive styles removed */
     
     .journey-image,
     .promise-image {
@@ -1209,10 +1733,5 @@ section {
         padding: 16px 16px 0;
     }
     
-    .edit-story-btn {
-        bottom: 16px;
-        right: 16px;
-        padding: 12px 16px;
-        font-size: 12px;
-    }
+    /* Edit story button responsive styles removed */
 }

@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="valentine-styles.css">
 </head>
 <body>
+    <!-- Edit Story Button - Fixed Position -->
+    <button class="edit-story-btn" id="editStoryBtn">
+        <span data-translate="edit-story">Edit Story</span>
+    </button>
+
     <!-- Header -->
     <header class="story-header">
         <div class="header-content">
@@ -30,42 +35,41 @@
     <main class="story-main">
         <!-- Hero Section -->
         <section class="hero-section" id="hero">
-            <div class="decorative-border top"></div>
-                <button class="edit-story-btn" id="editStoryBtn">
-                    <span data-translate="edit-story">Edit Story</span>
-                </button>
             <div class="hero-content">
                 <div class="hero-image">
                     <img id="heroImage" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop&crop=face" alt="Couple Photo">
-                    <button class="edit-image-btn" onclick="editSection('hero')">📷</button>
                 </div>
                 <div class="hero-text">
-                    <p class="hero-subtitle" data-translate="from-lover">To my dearest love, on our special day</p>
+                    <p class="hero-subtitle" contenteditable="true" data-translate="from-lover">To my dearest love, on our special day</p>
                     <h1 class="hero-title" id="heroTitle" contenteditable="true" data-translate="hero-title">Happy Anniversary, my forever Valentine</h1>
                 </div>
             </div>
-            <div class="decorative-border bottom"></div>
         </section>
 
         <!-- Journey Section -->
         <section class="journey-section" id="journey">
+            <div class="section-controls" id="journeyControls" style="display: none;">
+                <button class="section-remove-btn" onclick="removeSection('journey')" title="Remove Section">🗑️</button>
+            </div>
             <div class="section-content">
                 <div class="journey-text">
                     <p class="journey-intro" id="journeyIntro" contenteditable="true" data-translate="journey-intro">Another year together, another year of growing in love, another year of choosing each other every single day</p>
-                    <h2 class="section-title" data-translate="journey-title">Our Anniversary Journey</h2>
+                    <h2 class="section-title" contenteditable="true" data-translate="journey-title">Our Anniversary Journey</h2>
                 </div>
                 <div class="journey-image">
                     <img id="journeyImage" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop" alt="Couple Journey">
-                    <button class="edit-image-btn" onclick="editSection('journey')">📷</button>
                 </div>
             </div>
         </section>
 
         <!-- Memories Gallery Section -->
         <section class="memories-section" id="memories">
+            <div class="section-controls" id="memoriesControls" style="display: none;">
+                <button class="section-remove-btn" onclick="removeSection('memories')" title="Remove Section">🗑️</button>
+            </div>
             <div class="section-content">
-                <h2 class="section-title" data-translate="memories-title">Anniversary Memories</h2>
-                <p class="memories-subtitle" data-translate="memories-subtitle">Our precious moments together</p>
+                <h2 class="section-title" contenteditable="true" data-translate="memories-title">Anniversary Memories</h2>
+                <p class="memories-subtitle" contenteditable="true" data-translate="memories-subtitle">Our precious moments together</p>
                 
                 <!-- Memory Categories Filter -->
                 <div class="memory-filters">
@@ -92,10 +96,13 @@
 
         <!-- Words Section -->
         <section class="words-section" id="words">
+            <div class="section-controls" id="wordsControls" style="display: none;">
+                <button class="section-remove-btn" onclick="removeSection('words')" title="Remove Section">🗑️</button>
+            </div>
             <div class="section-content">
                 <div class="decorative-border left"></div>
                 <div class="words-content">
-                    <h2 class="section-title" data-translate="words-title">Words from the Heart</h2>
+                    <h2 class="section-title" contenteditable="true" data-translate="words-title">Words from the Heart</h2>
                     <blockquote class="heart-quote">
                         <p id="heartQuote" contenteditable="true" data-translate="heart-quote">"Another year of loving you, another year of being loved by you, another year of our beautiful story together"</p>
                         <cite id="heartQuoteAuthor" contenteditable="true" data-translate="heart-quote-author">- Your Forever Valentine</cite>
@@ -107,6 +114,9 @@
 
         <!-- Milestones Section -->
         <section class="milestones-section" id="milestones">
+            <div class="section-controls" id="milestonesControls" style="display: none;">
+                <button class="section-remove-btn" onclick="removeSection('milestones')" title="Remove Section">🗑️</button>
+            </div>
             <div class="section-content">
                 <h2 class="section-title" id="milestonesTitle" contenteditable="true" data-translate="milestones-title">Our Anniversary Milestones</h2>
                 <div class="milestones-timeline" id="milestonesTimeline">
@@ -121,17 +131,19 @@
 
         <!-- Promise Section -->
         <section class="promise-section" id="promise">
+            <div class="section-controls" id="promiseControls" style="display: none;">
+                <button class="section-remove-btn" onclick="removeSection('promise')" title="Remove Section">🗑️</button>
+            </div>
             <div class="section-content">
                 <div class="promise-image">
                     <img id="promiseImage" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=400&fit=crop" alt="Couple Promise">
-                    <button class="edit-image-btn" onclick="editSection('promise')">📷</button>
                 </div>
                 <div class="promise-content">
-                    <h2 class="section-title" data-translate="promise-title">To Another Year Together</h2>
-                    <h3 class="promise-subtitle" data-translate="promise-subtitle">My Anniversary Promise</h3>
+                    <h2 class="section-title" contenteditable="true" data-translate="promise-title">To Another Year Together</h2>
+                    <h3 class="promise-subtitle" contenteditable="true" data-translate="promise-subtitle">My Anniversary Promise</h3>
                     <p class="promise-text" id="promiseText" contenteditable="true" data-translate="promise-text">As we celebrate another year of love, I promise to continue choosing you every day, to grow with you through all of life's seasons, and to make every day feel like Valentine's Day with you by my side.</p>
                     <p class="promise-signature" id="promiseSignature" contenteditable="true" data-translate="promise-signature">Happy Anniversary, my forever Valentine</p>
-                    <p class="story-date" id="storyDate" contenteditable="true">February 14, 2025</p>
+                    <p class="story-date" id="storyDate" contenteditable="true"></p>
                 </div>
             </div>
         </section>
@@ -160,7 +172,7 @@
                         <label data-translate="section-image">Section Image</label>
                         <div class="image-upload-area" id="imageUploadArea">
                             <div class="upload-placeholder">
-                                <span class="upload-icon">📷</span>
+                                <span class="upload-icon">📁</span>
                                 <p data-translate="upload-instruction">Click to add image</p>
                                 <input type="file" id="imageInput" accept="image/*" style="display: none;">
                             </div>
@@ -200,7 +212,7 @@
                         <label data-translate="memory-media">Memory Media</label>
                         <div class="media-upload-area" id="memoryMediaUploadArea">
                             <div class="upload-placeholder">
-                                <span class="upload-icon">📷</span>
+                                <span class="upload-icon">📁</span>
                                 <p data-translate="upload-instruction">Click to add photos or videos</p>
                                 <input type="file" id="memoryMediaInput" accept="image/*,video/*" multiple style="display: none;">
                             </div>
@@ -283,6 +295,7 @@
             </div>
         </div>
     </div>
+
 
     <script src="valentine-script.js"></script>
 </body>
