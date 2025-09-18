@@ -3,6 +3,8 @@ const translations = {
     en: {
         "edit-story": "Edit Story",
         "save-story": "Save Story",
+        "changes-saved": "Changes saved successfully!",
+        "proceed-payment": "Proceed to Payment",
         "from-lover": "To my dearest love, on our special day",
         "hero-title": "Happy Anniversary, my forever Valentine",
         "journey-intro": "Another year together, another year of growing in love, another year of choosing each other every single day",
@@ -12,14 +14,9 @@ const translations = {
         "all-memories": "All Memories",
         "photos": "Photos",
         "videos": "Videos",
-        "favorites": "Favorites",
         "add-memory": "Add Memory",
         "memory-media": "Memory Media",
-        "memory-category": "Category",
         "memory-date": "Date",
-        "general": "General",
-        "daily": "Daily Life",
-        "special": "Special Moments",
         "words-title": "Words from the Heart",
         "heart-quote": "\"Another year of loving you, another year of being loved by you, another year of our beautiful story together\"",
         "heart-quote-author": "- Your Forever Valentine",
@@ -48,6 +45,8 @@ const translations = {
     tr: {
         "edit-story": "Hikayeyi Düzenle",
         "save-story": "Hikayeyi Kaydet",
+        "changes-saved": "Değişiklikler başarıyla kaydedildi!",
+        "proceed-payment": "Ödemeye Geç",
         "from-lover": "En sevgili aşkıma, özel günümüzde",
         "hero-title": "Mutlu Yıldönümü, sonsuz sevgilim",
         "journey-intro": "Birlikte geçirdiğimiz bir yıl daha, aşkta büyüdüğümüz bir yıl daha, her gün birbirimizi seçtiğimiz bir yıl daha",
@@ -57,14 +56,9 @@ const translations = {
         "all-memories": "Tüm Anılar",
         "photos": "Fotoğraflar",
         "videos": "Videolar",
-        "favorites": "Favoriler",
         "add-memory": "Anı Ekle",
         "memory-media": "Anı Medyası",
-        "memory-category": "Kategori",
         "memory-date": "Tarih",
-        "general": "Genel",
-        "daily": "Günlük Hayat",
-        "special": "Özel Anlar",
         "words-title": "Kalpten Sözler",
         "heart-quote": "\"Seni sevdiğim bir yıl daha, senin tarafından sevildiğim bir yıl daha, birlikte güzel hikayemizin bir yılı daha\"",
         "heart-quote-author": "- Sonsuz Sevgilin",
@@ -95,6 +89,45 @@ const translations = {
 // Current language
 let currentLanguage = 'en';
 
+// Notification functions
+function showNotification() {
+    const notification = document.getElementById('notificationToast');
+    if (notification) {
+        notification.classList.add('show');
+        
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+            hideNotification();
+        }, 3000);
+    }
+}
+
+function hideNotification() {
+    const notification = document.getElementById('notificationToast');
+    if (notification) {
+        notification.classList.remove('show');
+    }
+}
+
+// Proceed to payment function
+function proceedToPayment() {
+    // Get the current product selection from URL parameters or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product') || localStorage.getItem('selectedProduct');
+    
+    // Construct payment URL with product information
+    let paymentUrl = 'payment.html';
+    if (productId) {
+        paymentUrl += `?product=${productId}`;
+    }
+    
+    // Add story data to localStorage for payment page
+    localStorage.setItem('storyData', JSON.stringify(storyData));
+    
+    // Redirect to payment page
+    window.location.href = paymentUrl;
+}
+
 // Story data
 let storyData = {
     hero: {
@@ -116,9 +149,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop&crop=face"
                 }
             ],
-            category: "special",
-            date: "2023-02-14",
-            favorite: true
+            date: "2023-02-14"
         },
         {
             id: 2,
@@ -134,9 +165,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop"
                 }
             ],
-            category: "travel",
-            date: "2023-07-15",
-            favorite: false
+            date: "2023-07-15"
         },
         {
             id: 3,
@@ -152,9 +181,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=400&fit=crop"
                 }
             ],
-            category: "celebration",
-            date: "2024-02-14",
-            favorite: true
+            date: "2024-02-14"
         },
         {
             id: 4,
@@ -166,9 +193,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop"
                 }
             ],
-            category: "daily",
-            date: "2024-01-20",
-            favorite: false
+            date: "2024-01-20"
         },
         {
             id: 5,
@@ -188,9 +213,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop"
                 }
             ],
-            category: "celebration",
-            date: "2023-06-15",
-            favorite: true
+            date: "2023-06-15"
         },
         {
             id: 6,
@@ -206,9 +229,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=400&fit=crop"
                 }
             ],
-            category: "travel",
-            date: "2023-06-20",
-            favorite: true
+            date: "2023-06-20"
         },
         {
             id: 7,
@@ -220,9 +241,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400&h=400&fit=crop"
                 }
             ],
-            category: "celebration",
-            date: "2023-12-25",
-            favorite: false
+            date: "2023-12-25"
         },
         {
             id: 8,
@@ -234,9 +253,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop"
                 }
             ],
-            category: "daily",
-            date: "2024-01-15",
-            favorite: false
+            date: "2024-01-15"
         },
         {
             id: 9,
@@ -252,9 +269,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop"
                 }
             ],
-            category: "celebration",
-            date: "2023-09-10",
-            favorite: true
+            date: "2023-09-10"
         },
         {
             id: 10,
@@ -274,9 +289,7 @@ let storyData = {
                     url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop"
                 }
             ],
-            category: "travel",
-            date: "2023-11-05",
-            favorite: false
+            date: "2023-11-05"
         }
     ],
     words: {
@@ -491,14 +504,11 @@ function createMemoryItem(memory, index) {
     const item = document.createElement('div');
     item.className = 'memory-item';
     item.dataset.index = index;
-    item.dataset.category = memory.category;
-    item.dataset.favorite = memory.favorite;
     
     const firstMedia = memory.media[0];
     const mediaType = firstMedia ? firstMedia.type : 'image';
     const mediaUrl = firstMedia ? firstMedia.url : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zz4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGMEYwRjAiLz4KPHBhdGggZD0iTTE3NSAxMjVIMjI1VjE3NUgxNzVWMjVWiIgZmlsbD0iI0Q5RDlEOSIvPgo8cGF0aCBkPSJNMjA1VjE1NUgxOTVWMTQ1WiIgZmlsbD0iI0Q5RDlEOSIvPgo8L3N2Zz4K';
     const mediaCount = memory.media.length > 1 ? memory.media.length : '';
-    const categoryText = translations[currentLanguage] && translations[currentLanguage][memory.category] ? translations[currentLanguage][memory.category] : memory.category;
     
     item.innerHTML = `
         <div class="memory-media">
@@ -513,7 +523,6 @@ function createMemoryItem(memory, index) {
             <p class="memory-description" contenteditable="false" data-memory-index="${index}" data-field="description">${memory.description}</p>
             <div class="memory-meta">
                 <span class="memory-date" contenteditable="false" data-memory-index="${index}" data-field="date">${formatDate(memory.date)}</span>
-                <span class="memory-category">${categoryText}</span>
             </div>
         </div>
         <div class="memory-actions">
@@ -549,9 +558,9 @@ function createMilestoneItem(milestone, index) {
     item.dataset.index = index;
     
     item.innerHTML = `
-        <div class="milestone-year">${milestone.year}</div>
-        <div class="milestone-title">${milestone.title}</div>
-        <div class="milestone-description">${milestone.description}</div>
+        <div class="milestone-year" contenteditable="false" data-milestone-index="${index}" data-field="year">${milestone.year}</div>
+        <div class="milestone-title" contenteditable="false" data-milestone-index="${index}" data-field="title">${milestone.title}</div>
+        <div class="milestone-description" contenteditable="false" data-milestone-index="${index}" data-field="description">${milestone.description}</div>
         <div class="milestone-actions">
             <button class="action-btn delete" onclick="deleteMilestone(${index})" title="Delete">
                 🗑️
@@ -572,6 +581,15 @@ function setupEventListeners() {
         console.log('Edit story button listener added');
     } else {
         console.error('Edit story button not found!');
+    }
+    
+    // Proceed to payment button
+    const proceedPaymentBtn = document.getElementById('proceedPaymentBtn');
+    if (proceedPaymentBtn) {
+        proceedPaymentBtn.addEventListener('click', proceedToPayment);
+        console.log('Proceed payment button listener added');
+    } else {
+        console.error('Proceed payment button not found!');
     }
     
     // Modal close buttons
@@ -748,8 +766,10 @@ function replaceImage(imageElement) {
 
 // Edit mode
 function toggleEditMode() {
-    const contentEditableElements = document.querySelectorAll('[contenteditable="true"]');
+    // Get all elements that should be editable (by class/ID, not by contenteditable attribute)
+    const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
     const memoryTextElements = document.querySelectorAll('.memory-title, .memory-description, .memory-date');
+    const milestoneTextElements = document.querySelectorAll('.milestone-year, .milestone-title, .milestone-description');
     const editButtons = document.querySelectorAll('.edit-image-btn');
     const addMemoryContainer = document.getElementById('addMemoryContainer');
     const addMilestoneBtn = document.getElementById('addMilestoneBtn');
@@ -770,6 +790,11 @@ function toggleEditMode() {
             element.setAttribute('contenteditable', 'true');
         });
         
+        // Enable contenteditable for milestone text elements
+        milestoneTextElements.forEach(element => {
+            element.setAttribute('contenteditable', 'true');
+        });
+        
         // Show section controls
         sectionControls.forEach(control => {
             control.style.display = 'flex';
@@ -784,7 +809,11 @@ function toggleEditMode() {
         // Save and disable edit mode
         saveContentEditableElements();
         saveMemoryTextElements();
+        saveMilestoneTextElements();
         body.classList.remove('edit-mode');
+        
+        // Show success notification
+        showNotification();
         
         // Disable contenteditable for all editable elements
         contentEditableElements.forEach(element => {
@@ -793,6 +822,11 @@ function toggleEditMode() {
         
         // Disable contenteditable for memory text elements
         memoryTextElements.forEach(element => {
+            element.setAttribute('contenteditable', 'false');
+        });
+        
+        // Disable contenteditable for milestone text elements
+        milestoneTextElements.forEach(element => {
             element.setAttribute('contenteditable', 'false');
         });
         
@@ -894,8 +928,31 @@ function saveMemoryTextElements() {
     saveStoryData();
 }
 
+function saveMilestoneTextElements() {
+    // Save milestone text changes
+    const milestoneTextElements = document.querySelectorAll('.milestone-year, .milestone-title, .milestone-description');
+    
+    milestoneTextElements.forEach(element => {
+        const milestoneIndex = parseInt(element.dataset.milestoneIndex);
+        const field = element.dataset.field;
+        
+        if (milestoneIndex >= 0 && milestoneIndex < storyData.milestones.length && field) {
+            if (field === 'year') {
+                storyData.milestones[milestoneIndex].year = element.textContent;
+            } else if (field === 'title') {
+                storyData.milestones[milestoneIndex].title = element.textContent;
+            } else if (field === 'description') {
+                storyData.milestones[milestoneIndex].description = element.textContent;
+            }
+        }
+    });
+    
+    // Save to localStorage
+    saveStoryData();
+}
+
 function setupContentEditableSave() {
-    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+    document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date').forEach(element => {
         element.addEventListener('blur', function() {
             saveContentEditableElements();
         });
@@ -905,6 +962,13 @@ function setupContentEditableSave() {
     document.querySelectorAll('.memory-title, .memory-description, .memory-date').forEach(element => {
         element.addEventListener('blur', function() {
             saveMemoryTextElements();
+        });
+    });
+    
+    // Also handle milestone text elements
+    document.querySelectorAll('.milestone-year, .milestone-title, .milestone-description').forEach(element => {
+        element.addEventListener('blur', function() {
+            saveMilestoneTextElements();
         });
     });
 }
@@ -1009,7 +1073,6 @@ function handleAddMemory(e) {
     
     const title = document.getElementById('memoryTitle').value;
     const description = document.getElementById('memoryDescription').value;
-    const category = document.getElementById('memoryCategory').value;
     const date = document.getElementById('memoryDate').value;
     const mediaFiles = document.getElementById('memoryMediaInput').files;
     
@@ -1017,10 +1080,8 @@ function handleAddMemory(e) {
         id: Date.now(),
         title: title,
         description: description,
-        category: category,
         date: date,
-        media: [],
-        favorite: false
+        media: []
     };
     
     // Process media files
@@ -1037,6 +1098,10 @@ function handleAddMemory(e) {
     storyData.memories.push(memory);
     saveStoryData();
     renderMemories();
+    
+    // Show success notification
+    showNotification();
+    
     closeAddMemoryModal();
 }
 
@@ -1101,6 +1166,10 @@ function handleAddMilestone(e) {
     storyData.milestones.push(milestone);
     saveStoryData();
     renderMilestones();
+    
+    // Show success notification
+    showNotification();
+    
     closeAddMilestoneModal();
 }
 
@@ -1196,9 +1265,6 @@ function filterMemories(filter) {
     const memoryItems = document.querySelectorAll('.memory-item');
     
     memoryItems.forEach(item => {
-        const category = item.dataset.category;
-        const favorite = item.dataset.favorite === 'true';
-        
         let show = true;
         
         switch(filter) {
@@ -1207,9 +1273,6 @@ function filterMemories(filter) {
                 break;
             case 'videos':
                 show = !!item.querySelector('video');
-                break;
-            case 'favorites':
-                show = favorite;
                 break;
             case 'all':
             default:
@@ -1241,7 +1304,6 @@ function openMemoryLightbox(memory, index) {
     lightboxTitle.textContent = memory.title;
     lightboxDescription.textContent = memory.description;
     lightboxDate.textContent = formatDate(memory.date);
-    lightboxCategory.textContent = translations[currentLanguage][memory.category] || memory.category;
     
     // Update media
     lightboxMedia.innerHTML = '';
@@ -1507,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addMilestoneModal = document.getElementById('addMilestoneModal');
 
     // Disable contenteditable by default
-    const contentEditableElements = document.querySelectorAll('[contenteditable="true"]');
+    const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
     contentEditableElements.forEach(element => {
         element.setAttribute('contenteditable', 'false');
     });

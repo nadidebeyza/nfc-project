@@ -15,6 +15,18 @@
         <span data-translate="edit-story">Edit Story</span>
     </button>
 
+    <!-- Success Notification Toast -->
+    <div class="notification-toast" id="notificationToast">
+        <div class="notification-content">
+            <span class="notification-message" data-translate="changes-saved">Changes saved successfully!</span>
+        </div>
+    </div>
+
+    <!-- Proceed to Payment Button -->
+    <button class="proceed-payment-btn" id="proceedPaymentBtn">
+        <span data-translate="proceed-payment">Proceed to Payment</span>
+    </button>
+
     <!-- Header -->
     <header class="story-header">
         <div class="header-content">
@@ -76,7 +88,6 @@
                     <button class="filter-btn active" data-filter="all" data-translate="all-memories">All Memories</button>
                     <button class="filter-btn" data-filter="photos" data-translate="photos">Photos</button>
                     <button class="filter-btn" data-filter="videos" data-translate="videos">Videos</button>
-                    <button class="filter-btn" data-filter="favorites" data-translate="favorites">Favorites</button>
                 </div>
                 
                 <!-- Memories Gallery -->
@@ -220,16 +231,6 @@
                         <div class="media-preview" id="memoryMediaPreview"></div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="memoryCategory" data-translate="memory-category">Category</label>
-                        <select id="memoryCategory">
-                            <option value="general" data-translate="general">General</option>
-                            <option value="travel" data-translate="travel">Travel</option>
-                            <option value="celebration" data-translate="celebration">Celebration</option>
-                            <option value="daily" data-translate="daily">Daily Life</option>
-                            <option value="special" data-translate="special">Special Moments</option>
-                        </select>
-                    </div>
                     
                     <div class="form-group">
                         <label for="memoryDate" data-translate="memory-date">Date</label>

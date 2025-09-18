@@ -184,23 +184,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Editable Elements */
-[contenteditable="true"] {
-    position: relative;
-    transition: all 0.2s ease;
-}
-
-[contenteditable="true"]:hover {
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 4px;
-}
-
-[contenteditable="true"]:focus {
-    outline: none;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-}
+/* Editable Elements - Removed conflicting rules */
 
 /* Focus states for better accessibility */
 button:focus,
@@ -448,7 +432,7 @@ button:focus,
 /* Edit Story Button */
 .edit-story-btn {
     position: fixed !important;
-    top: 70px !important;
+    top: 100px !important;
     right: 25px !important;
     bottom: auto !important;
     left: auto !important;
@@ -479,6 +463,118 @@ button:focus,
     background: #333333;
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Proceed to Payment Button */
+.proceed-payment-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-family: "Source Serif Pro", serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.proceed-payment-btn:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(220, 38, 38, 0.4);
+}
+
+.proceed-payment-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+}
+
+.proceed-payment-btn::after {
+    content: "→";
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.proceed-payment-btn:hover::after {
+    transform: translateX(3px);
+}
+
+/* Success Notification Toast */
+.notification-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, rgba(0, 6, 2, 0.95), rgba(34, 39, 36, 0.9));
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 13, 5, 0.3);
+    z-index: 10000;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.notification-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Source Serif Pro", serif;
+    font-weight: 500;
+}
+
+.notification-message {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive notification */
+@media (max-width: 768px) {
+    .notification-toast {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+        padding: 14px 18px;
+        transform: translateY(-100%);
+    }
+    
+    .notification-toast.show {
+        transform: translateY(0);
+    }
+    
+    
+    .notification-message {
+        font-size: 13px;
+    }
+    
+    .proceed-payment-btn {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        padding: 14px 20px;
+        font-size: 15px;
+        text-align: center;
+        justify-content: center;
+    }
 }
 
 
@@ -539,7 +635,7 @@ section.visible {
 /* Hero Section */
 .hero-section {
     background: #ffffff;
-    padding: 80px 20px;
+    padding: 120px 20px;
     text-align: center;
     position: relative;
 }
@@ -549,10 +645,10 @@ section.visible {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 70px;
+    gap: 100px;
     max-width: 900px;
     margin: 0 auto;
-    padding: 60px 0;
+    padding: 140px 0;
     position: relative;
     z-index: 2;
 }
@@ -1338,24 +1434,7 @@ section.visible {
     margin-top: 24px;
 }
 
-/* Content Editable Styles */
-[contenteditable="true"] {
-    outline: none;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    padding: 8px;
-    transition: all 0.2s ease;
-}
-
-[contenteditable="true"]:hover {
-    border-color: rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.02);
-}
-
-[contenteditable="true"]:focus {
-    border-color: #000000;
-    background: rgba(0, 0, 0, 0.05);
-}
+/* Content Editable Styles - Removed conflicting rules */
 
 /* Lightbox Styles */
 .lightbox-content {
@@ -1591,6 +1670,38 @@ section.visible {
     outline: none;
 }
 
+/* Edit mode milestone text styling */
+.edit-mode .milestone-year,
+.edit-mode .milestone-title,
+.edit-mode .milestone-description {
+    border: 2px dashed rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.05);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 4px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 20px;
+    cursor: text;
+}
+
+.edit-mode .milestone-year:hover,
+.edit-mode .milestone-title:hover,
+.edit-mode .milestone-description:hover {
+    border-color: rgba(34, 197, 94, 0.6);
+    background: rgba(34, 197, 94, 0.08);
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+}
+
+.edit-mode .milestone-year:focus,
+.edit-mode .milestone-title:focus,
+.edit-mode .milestone-description:focus {
+    border-color: rgba(34, 197, 94, 0.8);
+    background: rgba(34, 197, 94, 0.1);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+    outline: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
@@ -1638,8 +1749,8 @@ section.visible {
 
 @media (max-width: 768px) {
     .hero-content {
-        gap: 50px;
-        padding: 40px 0;
+        gap: 70px;
+        padding: 100px 0;
     }
     
     .hero-image {
@@ -1669,12 +1780,12 @@ section.visible {
     }
     
     .hero-section {
-        padding: 60px 16px;
+        padding: 80px 16px;
     }
     
     .hero-content {
-        gap: 40px;
-        padding: 30px 0;
+        gap: 60px;
+        padding: 80px 0;
     }
     
     .hero-image {
