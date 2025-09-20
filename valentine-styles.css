@@ -469,7 +469,7 @@ button:focus,
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    background: linear-gradient(135deg, #000000, #1a1a1a);
     color: white;
     border: none;
     border-radius: 12px;
@@ -478,7 +478,7 @@ button:focus,
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 9998;
     display: flex;
@@ -490,14 +490,14 @@ button:focus,
 }
 
 .proceed-payment-btn:hover {
-    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    background: linear-gradient(135deg, #1a1a1a, #000000);
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .proceed-payment-btn:active {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .proceed-payment-btn::after {
@@ -741,7 +741,7 @@ section.visible {
 /* Journey Section */
 .journey-section {
     background: #ffffff;
-    padding: 80px 20px;
+    padding: 40px 20px;
 }
 
 .journey-content {
@@ -781,7 +781,7 @@ section.visible {
 /* Memories Section */
 .memories-section {
     background: #f8f9fa;
-    padding: 80px 20px;
+    padding: 80px 20px 120px 20px;
 }
 
 .memories-subtitle {
@@ -943,6 +943,7 @@ section.visible {
 
 .memory-date {
     font-weight: 500;
+    margin-bottom: 8px;
 }
 
 .memory-category {
@@ -1219,6 +1220,7 @@ section.visible {
     font-size: 14px;
     color: #999999;
     font-weight: 500;
+    margin-bottom: 20px;
 }
 
 /* Modal Styles */
@@ -1778,13 +1780,17 @@ section.visible {
         padding: 50px 16px;
     }
     
+    .memories-section {
+        padding: 60px 16px 100px 16px;
+    }
+    
     .hero-section {
-        padding: 80px 16px;
+        padding: 50px 16px;
     }
     
     .hero-content {
         gap: 60px;
-        padding: 80px 0;
+        padding: 50px 0;
     }
     
     .hero-image {
