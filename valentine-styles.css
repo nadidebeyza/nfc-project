@@ -16,7 +16,7 @@
 
 /* Enhanced mobile scroll sensitivity */
 * {
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: auto;
 }
 
 html {
@@ -28,7 +28,7 @@ html {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     scroll-snap-type: none;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: auto;
 }
 
 /* Edit button styles removed - using inline styles only */
@@ -50,7 +50,7 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: auto;
     scroll-behavior: auto;
     animation: fadeIn 0.8s ease-out forwards;
 }
