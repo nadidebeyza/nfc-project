@@ -1515,13 +1515,8 @@ function preventZoom() {
         viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
     }
     
-    // Prevent touch events that could cause zoom
-    document.addEventListener('touchstart', preventZoomTouch, { passive: false });
-    document.addEventListener('touchmove', preventZoomTouch, { passive: false });
-    document.addEventListener('touchend', preventZoomTouch, { passive: false });
-    
-    // Prevent double-tap zoom
-    document.addEventListener('touchend', preventDoubleTap, { passive: false });
+    // Only prevent multi-touch zoom, allow single touch scrolling
+    document.addEventListener('touchstart', preventZoomTouch, { passive: true });
     
     console.log('Zoom prevention enabled');
 }
@@ -1537,39 +1532,26 @@ function restoreZoom() {
     
     // Remove touch event listeners
     document.removeEventListener('touchstart', preventZoomTouch);
-    document.removeEventListener('touchmove', preventZoomTouch);
-    document.removeEventListener('touchend', preventZoomTouch);
-    document.removeEventListener('touchend', preventDoubleTap);
     
     console.log('Zoom functionality restored');
 }
 
-// Prevent zoom touch events
+// Prevent zoom touch events - only block multi-touch
 function preventZoomTouch(e) {
+    // Only prevent if more than 1 finger (pinch zoom)
     if (e.touches.length > 1) {
         e.preventDefault();
     }
-}
-
-// Prevent double-tap zoom
-let lastTouchEnd = 0;
-function preventDoubleTap(e) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        e.preventDefault();
-    }
-    lastTouchEnd = now;
+    // Allow single touch scrolling to work normally
 }
 
 // Star functions removed - no longer needed
 
 // Enhance scroll sensitivity for mobile
 function enhanceScrollSensitivity() {
-    // Simple approach - just ensure momentum scrolling is enabled
-    document.documentElement.style.webkitOverflowScrolling = 'touch';
-    document.body.style.webkitOverflowScrolling = 'touch';
-    
-    console.log('Enhanced scroll sensitivity enabled');
+    // Remove any potential touch interference
+    // Let the browser handle scrolling naturally
+    console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
 // Throttle function for smooth performance
