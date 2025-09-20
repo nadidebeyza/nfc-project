@@ -1494,6 +1494,9 @@ function updateLightboxContent(memory, index) {
     // Update media content
     updateLightboxMedia();
     
+    // Update navigation based on number of images
+    setupPopupClickNavigation();
+    
     console.log('Lightbox content updated for memory:', memory.title);
 }
 
@@ -1546,13 +1549,26 @@ function stitchPopupToInitialPosition() {
 // Setup click navigation for popup left/right areas
 function setupPopupClickNavigation() {
     const lightbox = document.getElementById('memoryLightbox');
-    if (!lightbox) return;
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const memory = currentLightboxMemories[currentLightboxIndex];
+    
+    if (!lightbox || !memory) return;
     
     // Remove any existing click listeners to avoid duplicates
     lightbox.removeEventListener('click', handlePopupClick);
     
-    // Add click listener to the entire popup
-    lightbox.addEventListener('click', handlePopupClick);
+    // Only add click navigation if memory has multiple images
+    if (memory.media.length > 1) {
+        lightbox.addEventListener('click', handlePopupClick);
+        // Show navigation arrows
+        if (lightboxPrev) lightboxPrev.style.display = 'flex';
+        if (lightboxNext) lightboxNext.style.display = 'flex';
+    } else {
+        // Hide navigation arrows for single image
+        if (lightboxPrev) lightboxPrev.style.display = 'none';
+        if (lightboxNext) lightboxNext.style.display = 'none';
+    }
 }
 
 // Handle clicks on popup for navigation
