@@ -1563,6 +1563,15 @@ function preventDoubleTap(e) {
 
 // Star functions removed - no longer needed
 
+// Enhance scroll sensitivity for mobile
+function enhanceScrollSensitivity() {
+    // Simple approach - just ensure momentum scrolling is enabled
+    document.documentElement.style.webkitOverflowScrolling = 'touch';
+    document.body.style.webkitOverflowScrolling = 'touch';
+    
+    console.log('Enhanced scroll sensitivity enabled');
+}
+
 // Throttle function for smooth performance
 function throttle(func, limit) {
     let inThrottle;
@@ -1860,8 +1869,8 @@ document.addEventListener('DOMContentLoaded', function() {
     addMemoryModal = document.getElementById('addMemoryModal');
     addMilestoneModal = document.getElementById('addMilestoneModal');
     
-    // Improve scroll sensitivity
-    improveScrollSensitivity();
+    // Enhance scroll sensitivity for mobile
+    enhanceScrollSensitivity();
 
     // Disable contenteditable by default
     const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');

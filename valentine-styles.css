@@ -14,6 +14,11 @@
     max-width: 100%;
 }
 
+/* Enhanced mobile scroll sensitivity */
+* {
+    -webkit-overflow-scrolling: touch;
+}
+
 html {
     scroll-behavior: auto;
     margin: 0 !important;
