@@ -1564,21 +1564,42 @@ function initializeSwipeUpDetection() {
     const mainContentWrapper = document.getElementById('mainContentWrapper');
     const swipeUpIndicator = document.getElementById('swipeUpIndicator');
     
-    if (!heroSection || !mainContentWrapper || !swipeUpIndicator) return;
+    if (!heroSection || !mainContentWrapper || !swipeUpIndicator) {
+        console.log('Missing elements for swipe detection');
+        return;
+    }
     
     // Touch events for swipe detection
     heroSection.addEventListener('touchstart', handleTouchStart, { passive: true });
+    heroSection.addEventListener('touchmove', handleTouchMove, { passive: true });
     heroSection.addEventListener('touchend', handleTouchEnd, { passive: true });
     
     // Also listen for scroll events as backup
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    console.log('Swipe up detection initialized');
+    // Add click/tap detection as additional fallback
+    heroSection.addEventListener('click', handleHeroClick, { passive: true });
+    
+    console.log('Swipe up detection initialized with multiple methods');
 }
 
 function handleTouchStart(e) {
     if (swipeUpDetected) return;
     touchStartY = e.touches[0].clientY;
+    console.log('Touch start Y:', touchStartY);
+}
+
+function handleTouchMove(e) {
+    if (swipeUpDetected) return;
+    
+    const currentY = e.touches[0].clientY;
+    const swipeDistance = touchStartY - currentY;
+    
+    // If user has swiped up more than 20px, reveal content
+    if (swipeDistance > 20) {
+        console.log('Touch move swipe detected! Distance:', swipeDistance);
+        revealMainContent();
+    }
 }
 
 function handleTouchEnd(e) {
@@ -1586,10 +1607,17 @@ function handleTouchEnd(e) {
     touchEndY = e.changedTouches[0].clientY;
     
     const swipeDistance = touchStartY - touchEndY;
-    const minSwipeDistance = 50; // Minimum distance for swipe up
+    const minSwipeDistance = 30; // Reduced minimum distance for easier detection
+    
+    console.log('Touch end Y:', touchEndY);
+    console.log('Swipe distance:', swipeDistance);
+    console.log('Min distance needed:', minSwipeDistance);
     
     if (swipeDistance > minSwipeDistance) {
+        console.log('Swipe up detected! Revealing content...');
         revealMainContent();
+    } else {
+        console.log('Swipe distance too small');
     }
 }
 
@@ -1597,9 +1625,18 @@ function handleScroll(e) {
     if (swipeUpDetected) return;
     
     // If user scrolls down even a little, reveal content
-    if (window.scrollY > 10) {
+    if (window.scrollY > 5) {
+        console.log('Scroll detected! Revealing content...');
         revealMainContent();
     }
+}
+
+function handleHeroClick(e) {
+    if (swipeUpDetected) return;
+    
+    // If user clicks/taps on hero section, reveal content
+    console.log('Hero click detected! Revealing content...');
+    revealMainContent();
 }
 
 function revealMainContent() {
