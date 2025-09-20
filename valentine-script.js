@@ -1554,6 +1554,76 @@ function enhanceScrollSensitivity() {
     console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
+// Swipe up detection and content reveal
+let swipeUpDetected = false;
+let touchStartY = 0;
+let touchEndY = 0;
+
+function initializeSwipeUpDetection() {
+    const heroSection = document.getElementById('hero');
+    const mainContentWrapper = document.getElementById('mainContentWrapper');
+    const swipeUpIndicator = document.getElementById('swipeUpIndicator');
+    
+    if (!heroSection || !mainContentWrapper || !swipeUpIndicator) return;
+    
+    // Touch events for swipe detection
+    heroSection.addEventListener('touchstart', handleTouchStart, { passive: true });
+    heroSection.addEventListener('touchend', handleTouchEnd, { passive: true });
+    
+    // Also listen for scroll events as backup
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    console.log('Swipe up detection initialized');
+}
+
+function handleTouchStart(e) {
+    if (swipeUpDetected) return;
+    touchStartY = e.touches[0].clientY;
+}
+
+function handleTouchEnd(e) {
+    if (swipeUpDetected) return;
+    touchEndY = e.changedTouches[0].clientY;
+    
+    const swipeDistance = touchStartY - touchEndY;
+    const minSwipeDistance = 50; // Minimum distance for swipe up
+    
+    if (swipeDistance > minSwipeDistance) {
+        revealMainContent();
+    }
+}
+
+function handleScroll(e) {
+    if (swipeUpDetected) return;
+    
+    // If user scrolls down even a little, reveal content
+    if (window.scrollY > 10) {
+        revealMainContent();
+    }
+}
+
+function revealMainContent() {
+    if (swipeUpDetected) return;
+    
+    swipeUpDetected = true;
+    const mainContentWrapper = document.getElementById('mainContentWrapper');
+    const swipeUpIndicator = document.getElementById('swipeUpIndicator');
+    
+    if (mainContentWrapper) {
+        mainContentWrapper.classList.add('revealed');
+    }
+    
+    if (swipeUpIndicator) {
+        swipeUpIndicator.style.opacity = '0';
+        swipeUpIndicator.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            swipeUpIndicator.style.display = 'none';
+        }, 300);
+    }
+    
+    console.log('Main content revealed via swipe up');
+}
+
 // Throttle function for smooth performance
 function throttle(func, limit) {
     let inThrottle;
@@ -1853,6 +1923,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Enhance scroll sensitivity for mobile
     enhanceScrollSensitivity();
+    
+    // Initialize swipe up detection
+    initializeSwipeUpDetection();
 
     // Disable contenteditable by default
     const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
