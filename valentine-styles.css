@@ -16,19 +16,19 @@
 
 /* Enhanced mobile scroll sensitivity */
 * {
-    -webkit-overflow-scrolling: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 html {
-    scroll-behavior: auto;
+    scroll-behavior: touch;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    scroll-snap-type: none;
-    -webkit-overflow-scrolling: auto;
+    scroll-snap-type: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Edit button styles removed - using inline styles only */
@@ -50,8 +50,8 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
-    -webkit-overflow-scrolling: auto;
-    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: touch;
     animation: fadeIn 0.8s ease-out forwards;
 }
 
