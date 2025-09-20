@@ -128,6 +128,35 @@ function proceedToPayment() {
     window.location.href = paymentUrl;
 }
 
+// Improve scroll sensitivity
+function improveScrollSensitivity() {
+    // Add CSS for better scroll sensitivity
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            scroll-behavior: auto !important;
+        }
+        
+        html, body {
+            scroll-behavior: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        
+        /* Improve scroll sensitivity on mobile */
+        @media (max-width: 768px) {
+            html, body {
+                -webkit-overflow-scrolling: touch !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Disable smooth scrolling for better responsiveness
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+}
+
 // Story data
 let storyData = {
     hero: {
@@ -1300,6 +1329,20 @@ function openMemoryLightbox(memory, index) {
     const lightboxDate = document.getElementById('lightboxDate');
     const lightboxCategory = document.getElementById('lightboxCategory');
     
+    // Ensure lightbox is positioned based on current viewport
+    if (lightbox) {
+        lightbox.style.position = 'fixed';
+        lightbox.style.top = '0';
+        lightbox.style.left = '0';
+        lightbox.style.right = '0';
+        lightbox.style.bottom = '0';
+        lightbox.style.height = '100vh';
+        lightbox.style.width = '100vw';
+        lightbox.style.display = 'flex';
+        lightbox.style.alignItems = 'center';
+        lightbox.style.justifyContent = 'center';
+    }
+    
     // Update lightbox content
     lightboxTitle.textContent = memory.title;
     lightboxDescription.textContent = memory.description;
@@ -1567,6 +1610,9 @@ document.addEventListener('DOMContentLoaded', function() {
     editModal = document.getElementById('editModal');
     addMemoryModal = document.getElementById('addMemoryModal');
     addMilestoneModal = document.getElementById('addMilestoneModal');
+    
+    // Improve scroll sensitivity
+    improveScrollSensitivity();
 
     // Disable contenteditable by default
     const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');

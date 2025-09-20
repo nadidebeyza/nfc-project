@@ -15,13 +15,15 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+    scroll-snap-type: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Edit button styles removed - using inline styles only */
@@ -43,6 +45,8 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
     animation: fadeIn 0.8s ease-out forwards;
 }
 
@@ -1239,6 +1243,10 @@ section.visible {
     visibility: hidden;
     transition: all 0.3s ease;
     padding: 20px;
+    /* Ensure centering based on viewport */
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
 }
 
 .modal-overlay.visible {
