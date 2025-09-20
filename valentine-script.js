@@ -1364,6 +1364,9 @@ function openMemoryLightbox(memory, index) {
         
         // Add click handlers for left/right navigation
         setupPopupClickNavigation();
+        
+        // Prevent zoom when popup is open
+        preventZoom();
     }
     
     // Update media after lightbox is visible - show only current image
@@ -1378,6 +1381,9 @@ function closeMemoryLightbox() {
         
         // Remove click navigation listeners
         lightbox.removeEventListener('click', handlePopupClick);
+        
+        // Restore zoom functionality when popup closes
+        restoreZoom();
         
         // Reset positioning and visibility
         lightbox.style.position = '';
@@ -1500,6 +1506,60 @@ function updateLightboxContent(memory, index) {
     console.log('Lightbox content updated for memory:', memory.title);
 }
 
+// Prevent zoom when popup is open
+function preventZoom() {
+    // Store original viewport meta tag
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+        viewport.dataset.originalContent = viewport.content;
+        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    }
+    
+    // Prevent touch events that could cause zoom
+    document.addEventListener('touchstart', preventZoomTouch, { passive: false });
+    document.addEventListener('touchmove', preventZoomTouch, { passive: false });
+    document.addEventListener('touchend', preventZoomTouch, { passive: false });
+    
+    // Prevent double-tap zoom
+    document.addEventListener('touchend', preventDoubleTap, { passive: false });
+    
+    console.log('Zoom prevention enabled');
+}
+
+// Restore zoom functionality when popup closes
+function restoreZoom() {
+    // Restore original viewport meta tag
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport && viewport.dataset.originalContent) {
+        viewport.content = viewport.dataset.originalContent;
+        delete viewport.dataset.originalContent;
+    }
+    
+    // Remove touch event listeners
+    document.removeEventListener('touchstart', preventZoomTouch);
+    document.removeEventListener('touchmove', preventZoomTouch);
+    document.removeEventListener('touchend', preventZoomTouch);
+    document.removeEventListener('touchend', preventDoubleTap);
+    
+    console.log('Zoom functionality restored');
+}
+
+// Prevent zoom touch events
+function preventZoomTouch(e) {
+    if (e.touches.length > 1) {
+        e.preventDefault();
+    }
+}
+
+// Prevent double-tap zoom
+let lastTouchEnd = 0;
+function preventDoubleTap(e) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+    }
+    lastTouchEnd = now;
+}
 
 // Star functions removed - no longer needed
 
