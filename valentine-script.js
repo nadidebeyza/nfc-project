@@ -1316,11 +1316,13 @@ function filterMemories(filter) {
 // Lightbox functionality
 let currentLightboxIndex = 0;
 let currentLightboxMemories = [];
+let currentImageIndex = 0;
 
 
 function openMemoryLightbox(memory, index) {
     currentLightboxIndex = index;
     currentLightboxMemories = storyData.memories;
+    currentImageIndex = 0; // Reset image index when opening new memory
     
     const lightbox = document.getElementById('memoryLightbox');
     const lightboxMedia = document.getElementById('lightboxMedia');
@@ -1359,18 +1361,13 @@ function openMemoryLightbox(memory, index) {
         
         // Stitch popup to initial center position
         stitchPopupToInitialPosition();
+        
+        // Add click handlers for left/right navigation
+        setupPopupClickNavigation();
     }
     
-    // Update media after lightbox is visible
-    lightboxMedia.innerHTML = '';
-    memory.media.forEach(media => {
-        const mediaElement = document.createElement(media.type === 'video' ? 'video' : 'img');
-        mediaElement.src = media.url;
-        if (media.type === 'video') {
-            mediaElement.controls = true;
-        }
-        lightboxMedia.appendChild(mediaElement);
-    });
+    // Update media after lightbox is visible - show only current image
+    updateLightboxMedia();
 }
 
 function closeMemoryLightbox() {
@@ -1379,12 +1376,21 @@ function closeMemoryLightbox() {
     if (lightbox) {
         // Close memory popup
         
-        // Reset positioning
+        // Remove click navigation listeners
+        lightbox.removeEventListener('click', handlePopupClick);
+        
+        // Reset positioning and visibility
         lightbox.style.position = '';
         lightbox.style.top = '';
         lightbox.style.left = '';
         lightbox.style.transform = '';
         lightbox.style.zIndex = '';
+        lightbox.style.visibility = '';
+        lightbox.style.opacity = '';
+        lightbox.style.display = '';
+        lightbox.style.alignItems = '';
+        lightbox.style.justifyContent = '';
+        lightbox.style.transition = '';
         
         // Immediately reset all styles to prevent transition delays
         document.body.style.overflow = '';
@@ -1426,6 +1432,21 @@ function closeMemoryLightbox() {
 }
 
 function navigateLightbox(direction) {
+    const memory = currentLightboxMemories[currentLightboxIndex];
+    const totalImages = memory.media.length;
+    
+    // If memory has multiple images, navigate between images first
+    if (totalImages > 1) {
+        if (direction === 'next') {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+        } else {
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+        }
+        updateLightboxMedia();
+        return;
+    }
+    
+    // If only one image or no more images to navigate, go to next/previous memory
     const total = currentLightboxMemories.length;
     if (direction === 'next') {
         currentLightboxIndex = (currentLightboxIndex + 1) % total;
@@ -1433,8 +1454,47 @@ function navigateLightbox(direction) {
         currentLightboxIndex = (currentLightboxIndex - 1 + total) % total;
     }
     
+    const newMemory = currentLightboxMemories[currentLightboxIndex];
+    currentImageIndex = 0; // Reset image index for new memory
+    updateLightboxContent(newMemory, currentLightboxIndex);
+}
+
+// Update lightbox media to show current image
+function updateLightboxMedia() {
+    const lightboxMedia = document.getElementById('lightboxMedia');
     const memory = currentLightboxMemories[currentLightboxIndex];
-    openMemoryLightbox(memory, currentLightboxIndex);
+    
+    if (!lightboxMedia || !memory || !memory.media.length) return;
+    
+    const currentMedia = memory.media[currentImageIndex];
+    lightboxMedia.innerHTML = '';
+    
+    const mediaElement = document.createElement(currentMedia.type === 'video' ? 'video' : 'img');
+    mediaElement.src = currentMedia.url;
+    if (currentMedia.type === 'video') {
+        mediaElement.controls = true;
+        mediaElement.muted = true;
+    }
+    
+    lightboxMedia.appendChild(mediaElement);
+    
+    console.log(`Showing image ${currentImageIndex + 1} of ${memory.media.length} for memory: ${memory.title}`);
+}
+
+// Update lightbox content without repositioning
+function updateLightboxContent(memory, index) {
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxDescription = document.getElementById('lightboxDescription');
+    const lightboxDate = document.getElementById('lightboxDate');
+    
+    if (lightboxTitle) lightboxTitle.textContent = memory.title;
+    if (lightboxDescription) lightboxDescription.textContent = memory.description;
+    if (lightboxDate) lightboxDate.textContent = formatDate(memory.date);
+    
+    // Update media content
+    updateLightboxMedia();
+    
+    console.log('Lightbox content updated for memory:', memory.title);
 }
 
 
@@ -1481,6 +1541,50 @@ function stitchPopupToInitialPosition() {
         
         console.log('Popup stitched to position:', centerX, centerY);
     }
+}
+
+// Setup click navigation for popup left/right areas
+function setupPopupClickNavigation() {
+    const lightbox = document.getElementById('memoryLightbox');
+    if (!lightbox) return;
+    
+    // Remove any existing click listeners to avoid duplicates
+    lightbox.removeEventListener('click', handlePopupClick);
+    
+    // Add click listener to the entire popup
+    lightbox.addEventListener('click', handlePopupClick);
+}
+
+// Handle clicks on popup for navigation
+function handlePopupClick(e) {
+    // Don't navigate if clicking on navigation buttons or close button
+    if (e.target.closest('.lightbox-nav') || e.target.closest('.lightbox-close')) {
+        return;
+    }
+    
+    const lightbox = document.getElementById('memoryLightbox');
+    if (!lightbox) return;
+    
+    // Get popup dimensions and position
+    const rect = lightbox.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const popupWidth = rect.width;
+    
+    // Calculate left and right zones (each 40% of popup width)
+    const leftZone = popupWidth * 0.4;
+    const rightZone = popupWidth * 0.6;
+    
+    // Navigate based on click position
+    if (clickX < leftZone) {
+        // Click on left side - go to previous memory
+        console.log('Left side clicked - navigating to previous memory');
+        navigateLightbox('prev');
+    } else if (clickX > rightZone) {
+        // Click on right side - go to next memory
+        console.log('Right side clicked - navigating to next memory');
+        navigateLightbox('next');
+    }
+    // Middle zone (40%-60%) does nothing - allows clicking on content without navigation
 }
 
 // No star movement needed - star has been removed
