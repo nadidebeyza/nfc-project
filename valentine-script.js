@@ -1329,26 +1329,41 @@ function openMemoryLightbox(memory, index) {
     const lightboxDate = document.getElementById('lightboxDate');
     const lightboxCategory = document.getElementById('lightboxCategory');
     
-    // Ensure lightbox is positioned based on current viewport
+    // Show both star and lightbox immediately at the beginning
+    showBigStar();
+    
+    // Set up lightbox to follow the star and make it visible immediately
     if (lightbox) {
-        lightbox.style.position = 'fixed';
-        lightbox.style.top = '0';
-        lightbox.style.left = '0';
-        lightbox.style.right = '0';
-        lightbox.style.bottom = '0';
-        lightbox.style.height = '100vh';
-        lightbox.style.width = '100vw';
+        // Add class to make popup follow the star
+        lightbox.classList.add('following-star');
+        
+        // Initially position at center (will be updated by moveStarToScrollCenter)
+        lightbox.style.position = 'absolute';
+        lightbox.style.top = '50%';
+        lightbox.style.left = '50%';
+        lightbox.style.transform = 'translate(-50%, -50%)';
         lightbox.style.display = 'flex';
         lightbox.style.alignItems = 'center';
         lightbox.style.justifyContent = 'center';
+        lightbox.style.zIndex = '10000';
+        
+        // Make lightbox visible immediately with no transitions
+        lightbox.style.opacity = '1';
+        lightbox.style.visibility = 'visible';
+        lightbox.style.transition = 'none';
+        lightbox.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+        
+        // Add basic content immediately so lightbox isn't empty
+        lightboxTitle.textContent = memory.title;
+        lightboxDescription.textContent = memory.description;
+        lightboxDate.textContent = formatDate(memory.date);
+        
+        // Immediately position star at popup center
+        moveStarToScrollCenter();
     }
     
-    // Update lightbox content
-    lightboxTitle.textContent = memory.title;
-    lightboxDescription.textContent = memory.description;
-    lightboxDate.textContent = formatDate(memory.date);
-    
-    // Update media
+    // Update media after lightbox is visible
     lightboxMedia.innerHTML = '';
     memory.media.forEach(media => {
         const mediaElement = document.createElement(media.type === 'video' ? 'video' : 'img');
@@ -1358,15 +1373,23 @@ function openMemoryLightbox(memory, index) {
         }
         lightboxMedia.appendChild(mediaElement);
     });
-    
-    lightbox.classList.add('visible');
-    document.body.style.overflow = 'hidden';
 }
 
 function closeMemoryLightbox() {
     console.log('Closing memory lightbox...');
     const lightbox = document.getElementById('memoryLightbox');
     if (lightbox) {
+        // Hide the star when memory popup closes
+        hideBigStar();
+        
+        // Remove following-star class and reset positioning
+        lightbox.classList.remove('following-star');
+        lightbox.style.position = '';
+        lightbox.style.top = '';
+        lightbox.style.left = '';
+        lightbox.style.transform = '';
+        lightbox.style.zIndex = '';
+        
         // Immediately reset all styles to prevent transition delays
         document.body.style.overflow = '';
         document.body.style.filter = '';
@@ -1418,6 +1441,140 @@ function navigateLightbox(direction) {
     openMemoryLightbox(memory, currentLightboxIndex);
 }
 
+
+// Big Star Functions
+function showBigStar() {
+    const star = document.getElementById('bigStar');
+    if (star) {
+        star.style.display = 'flex';
+        star.style.alignItems = 'center';
+        star.style.justifyContent = 'center';
+        // Move star to current scroll center
+        moveStarToScrollCenter();
+        console.log('Big star shown and moved to scroll center');
+    }
+}
+
+function hideBigStar() {
+    const star = document.getElementById('bigStar');
+    if (star) {
+        star.style.display = 'none';
+        // Reset any inline styles that might have been set
+        star.style.position = '';
+        star.style.top = '';
+        star.style.left = '';
+        star.style.transform = '';
+        star.style.zIndex = '';
+        star.style.transition = '';
+        star.style.fontSize = '';
+        star.style.color = '';
+        star.style.opacity = '';
+        console.log('Big star hidden and styles reset');
+    }
+}
+
+function toggleBigStar() {
+    const star = document.getElementById('bigStar');
+    if (star) {
+        if (star.style.display === 'none' || star.style.display === '') {
+            showBigStar();
+        } else {
+            hideBigStar();
+        }
+    }
+}
+
+// Throttle function for smooth performance
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Move star and memory popup to center of current scroll position with smooth animation
+function moveStarToScrollCenter() {
+    const star = document.getElementById('bigStar');
+    const memoryLightbox = document.getElementById('memoryLightbox');
+    
+    if (star && star.style.display !== 'none') {
+        // Get current scroll position with high precision
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+        
+        // Get viewport dimensions with high precision
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        
+        // Calculate exact center of current viewport
+        const centerY = scrollTop + (viewportHeight / 2);
+        const centerX = scrollLeft + (viewportWidth / 2);
+        
+        // If memory popup is visible, position both popup and star at viewport center
+        if (memoryLightbox && memoryLightbox.classList.contains('visible')) {
+            // Position memory popup at the center of current viewport
+            memoryLightbox.style.position = 'absolute';
+            memoryLightbox.style.top = centerY + 'px';
+            memoryLightbox.style.left = centerX + 'px';
+            memoryLightbox.style.transform = 'translate(-50%, -50%)';
+            memoryLightbox.style.zIndex = '10000';
+            memoryLightbox.style.transition = 'top 0.2s cubic-bezier(0.4, 0, 0.2, 1), left 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Position star at the center of the popup (same position as popup center)
+            star.style.position = 'absolute';
+            star.style.top = centerY + 'px';
+            star.style.left = centerX + 'px';
+            star.style.transform = 'translate(-50%, -50%)';
+            star.style.zIndex = '10001'; // Slightly above popup so star is visible
+        } else {
+            // If no popup, position star at viewport center
+            star.style.position = 'absolute';
+            star.style.top = centerY + 'px';
+            star.style.left = centerX + 'px';
+            star.style.transform = 'translate(-50%, -50%)';
+            star.style.zIndex = '99999';
+        }
+        
+        // Ensure fast smooth transition is enabled
+        star.style.transition = 'top 0.2s cubic-bezier(0.4, 0, 0.2, 1), left 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+    }
+}
+
+// Create throttled version for smooth scrolling
+const throttledMoveStar = throttle(moveStarToScrollCenter, 16); // ~60fps
+
+// Add scroll listener to move star with scroll (throttled for smoothness)
+window.addEventListener('scroll', throttledMoveStar);
+window.addEventListener('resize', throttledMoveStar);
+
+// Test function to debug star visibility
+function testStar() {
+    const star = document.getElementById('bigStar');
+    console.log('Star element:', star);
+    console.log('Star display style:', star ? star.style.display : 'not found');
+    console.log('Star computed style:', star ? window.getComputedStyle(star).display : 'not found');
+    
+    if (star) {
+        // Force make it visible with smooth centering
+        star.style.display = 'flex';
+        moveStarToScrollCenter(); // Use the smooth positioning function
+        star.style.fontSize = '150px';
+        star.style.color = '#ffd700';
+        star.style.opacity = '1';
+        console.log('Star forced to be visible with smooth centering');
+    }
+}
+
+// Auto-test star on page load - REMOVED
+// document.addEventListener('DOMContentLoaded', function() {
+//     setTimeout(testStar, 1000);
+// });
 
 // Utility functions
 function formatDate(dateString) {
@@ -1479,6 +1636,10 @@ window.openMemoryLightbox = openMemoryLightbox;
 window.closeMemoryLightbox = closeMemoryLightbox;
 window.navigateLightbox = navigateLightbox;
 window.removeSection = removeSection;
+window.showBigStar = showBigStar;
+window.hideBigStar = hideBigStar;
+window.toggleBigStar = toggleBigStar;
+window.testStar = testStar;
 
 
 // Performance and UX enhancements
