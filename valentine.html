@@ -10,16 +10,17 @@
     <link rel="stylesheet" href="valentine-styles.css">
 </head>
 <body>
-    <!-- Edit Story Button - Fixed Position -->
-    <button class="edit-story-btn" id="editStoryBtn">
-        <span data-translate="edit-story">Edit Story</span>
-    </button>
 
     <!-- Success Notification Toast -->
     <div class="notification-toast" id="notificationToast">
         <div class="notification-content">
             <span class="notification-message" data-translate="changes-saved">Changes saved successfully!</span>
         </div>
+    </div>
+
+    <!-- Edit Mode Active Notification -->
+    <div class="edit-mode-notification" id="editModeNotification">
+        <span>Edit Mode Active</span>
     </div>
 
     <!-- Proceed to Payment Button -->
@@ -37,6 +38,11 @@
                 <span class="logo-text">yourfavontheway</span>
             </div>
             <div class="header-actions">
+                <button class="edit-story-btn" id="editStoryBtn" title="Edit Story">
+                    <svg class="edit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="white"/>
+                    </svg>
+                </button>
                 <div class="language-selector">
                     <button class="language-btn active" data-lang="en">EN</button>
                     <button class="language-btn" data-lang="tr">TR</button>
@@ -44,6 +50,15 @@
             </div>
         </div>
     </header>
+
+    <!-- Floating Decorative Elements -->
+    <div class="floating-hearts">
+        <div class="heart heart-1">♡</div>
+        <div class="heart heart-2">♡</div>
+        <div class="heart heart-3">♡</div>
+        <div class="heart heart-4">♡</div>
+        <div class="heart heart-5">♡</div>
+    </div>
 
     <!-- Main Story Content -->
     <main class="story-main">

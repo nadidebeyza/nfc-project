@@ -25,23 +25,115 @@ html {
 
 body {
     font-family: 'Source Serif Pro', Georgia, serif;
-    background: linear-gradient(135deg, #fafbfc 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #ffffff 50%, #f1f3f4 75%, #e8eaed 100%);
+    background-attachment: fixed;
     color: #1a1a1a;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
-    min-height: 100vh; /* Natural minimum height */
-    height: auto; /* allow content height to grow naturally */
+    min-height: 100vh;
+    height: auto;
     letter-spacing: 0.01em;
     opacity: 0;
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    overflow-y: hidden; /* Block scrolling until tap to continue */
+    overflow-y: hidden;
     scroll-behavior: smooth;
     animation: fadeIn 0.8s ease-out forwards;
+    position: relative;
+}
+
+/* Add subtle floating elements animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.015) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(0, 0, 0, 0.01) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: floatingHearts 20s ease-in-out infinite;
+}
+
+@keyframes floatingHearts {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+/* Floating Hearts Animation */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.15;
+    color: #000000;
+    animation: floatHeart 15s infinite linear;
+}
+
+.heart-1 {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 20s;
+}
+
+.heart-2 {
+    left: 20%;
+    animation-delay: 4s;
+    animation-duration: 18s;
+}
+
+.heart-3 {
+    left: 70%;
+    animation-delay: 8s;
+    animation-duration: 22s;
+}
+
+.heart-4 {
+    left: 80%;
+    animation-delay: 12s;
+    animation-duration: 16s;
+}
+
+.heart-5 {
+    left: 50%;
+    animation-delay: 6s;
+    animation-duration: 24s;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.15;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Allow scrolling only after content is revealed */
@@ -217,8 +309,8 @@ button:focus,
 
 /* Edit Mode Visual Indicators - overflow restriction removed for better scrolling */
 
-.edit-mode::before {
-    content: "Edit Mode Active";
+/* Edit Mode Active Notification */
+.edit-mode-notification {
     position: fixed;
     top: 20px;
     left: 50%;
@@ -229,8 +321,17 @@ button:focus,
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
-    z-index: 1000;
+    z-index: 10000;
     box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-family: "Source Serif Pro", serif;
+}
+
+.edit-mode-notification.show {
+    opacity: 1;
+    visibility: visible;
     animation: editModeIndicator 0.5s ease-out;
 }
 
@@ -433,38 +534,33 @@ button:focus,
 
 /* Edit Story Button */
 .edit-story-btn {
-    position: fixed !important;
-    top: 100px !important;
-    right: 25px !important;
-    bottom: auto !important;
-    left: auto !important;
-    color: rgb(255, 255, 255) !important;
-    font-family: "Source Serif Pro", serif !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    z-index: 9999 !important;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
-    background: rgb(0, 0, 0) !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 6px 8px !important;
-    transition: 0.3s !important;
-    gap: 8px !important;
-    margin: 0 !important;
-    transform: none !important;
-    width: auto !important;
-    height: auto !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    color: rgb(255, 255, 255);
+    font-family: "Source Serif Pro", serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    transition: 0.3s;
+    margin: 0;
+    width: 36px;
+    height: 36px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+}
+
+.edit-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 .edit-story-btn:hover {
     background: #333333;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Big Star styles removed - no longer needed */
@@ -582,6 +678,7 @@ button:focus,
         text-align: center;
         justify-content: center;
     }
+    
 }
 
 
@@ -597,13 +694,18 @@ button:focus,
 
 /* Section Base Styles */
 section {
-    padding: 50px 20px;
+    padding: 80px 20px;
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
     opacity: 1;
     transform: translateY(0);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 section.visible {
@@ -611,9 +713,17 @@ section.visible {
     transform: translateY(0);
 }
 
+/* Add subtle hover effect to sections */
+section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
 .section-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .section-title {
@@ -733,8 +843,27 @@ section.visible {
 
 /* Journey Section */
 .journey-section {
-    background: #ffffff;
-    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.journey-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
 }
 
 .journey-content {
@@ -769,6 +898,15 @@ section.visible {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.journey-image img:hover {
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
 }
 
 /* Memories Section */
@@ -1028,9 +1166,22 @@ section.visible {
 
 /* Words Section */
 .words-section {
-    background: #ffffff;
-    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+    padding: 80px 40px;
     position: relative;
+    overflow: hidden;
+}
+
+.words-section::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 7s ease-in-out infinite;
 }
 
 .words-content {
@@ -1056,26 +1207,58 @@ section.visible {
 }
 
 .heart-quote {
-    background: #f8f9fa;
-    border-left: 4px solid #000000;
-    padding: 40px;
-    border-radius: 16px;
-    margin: 40px 0;
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+    padding: 50px;
+    border-radius: 24px;
+    margin: 50px 0;
     position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.heart-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    font-size: 80px;
+    color: rgba(0, 0, 0, 0.1);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+}
+
+.heart-quote::after {
+    content: '"';
+    position: absolute;
+    bottom: -40px;
+    right: -20px;
+    font-size: 80px;
+    color: rgba(0, 0, 0, 0.1);
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
 }
 
 .heart-quote p {
-    font-size: 24px;
-    color: #333333;
+    font-size: 26px;
+    color: #374151;
     font-style: italic;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 2;
 }
 
 .heart-quote cite {
-    font-size: 16px;
-    color: #666666;
+    font-size: 18px;
+    color: #6b7280;
     font-weight: 500;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
 }
 
 /* Milestones Section */
@@ -1162,8 +1345,22 @@ section.visible {
 
 /* Promise Section */
 .promise-section {
-    background: #ffffff;
-    padding: 80px 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.promise-section::before {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -15%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
 }
 
 .promise-content {
@@ -1171,6 +1368,8 @@ section.visible {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
+    position: relative;
+    z-index: 3;
 }
 
 .promise-image {
@@ -1186,6 +1385,15 @@ section.visible {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.promise-image img:hover {
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
 }
 
 .promise-subtitle {
@@ -1197,24 +1405,35 @@ section.visible {
 }
 
 .promise-text {
-    font-size: 16px;
-    color: #333333;
-    line-height: 1.6;
-    margin-bottom: 30px;
+    font-size: 20px;
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 35px;
+    font-style: italic;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .promise-signature {
-    font-size: 16px;
-    color: #666666;
+    font-size: 22px;
+    color: #1f2937;
     font-style: italic;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    font-weight: 600;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    text-align: right;
 }
 
 .story-date {
-    font-size: 14px;
-    color: #999999;
-    font-weight: 500;
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 300;
     margin-bottom: 20px;
+    font-style: italic;
+    letter-spacing: 0.3px;
+    text-align: right;
 }
 
 /* Modal Styles */

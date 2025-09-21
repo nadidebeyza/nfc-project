@@ -775,9 +775,24 @@ function toggleEditMode() {
     const sectionControls = document.querySelectorAll('.section-controls');
     const body = document.body;
     
-    if (editStoryBtn.textContent.includes('Edit')) {
+    // Check if we're currently in edit mode by looking for edit-mode class
+    const isEditMode = body.classList.contains('edit-mode');
+    const editModeNotification = document.getElementById('editModeNotification');
+    
+    console.log('Toggle edit mode - isEditMode:', isEditMode);
+    console.log('Edit mode notification element:', editModeNotification);
+    
+    if (!isEditMode) {
         // Enable edit mode
         body.classList.add('edit-mode');
+        
+        // Show edit mode notification
+        if (editModeNotification) {
+            editModeNotification.classList.add('show');
+            console.log('Edit mode notification shown');
+        } else {
+            console.error('Edit mode notification element not found when trying to show');
+        }
         
         // Enable contenteditable for all editable elements
         contentEditableElements.forEach(element => {
@@ -803,13 +818,27 @@ function toggleEditMode() {
         if (addMemoryContainer) addMemoryContainer.style.display = 'block';
         if (addMilestoneBtn) addMilestoneBtn.style.display = 'flex';
         
-        editStoryBtn.innerHTML = '<span data-translate="save-story">Save Story</span>';
+        // Change button to save mode (checkmark icon)
+        editStoryBtn.innerHTML = `
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+            </svg>
+        `;
+        editStoryBtn.title = 'Save Story';
     } else {
         // Save and disable edit mode
         saveContentEditableElements();
         saveMemoryTextElements();
         saveMilestoneTextElements();
         body.classList.remove('edit-mode');
+        
+        // Hide edit mode notification
+        if (editModeNotification) {
+            editModeNotification.classList.remove('show');
+            console.log('Edit mode notification hidden');
+        } else {
+            console.error('Edit mode notification element not found when trying to hide');
+        }
         
         // Show success notification
         showNotification();
@@ -838,7 +867,13 @@ function toggleEditMode() {
         if (addMemoryContainer) addMemoryContainer.style.display = 'none';
         if (addMilestoneBtn) addMilestoneBtn.style.display = 'none';
         
-        editStoryBtn.innerHTML = '<span data-translate="edit-story">Edit Story</span>';
+        // Change button back to edit mode (pen icon)
+        editStoryBtn.innerHTML = `
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="white"/>
+            </svg>
+        `;
+        editStoryBtn.title = 'Edit Story';
     }
 }
 
@@ -1800,6 +1835,14 @@ document.addEventListener('DOMContentLoaded', function() {
     editModal = document.getElementById('editModal');
     addMemoryModal = document.getElementById('addMemoryModal');
     addMilestoneModal = document.getElementById('addMilestoneModal');
+    
+    // Initialize edit mode notification
+    const editModeNotification = document.getElementById('editModeNotification');
+    if (editModeNotification) {
+        console.log('Edit mode notification element found');
+    } else {
+        console.error('Edit mode notification element not found!');
+    }
     
     // Enable scrolling immediately since we're coming from cover page
     document.body.classList.add('scrolling-enabled');

@@ -136,6 +136,13 @@ function handleIndicatorClick(e) {
 function proceedToValentinePage() {
     if (tapDetected) return;
     
+    // Check if edit mode is active
+    const isEditMode = document.body.classList.contains('edit-mode');
+    if (isEditMode) {
+        console.log('Cannot navigate while in edit mode. Please save changes first.');
+        return;
+    }
+    
     tapDetected = true;
     
     // Add fade out animation
@@ -170,5 +177,238 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize tap detection
     initializeTapDetection();
     
+    // Initialize edit functionality
+    initializeEditFunctionality();
+    
     console.log('Cover page initialized');
 });
+
+// Edit functionality
+function initializeEditFunctionality() {
+    const editStoryBtn = document.getElementById('editStoryBtn');
+    const editModeNotification = document.getElementById('editModeNotification');
+    
+    if (editStoryBtn) {
+        editStoryBtn.addEventListener('click', toggleEditMode);
+        console.log('Edit story button listener added to cover page');
+    } else {
+        console.error('Edit story button not found on cover page!');
+    }
+    
+    if (editModeNotification) {
+        console.log('Edit mode notification element found on cover page');
+    } else {
+        console.error('Edit mode notification element not found on cover page!');
+    }
+}
+
+function toggleEditMode() {
+    const body = document.body;
+    const editStoryBtn = document.getElementById('editStoryBtn');
+    const editModeNotification = document.getElementById('editModeNotification');
+    
+    // Check if we're currently in edit mode by looking for edit-mode class
+    const isEditMode = body.classList.contains('edit-mode');
+    
+    console.log('Toggle edit mode on cover page - isEditMode:', isEditMode);
+    console.log('Edit mode notification element:', editModeNotification);
+    
+    if (!isEditMode) {
+        // Enable edit mode
+        body.classList.add('edit-mode');
+        
+        // Show edit mode notification
+        if (editModeNotification) {
+            editModeNotification.classList.add('show');
+            console.log('Edit mode notification shown on cover page');
+        } else {
+            console.error('Edit mode notification element not found when trying to show on cover page');
+        }
+        
+        // Make hero elements editable
+        const heroTitle = document.getElementById('heroTitle');
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        const heroImage = document.getElementById('heroImage');
+        
+        if (heroTitle) {
+            heroTitle.setAttribute('contenteditable', 'true');
+        }
+        if (heroSubtitle) {
+            heroSubtitle.setAttribute('contenteditable', 'true');
+        }
+        if (heroImage) {
+            heroImage.style.cursor = 'pointer';
+            heroImage.addEventListener('click', handleImageClick);
+        }
+        
+        // Change button to save mode (checkmark icon)
+        editStoryBtn.innerHTML = `
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+            </svg>
+        `;
+        editStoryBtn.title = 'Save Story';
+        
+    } else {
+        // Save and disable edit mode
+        saveCoverStoryData();
+        body.classList.remove('edit-mode');
+        
+        // Hide edit mode notification
+        if (editModeNotification) {
+            editModeNotification.classList.remove('show');
+            console.log('Edit mode notification hidden on cover page');
+        } else {
+            console.error('Edit mode notification element not found when trying to hide on cover page');
+        }
+        
+        // Make hero elements non-editable
+        const heroTitle = document.getElementById('heroTitle');
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        const heroImage = document.getElementById('heroImage');
+        
+        if (heroTitle) {
+            heroTitle.setAttribute('contenteditable', 'false');
+        }
+        if (heroSubtitle) {
+            heroSubtitle.setAttribute('contenteditable', 'false');
+        }
+        if (heroImage) {
+            heroImage.style.cursor = 'default';
+            heroImage.removeEventListener('click', handleImageClick);
+        }
+        
+        // Change button back to edit mode (pen icon)
+        editStoryBtn.innerHTML = `
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="white"/>
+            </svg>
+        `;
+        editStoryBtn.title = 'Edit Story';
+        
+        // Show success notification
+        showCoverNotification();
+    }
+}
+
+function saveCoverStoryData() {
+    // Save hero title
+    const heroTitle = document.getElementById('heroTitle');
+    if (heroTitle) {
+        storyData.hero.title = heroTitle.textContent;
+    }
+    
+    // Save hero subtitle
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) {
+        storyData.hero.subtitle = heroSubtitle.textContent;
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('coverStoryData', JSON.stringify(storyData));
+    console.log('Cover story data saved:', storyData);
+}
+
+function handleImageClick() {
+    showImageOptions();
+}
+
+function showImageOptions() {
+    // Create hidden file input and trigger it immediately
+    const imageInput = document.createElement('input');
+    imageInput.type = 'file';
+    imageInput.accept = 'image/*';
+    imageInput.style.display = 'none';
+    
+    // Add to DOM temporarily
+    document.body.appendChild(imageInput);
+    
+    // Trigger file picker immediately
+    imageInput.click();
+    
+    // Handle file selection
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const heroImage = document.getElementById('heroImage');
+                if (heroImage) {
+                    heroImage.src = e.target.result;
+                    storyData.hero.image = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Clean up
+        document.body.removeChild(imageInput);
+    });
+    
+    // Handle cancel (when user closes file picker without selecting)
+    imageInput.addEventListener('cancel', () => {
+        document.body.removeChild(imageInput);
+    });
+    
+    // Also handle the case where user clicks outside or presses escape
+    const handleCancel = () => {
+        if (document.body.contains(imageInput)) {
+            document.body.removeChild(imageInput);
+        }
+    };
+    
+    // Add event listeners for cancel scenarios
+    setTimeout(() => {
+        if (document.body.contains(imageInput)) {
+            // If input is still there after a delay, user might have cancelled
+            handleCancel();
+        }
+    }, 100);
+}
+
+function showCoverNotification() {
+    // Create a simple notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+        color: white;
+        padding: 12px 40px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        font-family: "Source Serif Pro", serif;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        min-width: 300px;
+        text-align: center;
+    `;
+    notification.textContent = 'Changes saved successfully!';
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.visibility = 'visible';
+        notification.style.animation = 'editModeIndicator 0.5s ease-out';
+    }, 100);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.visibility = 'hidden';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
