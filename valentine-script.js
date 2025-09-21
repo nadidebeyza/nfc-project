@@ -1549,8 +1549,8 @@ function preventZoomTouch(e) {
 
 // Enhance scroll sensitivity for mobile
 function enhanceScrollSensitivity() {
-    // Remove any potential touch interference
     // Let the browser handle scrolling naturally
+    // No need to set webkit-overflow-scrolling on body/html
     console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
@@ -1635,10 +1635,6 @@ function restoreNormalScrolling() {
     // Remove any potential touch event interference
     document.body.style.touchAction = '';
     document.documentElement.style.touchAction = '';
-    
-    // Ensure webkit overflow scrolling is enabled for smooth scrolling
-    document.body.style.webkitOverflowScrolling = 'touch';
-    document.documentElement.style.webkitOverflowScrolling = 'touch';
     
     // Remove any remaining touch event listeners that might interfere
     document.removeEventListener('touchstart', preventZoomTouch);
