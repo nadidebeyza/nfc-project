@@ -29,7 +29,7 @@ html {
     width: 100%;
     height: auto; /* allow content height to grow */
     overflow-x: hidden;
-    overflow-y: scroll; /* ensures scrolling is always possible */
+    overflow-y: auto; /* allows natural scrolling */
     scroll-behavior: smooth;
 }
 
@@ -52,7 +52,7 @@ body {
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
-    overflow-y: scroll; /* ensures scrolling is always possible */
+    overflow-y: auto; /* allows natural scrolling */
     scroll-behavior: smooth;
     animation: fadeIn 0.8s ease-out forwards;
 }
@@ -730,13 +730,12 @@ section.visible {
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
+    /* Remove pointer-events: none to allow scrolling */
 }
 
 .main-content-wrapper.revealed {
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto;
 }
 
 /* Mobile-specific swipe indicator adjustments */
@@ -1031,6 +1030,7 @@ section.visible {
     margin-bottom: 12px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

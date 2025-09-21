@@ -128,33 +128,10 @@ function proceedToPayment() {
     window.location.href = paymentUrl;
 }
 
-// Improve scroll sensitivity
+// Improve scroll sensitivity - removed conflicting CSS
 function improveScrollSensitivity() {
-    // Add CSS for better scroll sensitivity
-    const style = document.createElement('style');
-    style.textContent = `
-        * {
-            scroll-behavior: auto !important;
-        }
-        
-        html, body {
-            scroll-behavior: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
-        
-        /* Improve scroll sensitivity on mobile */
-        @media (max-width: 768px) {
-            html, body {
-                -webkit-overflow-scrolling: touch !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Disable smooth scrolling for better responsiveness
-    document.documentElement.style.scrollBehavior = 'auto';
-    document.body.style.scrollBehavior = 'auto';
+    // Let the browser handle scrolling naturally
+    console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
 // Story data
@@ -1045,7 +1022,11 @@ function editSection(section) {
 
 function closeEditModal() {
     editModal.classList.remove('visible');
+    // Ensure scrolling is restored
     document.body.style.overflow = '';
+    document.body.style.overflowY = '';
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.overflowY = '';
     currentEditingSection = null;
 }
 
@@ -1094,7 +1075,11 @@ function addMemory() {
 
 function closeAddMemoryModal() {
     addMemoryModal.classList.remove('visible');
+    // Ensure scrolling is restored
     document.body.style.overflow = '';
+    document.body.style.overflowY = '';
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.overflowY = '';
 }
 
 function handleAddMemory(e) {
@@ -1176,7 +1161,11 @@ function addMilestone() {
 
 function closeAddMilestoneModal() {
     addMilestoneModal.classList.remove('visible');
+    // Ensure scrolling is restored
     document.body.style.overflow = '';
+    document.body.style.overflowY = '';
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.overflowY = '';
 }
 
 function handleAddMilestone(e) {
@@ -1398,19 +1387,11 @@ function closeMemoryLightbox() {
         lightbox.style.justifyContent = '';
         lightbox.style.transition = '';
         
-        // Immediately reset all styles to prevent transition delays
+        // Ensure body overflow is restored for scrolling
         document.body.style.overflow = '';
-        document.body.style.filter = '';
-        document.body.style.backdropFilter = '';
-        document.body.style.webkitBackdropFilter = '';
-        document.body.style.transform = '';
-        document.body.style.opacity = '';
-        document.body.style.background = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.left = '';
-        document.body.style.right = '';
-        document.body.style.bottom = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
         
         // Remove visible class immediately
         lightbox.classList.remove('visible');
@@ -1420,20 +1401,10 @@ function closeMemoryLightbox() {
         document.body.classList.remove('modal-open', 'lightbox-open', 'memory-lightbox-open');
         document.documentElement.classList.remove('modal-open', 'lightbox-open', 'memory-lightbox-open');
         
-        // Reset any potential backdrop effects on other elements
-        const elementsWithBackdrop = document.querySelectorAll('[style*="backdrop-filter"], [style*="filter"]');
-        elementsWithBackdrop.forEach(el => {
-            if (el !== lightbox) {
-                el.style.backdropFilter = '';
-                el.style.webkitBackdropFilter = '';
-                el.style.filter = '';
-            }
-        });
-        
         // Force immediate reflow
         document.body.offsetHeight;
         
-        console.log('Memory lightbox closed and page reset immediately');
+        console.log('Memory lightbox closed and scrolling restored');
     }
 }
 
@@ -1506,7 +1477,7 @@ function updateLightboxContent(memory, index) {
     console.log('Lightbox content updated for memory:', memory.title);
 }
 
-// Prevent zoom when popup is open
+// Prevent zoom when popup is open - simplified to avoid scroll interference
 function preventZoom() {
     // Store original viewport meta tag
     const viewport = document.querySelector('meta[name="viewport"]');
@@ -1514,9 +1485,6 @@ function preventZoom() {
         viewport.dataset.originalContent = viewport.content;
         viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
     }
-    
-    // Only prevent multi-touch zoom, allow single touch scrolling
-    document.addEventListener('touchstart', preventZoomTouch, { passive: true });
     
     console.log('Zoom prevention enabled');
 }
@@ -1530,19 +1498,7 @@ function restoreZoom() {
         delete viewport.dataset.originalContent;
     }
     
-    // Remove touch event listeners
-    document.removeEventListener('touchstart', preventZoomTouch);
-    
     console.log('Zoom functionality restored');
-}
-
-// Prevent zoom touch events - only block multi-touch
-function preventZoomTouch(e) {
-    // Only prevent if more than 1 finger (pinch zoom)
-    if (e.touches.length > 1) {
-        e.preventDefault();
-    }
-    // Allow single touch scrolling to work normally
 }
 
 // Star functions removed - no longer needed
@@ -1636,11 +1592,6 @@ function restoreNormalScrolling() {
     document.body.style.touchAction = '';
     document.documentElement.style.touchAction = '';
     
-    // Remove any remaining touch event listeners that might interfere
-    document.removeEventListener('touchstart', preventZoomTouch);
-    document.removeEventListener('touchmove', preventZoomTouch);
-    document.removeEventListener('touchend', preventZoomTouch);
-    
     // Ensure viewport meta tag is restored to normal
     const viewport = document.querySelector('meta[name="viewport"]');
     if (viewport && viewport.dataset.originalContent) {
@@ -1648,7 +1599,7 @@ function restoreNormalScrolling() {
         delete viewport.dataset.originalContent;
     }
     
-    console.log('Normal scrolling behavior restored - all touch interference removed');
+    console.log('Normal scrolling behavior restored');
 }
 
 // Throttle function for smooth performance
