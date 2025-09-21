@@ -114,6 +114,41 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* Subtitle container */
+.subtitle-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Remove subtitle button */
+.remove-subtitle-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+}
+
+.remove-subtitle-btn:hover {
+    background: #ff2222;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+}
+
 /* Edit mode styles for cover page */
 .edit-mode [contenteditable="true"] {
     border: 2px dashed rgba(34, 197, 94, 0.4);
@@ -262,7 +297,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 100px;
+    gap: 40px;
     max-width: 900px;
     margin: 0 auto;
     padding: 140px 0;

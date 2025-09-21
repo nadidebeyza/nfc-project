@@ -229,12 +229,17 @@ function toggleEditMode() {
         const heroTitle = document.getElementById('heroTitle');
         const heroSubtitle = document.querySelector('.hero-subtitle');
         const heroImage = document.getElementById('heroImage');
+        const removeSubtitleBtn = document.getElementById('removeSubtitleBtn');
         
         if (heroTitle) {
             heroTitle.setAttribute('contenteditable', 'true');
         }
         if (heroSubtitle) {
             heroSubtitle.setAttribute('contenteditable', 'true');
+        }
+        if (removeSubtitleBtn) {
+            removeSubtitleBtn.style.display = 'flex';
+            removeSubtitleBtn.addEventListener('click', removeSubtitle);
         }
         if (heroImage) {
             heroImage.style.cursor = 'pointer';
@@ -266,12 +271,17 @@ function toggleEditMode() {
         const heroTitle = document.getElementById('heroTitle');
         const heroSubtitle = document.querySelector('.hero-subtitle');
         const heroImage = document.getElementById('heroImage');
+        const removeSubtitleBtn = document.getElementById('removeSubtitleBtn');
         
         if (heroTitle) {
             heroTitle.setAttribute('contenteditable', 'false');
         }
         if (heroSubtitle) {
             heroSubtitle.setAttribute('contenteditable', 'false');
+        }
+        if (removeSubtitleBtn) {
+            removeSubtitleBtn.style.display = 'none';
+            removeSubtitleBtn.removeEventListener('click', removeSubtitle);
         }
         if (heroImage) {
             heroImage.style.cursor = 'default';
@@ -298,10 +308,13 @@ function saveCoverStoryData() {
         storyData.hero.title = heroTitle.textContent;
     }
     
-    // Save hero subtitle
+    // Save hero subtitle (check if it still exists)
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) {
         storyData.hero.subtitle = heroSubtitle.textContent;
+    } else {
+        // Subtitle was removed
+        storyData.hero.subtitle = '';
     }
     
     // Save to localStorage
@@ -311,6 +324,21 @@ function saveCoverStoryData() {
 
 function handleImageClick() {
     showImageOptions();
+}
+
+function removeSubtitle() {
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    const subtitleContainer = document.querySelector('.subtitle-container');
+    
+    if (heroSubtitle && subtitleContainer) {
+        // Remove the subtitle element
+        subtitleContainer.remove();
+        
+        // Update story data (but don't save yet - wait for user to click save)
+        storyData.hero.subtitle = '';
+        
+        console.log('Subtitle removed - changes will be saved when user clicks save button');
+    }
 }
 
 function showImageOptions() {

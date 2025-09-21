@@ -1431,7 +1431,7 @@ function navigateLightbox(direction) {
     const memory = currentLightboxMemories[currentLightboxIndex];
     const totalImages = memory.media.length;
     
-    // If memory has multiple images, navigate between images first
+    // Only navigate between images within the same memory
     if (totalImages > 1) {
         if (direction === 'next') {
             currentImageIndex = (currentImageIndex + 1) % totalImages;
@@ -1442,17 +1442,8 @@ function navigateLightbox(direction) {
         return;
     }
     
-    // If only one image or no more images to navigate, go to next/previous memory
-    const total = currentLightboxMemories.length;
-    if (direction === 'next') {
-        currentLightboxIndex = (currentLightboxIndex + 1) % total;
-    } else {
-        currentLightboxIndex = (currentLightboxIndex - 1 + total) % total;
-    }
-    
-    const newMemory = currentLightboxMemories[currentLightboxIndex];
-    currentImageIndex = 0; // Reset image index for new memory
-    updateLightboxContent(newMemory, currentLightboxIndex);
+    // If only one image, do nothing (no navigation)
+    console.log('Single image memory - no navigation available');
 }
 
 // Update lightbox media to show current image
@@ -1474,7 +1465,50 @@ function updateLightboxMedia() {
     
     lightboxMedia.appendChild(mediaElement);
     
+    // Update arrow visibility
+    updateLightboxArrows();
+    
     console.log(`Showing image ${currentImageIndex + 1} of ${memory.media.length} for memory: ${memory.title}`);
+}
+
+// Update lightbox navigation arrows visibility
+function updateLightboxArrows() {
+    const lightboxPrevBtn = document.getElementById('lightboxPrev');
+    const lightboxNextBtn = document.getElementById('lightboxNext');
+    const memory = currentLightboxMemories[currentLightboxIndex];
+    
+    if (!memory || !memory.media.length) return;
+    
+    const totalImages = memory.media.length;
+    
+    // Only show arrows if there are multiple images in this memory
+    if (totalImages <= 1) {
+        // Single image - hide both arrows
+        if (lightboxPrevBtn) lightboxPrevBtn.style.display = 'none';
+        if (lightboxNextBtn) lightboxNextBtn.style.display = 'none';
+        return;
+    }
+    
+    // Multiple images - show arrows based on current position
+    if (lightboxPrevBtn) {
+        if (currentImageIndex === 0) {
+            // First image - hide prev arrow
+            lightboxPrevBtn.style.display = 'none';
+        } else {
+            // Not first image - show prev arrow
+            lightboxPrevBtn.style.display = 'flex';
+        }
+    }
+    
+    if (lightboxNextBtn) {
+        if (currentImageIndex === totalImages - 1) {
+            // Last image - hide next arrow
+            lightboxNextBtn.style.display = 'none';
+        } else {
+            // Not last image - show next arrow
+            lightboxNextBtn.style.display = 'flex';
+        }
+    }
 }
 
 // Update lightbox content without repositioning
@@ -1492,6 +1526,9 @@ function updateLightboxContent(memory, index) {
     
     // Update navigation based on number of images
     setupPopupClickNavigation();
+    
+    // Update arrow visibility
+    updateLightboxArrows();
     
     console.log('Lightbox content updated for memory:', memory.title);
 }
