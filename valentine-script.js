@@ -1596,6 +1596,7 @@ function revealMainContent() {
     tapDetected = true;
     const mainContentWrapper = document.getElementById('mainContentWrapper');
     const swipeUpIndicator = document.getElementById('swipeUpIndicator');
+    const heroSection = document.getElementById('hero');
     
     if (mainContentWrapper) {
         mainContentWrapper.classList.add('revealed');
@@ -1609,7 +1610,49 @@ function revealMainContent() {
         }, 300);
     }
     
-    console.log('Main content revealed via tap');
+    // Remove event listeners to prevent interference with normal scrolling
+    if (heroSection) {
+        heroSection.removeEventListener('click', handleHeroClick);
+    }
+    if (swipeUpIndicator) {
+        swipeUpIndicator.removeEventListener('click', handleIndicatorClick);
+    }
+    
+    // Ensure normal scrolling behavior is restored
+    restoreNormalScrolling();
+    
+    console.log('Main content revealed via tap - event listeners removed');
+}
+
+// Function to restore normal scrolling behavior
+function restoreNormalScrolling() {
+    // Ensure body and html have normal scrolling properties
+    document.body.style.overflow = '';
+    document.body.style.overflowY = '';
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.overflowY = '';
+    
+    // Remove any potential touch event interference
+    document.body.style.touchAction = '';
+    document.documentElement.style.touchAction = '';
+    
+    // Ensure webkit overflow scrolling is enabled for smooth scrolling
+    document.body.style.webkitOverflowScrolling = 'touch';
+    document.documentElement.style.webkitOverflowScrolling = 'touch';
+    
+    // Remove any remaining touch event listeners that might interfere
+    document.removeEventListener('touchstart', preventZoomTouch);
+    document.removeEventListener('touchmove', preventZoomTouch);
+    document.removeEventListener('touchend', preventZoomTouch);
+    
+    // Ensure viewport meta tag is restored to normal
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport && viewport.dataset.originalContent) {
+        viewport.content = viewport.dataset.originalContent;
+        delete viewport.dataset.originalContent;
+    }
+    
+    console.log('Normal scrolling behavior restored - all touch interference removed');
 }
 
 // Throttle function for smooth performance

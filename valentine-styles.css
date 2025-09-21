@@ -50,7 +50,7 @@ body {
     max-width: 100% !important;
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: touch;
+    scroll-behavior: smooth;
     animation: fadeIn 0.8s ease-out forwards;
 }
 
