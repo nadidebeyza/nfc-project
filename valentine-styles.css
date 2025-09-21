@@ -9,19 +9,7 @@
     box-sizing: border-box;
 }
 
-/* Prevent horizontal overflow */
-* {
-    max-width: 100%;
-}
-
-/* Enhanced mobile scroll sensitivity - removed universal webkit-overflow-scrolling */
-
-/* Scroll container for momentum scrolling on mobile */
-/* Note: -webkit-overflow-scrolling only works on inner containers, NOT on body/html */
-.scroll-container {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-}
+/* Enhanced mobile scroll sensitivity - using natural browser scrolling */
 
 html {
     margin: 0;
@@ -43,14 +31,13 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
-    min-height: 200vh; /* Make page taller to ensure it's scrollable */
-    height: auto; /* allow content height to grow */
+    min-height: 100vh; /* Natural minimum height */
+    height: auto; /* allow content height to grow naturally */
     letter-spacing: 0.01em;
     opacity: 0;
     margin: 0;
     padding: 0;
     width: 100%;
-    max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto; /* allows natural scrolling */
     scroll-behavior: smooth;

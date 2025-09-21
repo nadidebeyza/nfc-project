@@ -1556,6 +1556,7 @@ function revealMainContent() {
     
     if (mainContentWrapper) {
         mainContentWrapper.classList.add('revealed');
+        console.log('Main content wrapper revealed');
     }
     
     if (swipeUpIndicator) {
@@ -1576,6 +1577,9 @@ function revealMainContent() {
     
     // Ensure normal scrolling behavior is restored
     restoreNormalScrolling();
+    
+    // Trigger scroll animations for any sections that might be visible
+    setupScrollAnimations();
     
     console.log('Main content revealed via tap - event listeners removed');
 }
@@ -1848,19 +1852,28 @@ function setupScrollAnimations() {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    console.log('Section made visible:', entry.target.id || entry.target.className);
                 }
             });
         }, {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -20px 0px' // Reduced margin for earlier triggering
         });
         
         // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
+        const sections = document.querySelectorAll('section');
+        console.log('Setting up scroll animations for', sections.length, 'sections');
+        sections.forEach(section => {
             sectionObserver.observe(section);
         });
+        
+        // Also make hero section visible immediately since it's above the fold
+        const heroSection = document.getElementById('hero');
+        if (heroSection) {
+            heroSection.classList.add('visible');
+        }
     } else {
-        // Fallback for older browsers
+        // Fallback for older browsers - make all sections visible immediately
         document.querySelectorAll('section').forEach(section => {
             section.classList.add('visible');
         });
