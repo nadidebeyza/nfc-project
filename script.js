@@ -440,7 +440,7 @@ function createProductCard(product) {
             </div>
             <div class="message-preview">${messagePreview}</div>
             <div class="cta-row">
-                <button class="btn-primary" onclick="goToValentinePage()">Personalize</button>
+                <button class="btn-primary" onclick="goToCoverPage()">Personalize</button>
                 <button class="btn-secondary">Buy as gift</button>
             </div>
             <div class="nfc-hint">
@@ -700,14 +700,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 
-// Function to redirect to Valentine page
+// Function to redirect to Cover page (from product cards)
+function goToCoverPage() {
+    console.log('goToCoverPage called - redirecting to cover.html');
+    window.location.href = 'cover.html';
+}
+
+// Function to redirect to Cover page (from modal with personal message)
 function goToValentinePage() {
-    // Get the personal message from the textarea
-    const personalMessage = document.getElementById('personalMessage').value;
+    console.log('goToValentinePage called - redirecting to cover.html');
     
-    // Store the message in localStorage to use in valentine page
-    if (personalMessage.trim()) {
-        localStorage.setItem('personalMessage', personalMessage);
+    // Get the personal message from the textarea
+    const personalMessage = document.getElementById('personalMessage');
+    if (personalMessage && personalMessage.value.trim()) {
+        localStorage.setItem('personalMessage', personalMessage.value);
+        console.log('Personal message saved:', personalMessage.value);
     }
     
     // Close the modal
@@ -717,7 +724,8 @@ function goToValentinePage() {
         document.body.style.overflow = '';
     }
     
-    // Redirect to valentine page
-    window.location.href = 'valentine.html';
+    // Redirect to cover page
+    console.log('Redirecting to cover.html...');
+    window.location.href = 'cover.html';
 }
 

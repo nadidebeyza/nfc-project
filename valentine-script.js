@@ -1761,38 +1761,12 @@ function setupPerformanceMonitoring() {
 }
 
 function setupScrollAnimations() {
-    // Add intersection observer for scroll animations
-    if ('IntersectionObserver' in window) {
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    console.log('Section made visible:', entry.target.id || entry.target.className);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -20px 0px' // Reduced margin for earlier triggering
-        });
-        
-        // Observe all sections
-        const sections = document.querySelectorAll('section');
-        console.log('Setting up scroll animations for', sections.length, 'sections');
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-        
-        // Also make hero section visible immediately since it's above the fold
-        const heroSection = document.getElementById('hero');
-        if (heroSection) {
-            heroSection.classList.add('visible');
-        }
-    } else {
-        // Fallback for older browsers - make all sections visible immediately
-        document.querySelectorAll('section').forEach(section => {
-            section.classList.add('visible');
-        });
-    }
+    // Make all sections visible immediately - no scroll animations needed
+    const sections = document.querySelectorAll('section');
+    console.log('Making all sections visible immediately:', sections.length, 'sections');
+    sections.forEach(section => {
+        section.classList.add('visible');
+    });
 }
 
 // Language switching
