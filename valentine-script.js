@@ -1554,95 +1554,46 @@ function enhanceScrollSensitivity() {
     console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
-// Swipe up detection and content reveal
-let swipeUpDetected = false;
-let touchStartY = 0;
-let touchEndY = 0;
+// Tap to continue detection and content reveal
+let tapDetected = false;
 
-function initializeSwipeUpDetection() {
+function initializeTapDetection() {
     const heroSection = document.getElementById('hero');
     const mainContentWrapper = document.getElementById('mainContentWrapper');
     const swipeUpIndicator = document.getElementById('swipeUpIndicator');
     
     if (!heroSection || !mainContentWrapper || !swipeUpIndicator) {
-        console.log('Missing elements for swipe detection');
+        console.log('Missing elements for tap detection');
         return;
     }
     
-    // Touch events for swipe detection
-    heroSection.addEventListener('touchstart', handleTouchStart, { passive: true });
-    heroSection.addEventListener('touchmove', handleTouchMove, { passive: true });
-    heroSection.addEventListener('touchend', handleTouchEnd, { passive: true });
-    
-    // Also listen for scroll events as backup
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Add click/tap detection as additional fallback
+    // Simple tap/click detection
     heroSection.addEventListener('click', handleHeroClick, { passive: true });
+    swipeUpIndicator.addEventListener('click', handleIndicatorClick, { passive: true });
     
-    console.log('Swipe up detection initialized with multiple methods');
-}
-
-function handleTouchStart(e) {
-    if (swipeUpDetected) return;
-    touchStartY = e.touches[0].clientY;
-    console.log('Touch start Y:', touchStartY);
-}
-
-function handleTouchMove(e) {
-    if (swipeUpDetected) return;
-    
-    const currentY = e.touches[0].clientY;
-    const swipeDistance = touchStartY - currentY;
-    
-    // If user has swiped up more than 20px, reveal content
-    if (swipeDistance > 20) {
-        console.log('Touch move swipe detected! Distance:', swipeDistance);
-        revealMainContent();
-    }
-}
-
-function handleTouchEnd(e) {
-    if (swipeUpDetected) return;
-    touchEndY = e.changedTouches[0].clientY;
-    
-    const swipeDistance = touchStartY - touchEndY;
-    const minSwipeDistance = 30; // Reduced minimum distance for easier detection
-    
-    console.log('Touch end Y:', touchEndY);
-    console.log('Swipe distance:', swipeDistance);
-    console.log('Min distance needed:', minSwipeDistance);
-    
-    if (swipeDistance > minSwipeDistance) {
-        console.log('Swipe up detected! Revealing content...');
-        revealMainContent();
-    } else {
-        console.log('Swipe distance too small');
-    }
-}
-
-function handleScroll(e) {
-    if (swipeUpDetected) return;
-    
-    // If user scrolls down even a little, reveal content
-    if (window.scrollY > 5) {
-        console.log('Scroll detected! Revealing content...');
-        revealMainContent();
-    }
+    console.log('Tap detection initialized');
 }
 
 function handleHeroClick(e) {
-    if (swipeUpDetected) return;
+    if (tapDetected) return;
     
     // If user clicks/taps on hero section, reveal content
     console.log('Hero click detected! Revealing content...');
     revealMainContent();
 }
 
-function revealMainContent() {
-    if (swipeUpDetected) return;
+function handleIndicatorClick(e) {
+    if (tapDetected) return;
     
-    swipeUpDetected = true;
+    // If user clicks/taps on the indicator, reveal content
+    console.log('Indicator click detected! Revealing content...');
+    revealMainContent();
+}
+
+function revealMainContent() {
+    if (tapDetected) return;
+    
+    tapDetected = true;
     const mainContentWrapper = document.getElementById('mainContentWrapper');
     const swipeUpIndicator = document.getElementById('swipeUpIndicator');
     
@@ -1658,7 +1609,7 @@ function revealMainContent() {
         }, 300);
     }
     
-    console.log('Main content revealed via swipe up');
+    console.log('Main content revealed via tap');
 }
 
 // Throttle function for smooth performance
@@ -1961,8 +1912,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance scroll sensitivity for mobile
     enhanceScrollSensitivity();
     
-    // Initialize swipe up detection
-    initializeSwipeUpDetection();
+    // Initialize tap detection
+    initializeTapDetection();
 
     // Disable contenteditable by default
     const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
