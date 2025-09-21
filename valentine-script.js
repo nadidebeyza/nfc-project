@@ -136,10 +136,6 @@ function improveScrollSensitivity() {
 
 // Story data
 let storyData = {
-    hero: {
-        title: "Happy Anniversary, my forever Valentine",
-        image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop&crop=face"
-    },
     journey: {
         intro: "Another year together, another year of growing in love, another year of choosing each other every single day",
         image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"
@@ -353,6 +349,19 @@ function loadStoryData() {
     if (savedStory) {
         const savedData = JSON.parse(savedStory);
         
+        // Ensure all required objects exist
+        if (!savedData.journey) {
+            savedData.journey = storyData.journey;
+        }
+        
+        if (!savedData.words) {
+            savedData.words = storyData.words;
+        }
+        
+        if (!savedData.promise) {
+            savedData.promise = storyData.promise;
+        }
+        
         // If saved data has no memories, use our example data
         if (!savedData.memories || savedData.memories.length === 0) {
             savedData.memories = storyData.memories;
@@ -389,35 +398,19 @@ function saveStoryData() {
 }
 
 function renderStory() {
-    // Update hero section
-    const heroTitle = document.getElementById('heroTitle');
-    if (heroTitle) {
-        // Use translation if available, otherwise use story data
-        if (translations[currentLanguage] && translations[currentLanguage]['hero-title']) {
-            heroTitle.textContent = translations[currentLanguage]['hero-title'];
-        } else if (storyData.hero.title) {
-        heroTitle.textContent = storyData.hero.title;
-        }
-    }
-    
-    const heroImage = document.getElementById('heroImage');
-    if (heroImage && storyData.hero.image) {
-        heroImage.src = storyData.hero.image;
-    }
-    
     // Update journey section
     const journeyIntro = document.getElementById('journeyIntro');
     if (journeyIntro) {
         // Use translation if available, otherwise use story data
         if (translations[currentLanguage] && translations[currentLanguage]['journey-intro']) {
             journeyIntro.textContent = translations[currentLanguage]['journey-intro'];
-        } else if (storyData.journey.intro) {
+        } else if (storyData.journey && storyData.journey.intro) {
         journeyIntro.textContent = storyData.journey.intro;
         }
     }
     
     const journeyImage = document.getElementById('journeyImage');
-    if (journeyImage && storyData.journey.image) {
+    if (journeyImage && storyData.journey && storyData.journey.image) {
         journeyImage.src = storyData.journey.image;
     }
     
@@ -427,7 +420,7 @@ function renderStory() {
         // Use translation if available, otherwise use story data
         if (translations[currentLanguage] && translations[currentLanguage]['heart-quote']) {
             heartQuote.textContent = translations[currentLanguage]['heart-quote'];
-        } else if (storyData.words.quote) {
+        } else if (storyData.words && storyData.words.quote) {
         heartQuote.textContent = storyData.words.quote;
         }
     }
@@ -437,7 +430,7 @@ function renderStory() {
         // Use translation if available, otherwise use story data
         if (translations[currentLanguage] && translations[currentLanguage]['heart-quote-author']) {
             heartQuoteAuthor.textContent = translations[currentLanguage]['heart-quote-author'];
-        } else if (storyData.words.author) {
+        } else if (storyData.words && storyData.words.author) {
         heartQuoteAuthor.textContent = storyData.words.author;
         }
     }
@@ -454,7 +447,7 @@ function renderStory() {
         // Use translation if available, otherwise use story data
         if (translations[currentLanguage] && translations[currentLanguage]['promise-text']) {
             promiseText.textContent = translations[currentLanguage]['promise-text'];
-        } else if (storyData.promise.text) {
+        } else if (storyData.promise && storyData.promise.text) {
         promiseText.textContent = storyData.promise.text;
         }
     }
@@ -464,7 +457,7 @@ function renderStory() {
         // Use translation if available, otherwise use story data
         if (translations[currentLanguage] && translations[currentLanguage]['promise-signature']) {
             promiseSignature.textContent = translations[currentLanguage]['promise-signature'];
-        } else if (storyData.promise.signature) {
+        } else if (storyData.promise && storyData.promise.signature) {
         promiseSignature.textContent = storyData.promise.signature;
         }
     }
@@ -482,7 +475,7 @@ function renderStory() {
     }
     
     const promiseImage = document.getElementById('promiseImage');
-    if (promiseImage && storyData.promise.image) {
+    if (promiseImage && storyData.promise && storyData.promise.image) {
         promiseImage.src = storyData.promise.image;
     }
     
@@ -850,12 +843,6 @@ function toggleEditMode() {
 }
 
 function saveContentEditableElements() {
-    // Save hero title
-    const heroTitle = document.getElementById('heroTitle');
-    if (heroTitle) {
-        storyData.hero.title = heroTitle.textContent;
-    }
-    
     // Save journey intro
     const journeyIntro = document.getElementById('journeyIntro');
     if (journeyIntro) {
@@ -958,7 +945,7 @@ function saveMilestoneTextElements() {
 }
 
 function setupContentEditableSave() {
-    document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date').forEach(element => {
+    document.querySelectorAll('.journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date').forEach(element => {
         element.addEventListener('blur', function() {
             saveContentEditableElements();
         });
@@ -989,10 +976,7 @@ function editSection(section) {
     const form = document.getElementById('editForm');
     form.reset();
     
-    if (section === 'hero') {
-        document.getElementById('sectionTitle').value = storyData.hero.title || '';
-        document.getElementById('sectionText').value = '';
-    } else if (section === 'journey') {
+    if (section === 'journey') {
         document.getElementById('sectionTitle').value = 'Journey Section';
         document.getElementById('sectionText').value = storyData.journey.intro || '';
     } else if (section === 'promise') {
@@ -1005,9 +989,7 @@ function editSection(section) {
     imagePreview.innerHTML = '';
     
     let currentImage = null;
-    if (section === 'hero' && storyData.hero.image) {
-        currentImage = storyData.hero.image;
-    } else if (section === 'journey' && storyData.journey.image) {
+    if (section === 'journey' && storyData.journey.image) {
         currentImage = storyData.journey.image;
     } else if (section === 'promise' && storyData.promise.image) {
         currentImage = storyData.promise.image;
@@ -1022,11 +1004,13 @@ function editSection(section) {
 
 function closeEditModal() {
     editModal.classList.remove('visible');
-    // Ensure scrolling is restored
-    document.body.style.overflow = '';
-    document.body.style.overflowY = '';
-    document.documentElement.style.overflow = '';
-    document.documentElement.style.overflowY = '';
+    // Only restore scrolling if it was enabled (after tap to continue)
+    if (document.body.classList.contains('scrolling-enabled')) {
+        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
+    }
     currentEditingSection = null;
 }
 
@@ -1037,13 +1021,7 @@ function handleEditSection(e) {
     const text = document.getElementById('sectionText').value;
     const imageFile = document.getElementById('imageInput').files[0];
     
-    if (currentEditingSection === 'hero') {
-        if (title) storyData.hero.title = title;
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            storyData.hero.image = imageUrl;
-        }
-    } else if (currentEditingSection === 'journey') {
+    if (currentEditingSection === 'journey') {
         if (text) storyData.journey.intro = text;
         if (imageFile) {
             const imageUrl = URL.createObjectURL(imageFile);
@@ -1075,11 +1053,13 @@ function addMemory() {
 
 function closeAddMemoryModal() {
     addMemoryModal.classList.remove('visible');
-    // Ensure scrolling is restored
-    document.body.style.overflow = '';
-    document.body.style.overflowY = '';
-    document.documentElement.style.overflow = '';
-    document.documentElement.style.overflowY = '';
+    // Only restore scrolling if it was enabled (after tap to continue)
+    if (document.body.classList.contains('scrolling-enabled')) {
+        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
+    }
 }
 
 function handleAddMemory(e) {
@@ -1161,11 +1141,13 @@ function addMilestone() {
 
 function closeAddMilestoneModal() {
     addMilestoneModal.classList.remove('visible');
-    // Ensure scrolling is restored
-    document.body.style.overflow = '';
-    document.body.style.overflowY = '';
-    document.documentElement.style.overflow = '';
-    document.documentElement.style.overflowY = '';
+    // Only restore scrolling if it was enabled (after tap to continue)
+    if (document.body.classList.contains('scrolling-enabled')) {
+        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
+    }
 }
 
 function handleAddMilestone(e) {
@@ -1387,11 +1369,13 @@ function closeMemoryLightbox() {
         lightbox.style.justifyContent = '';
         lightbox.style.transition = '';
         
-        // Ensure body overflow is restored for scrolling
-        document.body.style.overflow = '';
-        document.body.style.overflowY = '';
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.overflowY = '';
+        // Only restore scrolling if it was enabled (after tap to continue)
+        if (document.body.classList.contains('scrolling-enabled')) {
+            document.body.style.overflow = '';
+            document.body.style.overflowY = '';
+            document.documentElement.style.overflow = '';
+            document.documentElement.style.overflowY = '';
+        }
         
         // Remove visible class immediately
         lightbox.classList.remove('visible');
@@ -1510,91 +1494,24 @@ function enhanceScrollSensitivity() {
     console.log('Scroll sensitivity optimized - using native browser scrolling');
 }
 
-// Tap to continue detection and content reveal
-let tapDetected = false;
-
-function initializeTapDetection() {
-    const heroSection = document.getElementById('hero');
-    const mainContentWrapper = document.getElementById('mainContentWrapper');
-    const swipeUpIndicator = document.getElementById('swipeUpIndicator');
-    
-    if (!heroSection || !mainContentWrapper || !swipeUpIndicator) {
-        console.log('Missing elements for tap detection');
-        return;
-    }
-    
-    // Simple tap/click detection
-    heroSection.addEventListener('click', handleHeroClick, { passive: true });
-    swipeUpIndicator.addEventListener('click', handleIndicatorClick, { passive: true });
-    
-    console.log('Tap detection initialized');
-}
-
-function handleHeroClick(e) {
-    if (tapDetected) return;
-    
-    // If user clicks/taps on hero section, reveal content
-    console.log('Hero click detected! Revealing content...');
-    revealMainContent();
-}
-
-function handleIndicatorClick(e) {
-    if (tapDetected) return;
-    
-    // If user clicks/taps on the indicator, reveal content
-    console.log('Indicator click detected! Revealing content...');
-    revealMainContent();
-}
-
-function revealMainContent() {
-    if (tapDetected) return;
-    
-    tapDetected = true;
-    const mainContentWrapper = document.getElementById('mainContentWrapper');
-    const swipeUpIndicator = document.getElementById('swipeUpIndicator');
-    const heroSection = document.getElementById('hero');
-    
-    if (mainContentWrapper) {
-        mainContentWrapper.classList.add('revealed');
-        console.log('Main content wrapper revealed');
-    }
-    
-    if (swipeUpIndicator) {
-        swipeUpIndicator.style.opacity = '0';
-        swipeUpIndicator.style.transform = 'translateY(-20px)';
-        setTimeout(() => {
-            swipeUpIndicator.style.display = 'none';
-        }, 300);
-    }
-    
-    // Remove event listeners to prevent interference with normal scrolling
-    if (heroSection) {
-        heroSection.removeEventListener('click', handleHeroClick);
-    }
-    if (swipeUpIndicator) {
-        swipeUpIndicator.removeEventListener('click', handleIndicatorClick);
-    }
-    
-    // Ensure normal scrolling behavior is restored
-    restoreNormalScrolling();
-    
-    // Trigger scroll animations for any sections that might be visible
-    setupScrollAnimations();
-    
-    console.log('Main content revealed via tap - event listeners removed');
-}
+// Hero section and tap detection removed - now handled in cover page
 
 // Function to restore normal scrolling behavior
 function restoreNormalScrolling() {
-    // Ensure body and html have normal scrolling properties
-    document.body.style.overflow = '';
-    document.body.style.overflowY = '';
-    document.documentElement.style.overflow = '';
-    document.documentElement.style.overflowY = '';
-    
-    // Remove any potential touch event interference
-    document.body.style.touchAction = '';
-    document.documentElement.style.touchAction = '';
+    // Only restore scrolling if it's been enabled (after tap to continue)
+    if (document.body.classList.contains('scrolling-enabled')) {
+        // Ensure body and html have normal scrolling properties
+        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
+        
+        // Remove any potential touch event interference
+        document.body.style.touchAction = '';
+        document.documentElement.style.touchAction = '';
+        
+        console.log('Normal scrolling behavior restored');
+    }
     
     // Ensure viewport meta tag is restored to normal
     const viewport = document.querySelector('meta[name="viewport"]');
@@ -1602,8 +1519,6 @@ function restoreNormalScrolling() {
         viewport.content = viewport.dataset.originalContent;
         delete viewport.dataset.originalContent;
     }
-    
-    console.log('Normal scrolling behavior restored');
 }
 
 // Throttle function for smooth performance
@@ -1912,14 +1827,15 @@ document.addEventListener('DOMContentLoaded', function() {
     addMemoryModal = document.getElementById('addMemoryModal');
     addMilestoneModal = document.getElementById('addMilestoneModal');
     
+    // Enable scrolling immediately since we're coming from cover page
+    document.body.classList.add('scrolling-enabled');
+    document.documentElement.style.overflowY = 'auto';
+    
     // Enhance scroll sensitivity for mobile
     enhanceScrollSensitivity();
-    
-    // Initialize tap detection
-    initializeTapDetection();
 
     // Disable contenteditable by default
-    const contentEditableElements = document.querySelectorAll('.hero-subtitle, .hero-title, .journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
+    const contentEditableElements = document.querySelectorAll('.journey-intro, .section-title, .memories-subtitle, .heart-quote, .heart-quote-author, .promise-subtitle, .promise-text, .promise-signature, .story-date');
     contentEditableElements.forEach(element => {
         element.setAttribute('contenteditable', 'false');
     });
@@ -1947,4 +1863,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add scroll animations
     setupScrollAnimations();
+    
+    console.log('Valentine page initialized with scrolling enabled');
 });
