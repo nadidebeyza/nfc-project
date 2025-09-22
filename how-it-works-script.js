@@ -52,7 +52,67 @@ const translations = {
 
 let currentLanguage = 'en';
 
-// Sample product data (in real app, this would come from URL params or localStorage)
+// Product data (matching the products from index page)
+const products = {
+    1: {
+        id: 1,
+        title: 'Valentine\'s Heart',
+        subtitle: '5-photo portrait keepsake',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/valentine/product-image-1.png',
+        basePrice: 24,
+        personalizationPrice: 8
+    },
+    2: {
+        id: 2,
+        title: 'Mother\'s Blessing',
+        subtitle: '3-photo memory frame',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/valentine/product-image-2.png',
+        basePrice: 19,
+        personalizationPrice: 6
+    },
+    3: {
+        id: 3,
+        title: 'Daughter\'s Treasure',
+        subtitle: '4-photo keepsake box',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/daughter/product-image-7.png',
+        basePrice: 22,
+        personalizationPrice: 7
+    },
+    4: {
+        id: 4,
+        title: 'Son\'s Pride',
+        subtitle: '4-photo memory frame',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/son/product-image-4.png',
+        basePrice: 23,
+        personalizationPrice: 8
+    },
+    5: {
+        id: 5,
+        title: 'Friendship Bond',
+        subtitle: '3-photo keepsake box',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/friend/product-image-4.png',
+        basePrice: 20,
+        personalizationPrice: 6
+    },
+    6: {
+        id: 6,
+        title: 'Birthday Celebration',
+        subtitle: '6-photo memory book',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/birthday/product-image-4.png',
+        basePrice: 28,
+        personalizationPrice: 8
+    },
+    7: {
+        id: 7,
+        title: 'Pet Companion',
+        subtitle: '2-photo memory frame',
+        image: 'https://nadidebeyza.github.io/nfc-project/products/pet/product-image-6.png',
+        basePrice: 18,
+        personalizationPrice: 5
+    }
+};
+
+// Fallback product
 const sampleProduct = {
     id: 'valentine-nfc',
     title: 'Valentine\'s Day NFC Keepsake',
@@ -78,20 +138,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadProductData() {
-    // In a real app, this would come from URL parameters or localStorage
-    // For now, we'll use sample data
+    // Get product data from URL parameters or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product') || localStorage.getItem('selectedProduct');
+    
+    // Find the selected product from the products array
+    let selectedProduct = sampleProduct; // fallback
+    
+    if (productId && products[productId]) {
+        selectedProduct = products[productId];
+        console.log('Selected product:', selectedProduct);
+    } else if (productId) {
+        console.log('Product ID not found:', productId);
+    }
+    
     const productImage = document.getElementById('productImage');
     const productTitle = document.getElementById('productTitle');
     const productSubtitle = document.getElementById('productSubtitle');
     const basePrice = document.getElementById('basePrice');
     const personalizationPrice = document.getElementById('personalizationPrice');
     
-    if (productImage) productImage.src = sampleProduct.image;
-    if (productImage) productImage.alt = sampleProduct.title;
-    if (productTitle) productTitle.textContent = sampleProduct.title;
-    if (productSubtitle) productSubtitle.textContent = sampleProduct.subtitle;
-    if (basePrice) basePrice.textContent = `$${sampleProduct.basePrice.toFixed(2)}`;
-    if (personalizationPrice) personalizationPrice.textContent = `+$${sampleProduct.personalizationPrice.toFixed(2)} personalization`;
+    if (productImage) productImage.src = selectedProduct.image;
+    if (productImage) productImage.alt = selectedProduct.title;
+    if (productTitle) productTitle.textContent = selectedProduct.title;
+    if (productSubtitle) productSubtitle.textContent = selectedProduct.subtitle;
+    if (basePrice) basePrice.textContent = `$${selectedProduct.basePrice.toFixed(2)}`;
+    if (personalizationPrice) personalizationPrice.textContent = `+$${selectedProduct.personalizationPrice.toFixed(2)} personalization`;
 }
 
 function setupLanguageSwitching() {

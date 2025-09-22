@@ -240,11 +240,11 @@ function setupFormValidation() {
 }
 
 function setupActionButtons() {
-    const backToReviewBtn = document.getElementById('backToReviewBtn');
+    const goBackBtn = document.getElementById('goBackBtn');
     const placeOrderBtn = document.getElementById('placeOrderBtn');
     
-    if (backToReviewBtn) {
-        backToReviewBtn.addEventListener('click', function() {
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', function() {
             // Navigate back to Valentine page (review page)
             window.location.href = 'valentine.html?fromPreview=1';
         });

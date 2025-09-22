@@ -43,7 +43,6 @@
                 <button class="filter-chip" data-filter="friend" data-translate="friend">Friend</button>
                 <button class="filter-chip" data-filter="birthday" data-translate="birthday">Birthday</button>
                 <button class="filter-chip" data-filter="pet" data-translate="pet">Pet</button>
-                <button class="filter-chip" data-filter="limited" data-translate="limited">Limited</button>
             </div>
         </section>
 
@@ -63,15 +62,6 @@
         </section>
     </main>
 
-    <!-- Sticky Bottom Bar -->
-    <div class="sticky-bottom-bar" id="stickyBar">
-        <div class="sticky-content">
-            <div class="selected-filters">
-                <span class="filter-summary">2 items selected</span>
-            </div>
-            <button class="checkout-btn" data-translate="checkout">Checkout</button>
-        </div>
-    </div>
 
     <!-- Quick View Modal -->
     <div class="modal-overlay" id="modalOverlay">
@@ -90,14 +80,6 @@
                     <div class="modal-price">
                         <span id="modalBasePrice"></span>
                         <span id="modalPersonalizationPrice"></span>
-                    </div>
-                </div>
-                <div class="personalization-form">
-                    <label for="personalMessage" data-translate="personal-message">Your message</label>
-                    <textarea id="personalMessage" placeholder="Write a short love note or personal message..."></textarea>
-                    <div class="form-actions">
-                        <button class="btn-secondary" data-translate="send-gift">Send as gift</button>
-                        <button class="btn-primary" data-translate="personalize-buy" onclick="goToCoverPage()">Personalize & buy</button>
                     </div>
                 </div>
             </div>

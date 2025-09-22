@@ -278,7 +278,7 @@ let cartCount = 0;
 const productGrid = document.querySelector('.product-grid');
 const filterChips = document.querySelectorAll('.filter-chip');
 const sortOptions = document.querySelectorAll('.sort-option');
-const stickyBar = document.getElementById('stickyBar');
+// const stickyBar = document.getElementById('stickyBar'); // Removed since sticky bar was removed
 const modalOverlay = document.getElementById('modalOverlay');
 const modalDrawer = document.getElementById('modalDrawer');
 const modalClose = document.getElementById('modalClose');
@@ -286,6 +286,9 @@ const cartIcon = document.querySelector('.cart-count');
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
+    // Always start at the top of the page
+    window.scrollTo(0, 0);
+    
     renderProducts();
     setupEventListeners();
     setupScrollListener();
@@ -321,29 +324,12 @@ function setupEventListeners() {
         }
     });
 
-    // Sticky bar checkout
-    document.querySelector('.checkout-btn').addEventListener('click', function() {
-        if (selectedProducts.size > 0) {
-            alert(`Proceeding to checkout with ${selectedProducts.size} items`);
-        }
-    });
+    // Sticky bar checkout - removed since sticky bar was removed
 }
 
-// Scroll listener for sticky bar
+// Scroll listener for sticky bar - removed since sticky bar was removed
 function setupScrollListener() {
-    let lastScrollY = window.scrollY;
-    
-    window.addEventListener('scroll', function() {
-        const currentScrollY = window.scrollY;
-        
-        if (currentScrollY > 200) {
-            stickyBar.classList.add('visible');
-        } else {
-            stickyBar.classList.remove('visible');
-        }
-        
-        lastScrollY = currentScrollY;
-    });
+    // No longer needed since sticky bar was removed
 }
 
 // Filter and sort products
@@ -441,7 +427,6 @@ function createProductCard(product) {
             <div class="message-preview">${messagePreview}</div>
             <div class="cta-row">
                 <button class="btn-primary" onclick="goToCoverPage()">Personalize</button>
-                <button class="btn-secondary">Buy as gift</button>
             </div>
             <div class="nfc-hint">
                 <span class="nfc-icon">📱</span>
@@ -499,18 +484,20 @@ function openQuickView(productId) {
     document.getElementById('modalProductSubtitle').textContent = subtitle;
     document.getElementById('modalBasePrice').textContent = formatPrice(product.basePrice);
     document.getElementById('modalPersonalizationPrice').textContent = `• Personalization +${formatPrice(product.personalizationPrice)}`;
-    document.getElementById('personalMessage').value = message;
+    
+    // personalMessage element was removed, so skip setting its value
+    // document.getElementById('personalMessage').value = message;
 
     // Show modal
     modalOverlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
 
-    // Add to cart functionality
-    const personalizeBtn = document.querySelector('.form-actions .btn-primary');
-    personalizeBtn.onclick = function() {
-        addToCart(productId);
-        closeModal();
-    };
+    // Form actions were removed, so skip button functionality
+    // const personalizeBtn = document.querySelector('.form-actions .btn-primary');
+    // personalizeBtn.onclick = function() {
+    //     addToCart(productId);
+    //     closeModal();
+    // };
 }
 
 // Close modal
@@ -703,6 +690,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to redirect to How It Works page (from product cards)
 function goToCoverPage() {
     console.log('goToCoverPage called - redirecting to how-it-works.html');
+    
+    // Get the product ID from the clicked button's parent card
+    const productCard = event.target.closest('.product-card');
+    const productId = productCard ? productCard.dataset.productId : null;
+    
+    if (productId) {
+        // Store the selected product ID in localStorage
+        localStorage.setItem('selectedProduct', productId);
+        console.log('Selected product ID:', productId);
+    }
+    
     window.location.href = 'how-it-works.html';
 }
 

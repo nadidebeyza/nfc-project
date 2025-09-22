@@ -132,7 +132,7 @@ body {
 /* Main Content */
 .main-content {
     margin-top: 56px;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
 }
 
 /* Filter Section */
@@ -644,6 +644,7 @@ body {
     .main-content {
         max-width: 600px;
         margin: 48px auto 0;
+        padding-bottom: 20px;
     }
     
     .header-content {
