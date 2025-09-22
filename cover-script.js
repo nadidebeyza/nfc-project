@@ -1,3 +1,35 @@
+// Immediate scroll prevention - runs before DOM is ready
+(function() {
+    // Prevent scrolling immediately
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.position = 'fixed';
+    document.body.style.position = 'fixed';
+    
+    // Prevent scroll events immediately
+    function preventScroll(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+    
+    function preventScrollKeys(e) {
+        const scrollKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+        if (scrollKeys.includes(e.keyCode)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    }
+    
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('keydown', preventScrollKeys, { passive: false });
+    document.addEventListener('scroll', preventScroll, { passive: false });
+    
+    console.log('Immediate scroll prevention applied');
+})();
+
 // Translation data
 const translations = {
     en: {
@@ -110,11 +142,28 @@ function initializeTapDetection() {
         return;
     }
     
-    // Simple tap/click detection
+    // Multiple event listeners to ensure tap detection always works
     heroSection.addEventListener('click', handleHeroClick, { passive: true });
+    heroSection.addEventListener('touchstart', handleHeroClick, { passive: true });
     swipeUpIndicator.addEventListener('click', handleIndicatorClick, { passive: true });
+    swipeUpIndicator.addEventListener('touchstart', handleIndicatorClick, { passive: true });
     
-    console.log('Tap detection initialized');
+    // Also add to the entire body as fallback
+    document.body.addEventListener('click', handleBodyClick, { passive: true });
+    document.body.addEventListener('touchstart', handleBodyClick, { passive: true });
+    
+    console.log('Tap detection initialized with multiple event listeners');
+}
+
+function handleBodyClick(e) {
+    // Only proceed if clicking on the main content area (not edit buttons, etc.)
+    if (e.target.closest('.header-actions') || e.target.closest('.edit-story-btn') || e.target.closest('.language-selector')) {
+        return;
+    }
+    
+    // If clicking anywhere on the body, proceed to Valentine page
+    console.log('Body click detected! Proceeding to Valentine page...');
+    proceedToValentinePage();
 }
 
 function handleHeroClick(e) {
@@ -165,6 +214,9 @@ function proceedToValentinePage() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Cover page loaded');
     
+    // Ensure scrolling is always blocked on cover page
+    preventScrolling();
+    
     // Load saved data or use default
     loadStoryData();
     
@@ -182,6 +234,39 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Cover page initialized');
 });
+
+// Prevent scrolling on cover page
+function preventScrolling() {
+    // Block all scrolling methods with !important
+    document.body.style.setProperty('overflow', 'hidden', 'important');
+    document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+    document.body.style.setProperty('position', 'fixed', 'important');
+    document.documentElement.style.setProperty('position', 'fixed', 'important');
+    
+    // Prevent scroll events
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('keydown', preventScrollKeys, { passive: false });
+    document.addEventListener('scroll', preventScroll, { passive: false });
+    
+    console.log('Scrolling prevented on cover page');
+}
+
+function preventScroll(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}
+
+function preventScrollKeys(e) {
+    // Prevent arrow keys, page up/down, home, end from scrolling
+    const scrollKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+    if (scrollKeys.includes(e.keyCode)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+}
 
 // Edit functionality
 function initializeEditFunctionality() {
