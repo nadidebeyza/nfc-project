@@ -4,7 +4,7 @@ const translations = {
         "edit-story": "Edit Story",
         "save-story": "Save Story",
         "changes-saved": "Changes saved successfully!",
-        "proceed-payment": "Proceed to Payment",
+        "proceed-payment": "Preview & Finalize",
         "from-lover": "To my dearest love, on our special day",
         "hero-title": "Happy Anniversary, my forever Valentine",
         "journey-intro": "Another year together, another year of growing in love, another year of choosing each other every single day",
@@ -40,34 +40,67 @@ const translations = {
         "milestone-title": "Milestone Title",
         "milestone-year": "Year",
         "milestone-description": "Description",
-        "save-milestone": "Save Milestone"
+        "save-milestone": "Save Milestone",
+        "first-date": "Our First Date",
+        "first-date-desc": "The day we first met and knew it was something special",
+        "cooking-together": "Cooking Together",
+        "cooking-together-desc": "Making a mess in the kitchen and laughing about it",
+        "beach-day": "Beach Day",
+        "beach-day-desc": "Building sandcastles and getting sunburnt together",
+        "movie-night": "Movie Night",
+        "movie-night-desc": "Fighting over the remote and sharing popcorn",
+        "anniversary-dinner": "Anniversary Dinner",
+        "anniversary-dinner-desc": "Celebrating our love with a romantic dinner",
+        "morning-coffee": "Morning Coffee",
+        "morning-coffee-desc": "Sharing coffee and planning our day together",
+        "upload-instruction": "Click to add image",
+        "upload-instruction-media": "Click to add photos or videos",
+        "first-meeting": "First Meeting",
+        "first-meeting-desc": "The day our love story began",
+        "first-date-desc": "Our first romantic dinner together",
+        "first-anniversary": "First Anniversary",
+        "first-anniversary-desc": "Celebrating one year of love",
+        "moving-in-together": "Moving In Together",
+        "moving-in-together-desc": "Starting our life as a couple",
+        "daily-moments": "Daily Moments",
+        "daily-moments-desc": "Simple moments that make our love special",
+        "wedding-day": "Wedding Day",
+        "wedding-day-desc": "The most beautiful day of our lives",
+        "honeymoon": "Honeymoon",
+        "honeymoon-desc": "Our romantic vacation celebrating our love",
+        "christmas-together": "Christmas Together",
+        "christmas-together-desc": "Our first Christmas as a married couple",
+        "birthday-surprise": "Birthday Surprise",
+        "birthday-surprise-desc": "Surprising you with your favorite cake",
+        "weekend-getaway": "Weekend Getaway",
+        "weekend-getaway-desc": "Escaping to the mountains for some peace"
     },
     tr: {
         "edit-story": "Hikayeyi Düzenle",
         "save-story": "Hikayeyi Kaydet",
         "changes-saved": "Değişiklikler başarıyla kaydedildi!",
-        "proceed-payment": "Ödemeye Geç",
-        "from-lover": "En sevgili aşkıma, özel günümüzde",
-        "hero-title": "Mutlu Yıldönümü, sonsuz sevgilim",
-        "journey-intro": "Birlikte geçirdiğimiz bir yıl daha, aşkta büyüdüğümüz bir yıl daha, her gün birbirimizi seçtiğimiz bir yıl daha",
-        "journey-title": "Yıldönümü Yolculuğumuz",
-        "memories-title": "Yıldönümü Anıları",
-        "memories-subtitle": "Birlikte yaşadığımız değerli anlar",
+        "proceed-payment": "Önizleme & Son Hal",
+        "from-lover": "Canım sevgilim, özel günümüzde",
+        "hero-title": "Mutlu yıldönümümüz, hayatımın aşkı",
+        "journey-intro": "Birlikte geçirdiğimiz bir yıl daha, birbirimize olan sevgimizin derinleştiği, her gün yan yana büyüdüğümüz bir yıl daha",
+        "journey-title": "Aşk Yolculuğumuz",
+        "memories-title": "Güzel Anılarımız",
+        "memories-subtitle": "Birlikte yaşadığımız unutulmaz anlar",
         "all-memories": "Tüm Anılar",
         "photos": "Fotoğraflar",
         "videos": "Videolar",
         "add-memory": "Anı Ekle",
         "memory-media": "Anı Medyası",
         "memory-date": "Tarih",
-        "words-title": "Kalpten Sözler",
-        "heart-quote": "\"Seni sevdiğim bir yıl daha, senin tarafından sevildiğim bir yıl daha, birlikte güzel hikayemizin bir yılı daha\"",
-        "heart-quote-author": "- Sonsuz Sevgilin",
-        "milestones-title": "Yıldönümü Dönüm Noktalarımız",
+        "words-title": "Gönülden Sözler",
+        "heart-quote": "\"Seni sevdiğim bir yıl daha, senin sevginle büyüdüğüm bir yıl daha, birlikte yazdığımız güzel hikayenin bir yılı daha\"",
+        "heart-quote-author": "- Hayatımın Aşkı",
+        "milestones-title": "Aşkımızın Dönüm Noktaları",
         "add-milestone": "Dönüm Noktası Ekle",
-        "promise-title": "Birlikte Bir Yıl Daha",
-        "promise-subtitle": "Yıldönümü Sözüm",
-        "promise-text": "Aşkımızın bir yılını daha kutlarken, her gün seni seçmeye devam edeceğime, hayatın tüm mevsimlerinde seninle büyüyeceğime ve senin yanımda olduğun her günü Sevgililer Günü gibi hissettireceğime söz veriyorum.",
-        "promise-signature": "Mutlu Yıldönümü, sonsuz sevgilim",
+        "promise-title": "Geleceğe Doğru",
+        "promise-subtitle": "Sana Olan Sözüm",
+        "promise-text": "Aşkımızın bir yılını daha kutlarken, her gün seni seçmeye devam edeceğime, hayatın tüm zorluklarında yanında olacağıma ve seninle geçirdiğim her anı değerli kılacağıma söz veriyorum.",
+        "promise-signature": "Mutlu yıldönümümüz, canım sevgilim",
         "edit-section": "Bölümü Düzenle",
         "section-title": "Bölüm Başlığı",
         "section-text": "Metin İçeriği",
@@ -82,7 +115,40 @@ const translations = {
         "milestone-title": "Dönüm Noktası Başlığı",
         "milestone-year": "Yıl",
         "milestone-description": "Açıklama",
-        "save-milestone": "Dönüm Noktasını Kaydet"
+        "save-milestone": "Dönüm Noktasını Kaydet",
+        "first-date": "İlk Karşılaşmamız",
+        "first-date-desc": "İlk gördüğümde kalbimin çarptığı o özel an",
+        "cooking-together": "Mutfakta Eğlence",
+        "cooking-together-desc": "Birlikte yemek yaparken mutfakta eğlenmek",
+        "beach-day": "Deniz Keyfi",
+        "beach-day-desc": "Sahilde güneşlenip denizde oynamak",
+        "movie-night": "Evde Sinema",
+        "movie-night-desc": "Birlikte film izleyip mısır yemek",
+        "anniversary-dinner": "Romantik Akşam",
+        "anniversary-dinner-desc": "Aşkımızı özel bir akşam yemeğiyle kutlamak",
+        "morning-coffee": "Sabah Keyfi",
+        "morning-coffee-desc": "Birlikte kahve içip güne başlamak",
+        "upload-instruction": "Resim eklemek için tıklayın",
+        "upload-instruction-media": "Fotoğraf veya video eklemek için tıklayın",
+        "first-meeting": "İlk Karşılaşma",
+        "first-meeting-desc": "Aşk hikayemizin başladığı gün",
+        "first-date-desc": "Birlikte ilk romantik yemeğimiz",
+        "first-anniversary": "İlk Yıldönümümüz",
+        "first-anniversary-desc": "Bir yıllık aşkımızı kutlamak",
+        "moving-in-together": "Birlikte Yaşamaya Başlama",
+        "moving-in-together-desc": "Çift olarak hayatımıza başlamak",
+        "daily-moments": "Günlük Anlar",
+        "daily-moments-desc": "Aşkımızı özel kılan basit anlar",
+        "wedding-day": "Düğün Günümüz",
+        "wedding-day-desc": "Hayatımızın en güzel günü",
+        "honeymoon": "Balayımız",
+        "honeymoon-desc": "Aşkımızı kutladığımız romantik tatil",
+        "christmas-together": "Birlikte Noel",
+        "christmas-together-desc": "Evli çift olarak ilk Noel'imiz",
+        "birthday-surprise": "Doğum Günü Sürprizi",
+        "birthday-surprise-desc": "En sevdiğin pastayla seni şaşırtmak",
+        "weekend-getaway": "Hafta Sonu Kaçamağı",
+        "weekend-getaway-desc": "Huzur için dağlara kaçmak"
     }
 };
 
@@ -138,133 +204,161 @@ function improveScrollSensitivity() {
 let storyData = {
     journey: {
         intro: "Another year together, another year of growing in love, another year of choosing each other every single day",
-        image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"
+        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=400&fit=crop&crop=faces"
     },
     memories: [
         {
             id: 1,
-            title: "Our First Date",
-            description: "The day we first met and knew it was something special",
+            title: "first-date",
+            description: "first-date-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop&crop=face"
+                    url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-02-14"
         },
         {
             id: 2,
-            title: "Summer Vacation",
-            description: "Our amazing trip to the beach together",
+            title: "cooking-together",
+            description: "cooking-together-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop&crop=faces"
+                }
+            ],
+            date: "2023-03-20"
+        },
+        {
+            id: 3,
+            title: "beach-day",
+            description: "beach-day-desc",
+            media: [
+                {
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&crop=faces"
+                },
+                {
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-07-15"
         },
         {
-            id: 3,
-            title: "Anniversary Dinner",
-            description: "Celebrating our love with a romantic dinner",
+            id: 4,
+            title: "movie-night",
+            description: "movie-night-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop&crop=faces"
+                }
+            ],
+            date: "2023-09-10"
+        },
+        {
+            id: 5,
+            title: "anniversary-dinner",
+            description: "anniversary-dinner-desc",
+            media: [
+                {
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2024-02-14"
         },
         {
             id: 4,
-            title: "Daily Moments",
-            description: "Simple moments that make our love special",
+            title: "daily-moments",
+            description: "daily-moments-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2024-01-20"
         },
         {
             id: 5,
-            title: "Wedding Day",
-            description: "The most beautiful day of our lives",
+            title: "wedding-day",
+            description: "wedding-day-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-06-15"
         },
         {
             id: 6,
-            title: "Honeymoon Adventure",
-            description: "Exploring the world together as newlyweds",
+            title: "honeymoon",
+            description: "honeymoon-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-06-20"
         },
         {
             id: 7,
-            title: "Christmas Together",
-            description: "Our first Christmas as a married couple",
+            title: "christmas-together",
+            description: "christmas-together-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-12-25"
         },
         {
             id: 8,
-            title: "Morning Coffee",
-            description: "Starting each day with love and coffee",
+            title: "morning-coffee",
+            description: "morning-coffee-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2024-01-15"
         },
         {
             id: 9,
-            title: "Birthday Surprise",
-            description: "Surprising you with your favorite cake",
+            title: "birthday-surprise",
+            description: "birthday-surprise-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
@@ -275,12 +369,12 @@ let storyData = {
         },
         {
             id: 10,
-            title: "Weekend Getaway",
-            description: "Escaping to the mountains for some peace",
+            title: "weekend-getaway",
+            description: "weekend-getaway-desc",
             media: [
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=faces"
                 },
                 {
                     type: "image",
@@ -288,7 +382,7 @@ let storyData = {
                 },
                 {
                     type: "image",
-                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop"
+                    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=faces"
                 }
             ],
             date: "2023-11-05"
@@ -301,34 +395,34 @@ let storyData = {
     milestones: [
         {
             id: 1,
-            title: "First Meeting",
-            year: "2023",
-            description: "The day our love story began"
+            title: "first-meeting",
+            year: "2020",
+            description: "first-meeting-desc"
         },
         {
             id: 2,
-            title: "First Date",
-            year: "2023",
-            description: "Our first romantic dinner together"
+            title: "first-date",
+            year: "2020",
+            description: "first-date-desc"
         },
         {
             id: 3,
-            title: "Moving In Together",
-            year: "2023",
-            description: "Starting our life as a couple"
+            title: "moving-in-together",
+            year: "2022",
+            description: "moving-in-together-desc"
         },
         {
             id: 4,
-            title: "First Anniversary",
-            year: "2024",
-            description: "Celebrating one year of love"
+            title: "first-anniversary",
+            year: "2021",
+            description: "first-anniversary-desc"
         }
     ],
     promise: {
         text: "As we celebrate another year of love, I promise to continue choosing you every day, to grow with you through all of life's seasons, and to make every day feel like Valentine's Day with you by my side.",
         signature: "Happy Anniversary, my forever Valentine",
         date: null, // Will be set to current date when loaded
-        image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=400&fit=crop"
+        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=400&fit=crop&crop=faces"
     }
 };
 
@@ -509,17 +603,25 @@ function createMemoryItem(memory, index) {
     const mediaUrl = firstMedia ? firstMedia.url : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zz4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGMEYwRjAiLz4KPHBhdGggZD0iTTE3NSAxMjVIMjI1VjE3NUgxNzVWMjVWiIgZmlsbD0iI0Q5RDlEOSIvPgo8cGF0aCBkPSJNMjA1VjE1NUgxOTVWMTQ1WiIgZmlsbD0iI0Q5RDlEOSIvPgo8L3N2Zz4K';
     const mediaCount = memory.media.length > 1 ? memory.media.length : '';
     
+    // Get translated title and description
+    const translatedTitle = translations[currentLanguage] && translations[currentLanguage][memory.title] 
+        ? translations[currentLanguage][memory.title] 
+        : memory.title;
+    const translatedDescription = translations[currentLanguage] && translations[currentLanguage][memory.description] 
+        ? translations[currentLanguage][memory.description] 
+        : memory.description;
+
     item.innerHTML = `
         <div class="memory-media">
             ${mediaType === 'video' ? 
                 `<video src="${mediaUrl}" muted></video>` : 
-                `<img src="${mediaUrl}" alt="${memory.title}">`
+                `<img src="${mediaUrl}" alt="${translatedTitle}">`
             }
             ${mediaCount ? `<div class="media-count">+${mediaCount - 1}</div>` : ''}
         </div>
         <div class="memory-content">
-            <h3 class="memory-title" contenteditable="false" data-memory-index="${index}" data-field="title">${memory.title}</h3>
-            <p class="memory-description" contenteditable="false" data-memory-index="${index}" data-field="description">${memory.description}</p>
+            <h3 class="memory-title" contenteditable="false" data-memory-index="${index}" data-field="title">${translatedTitle}</h3>
+            <p class="memory-description" contenteditable="false" data-memory-index="${index}" data-field="description">${translatedDescription}</p>
             <div class="memory-meta">
                 <span class="memory-date" contenteditable="false" data-memory-index="${index}" data-field="date">${formatDate(memory.date)}</span>
             </div>
@@ -556,10 +658,18 @@ function createMilestoneItem(milestone, index) {
     item.className = 'milestone-item';
     item.dataset.index = index;
     
+    // Get translated title and description
+    const translatedTitle = translations[currentLanguage] && translations[currentLanguage][milestone.title] 
+        ? translations[currentLanguage][milestone.title] 
+        : milestone.title;
+    const translatedDescription = translations[currentLanguage] && translations[currentLanguage][milestone.description] 
+        ? translations[currentLanguage][milestone.description] 
+        : milestone.description;
+    
     item.innerHTML = `
         <div class="milestone-year" contenteditable="false" data-milestone-index="${index}" data-field="year">${milestone.year}</div>
-        <div class="milestone-title" contenteditable="false" data-milestone-index="${index}" data-field="title">${milestone.title}</div>
-        <div class="milestone-description" contenteditable="false" data-milestone-index="${index}" data-field="description">${milestone.description}</div>
+        <div class="milestone-title" contenteditable="false" data-milestone-index="${index}" data-field="title">${translatedTitle}</div>
+        <div class="milestone-description" contenteditable="false" data-milestone-index="${index}" data-field="description">${translatedDescription}</div>
         <div class="milestone-actions">
             <button class="action-btn delete" onclick="deleteMilestone(${index})" title="Delete">
                 🗑️
@@ -585,7 +695,10 @@ function setupEventListeners() {
     // Proceed to payment button
     const proceedPaymentBtn = document.getElementById('proceedPaymentBtn');
     if (proceedPaymentBtn) {
-        proceedPaymentBtn.addEventListener('click', proceedToPayment);
+        proceedPaymentBtn.addEventListener('click', function() {
+            // Navigate to cover in preview mode (no editing)
+            window.location.href = 'cover.html?preview=1';
+        });
         console.log('Proceed payment button listener added');
     } else {
         console.error('Proceed payment button not found!');
@@ -740,6 +853,113 @@ function setupEventListeners() {
             }
         });
     });
+}
+
+// Render preview action bar when returning from cover preview
+function renderPreviewActionsIfNeeded() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('fromPreview') === '1') {
+            const existing = document.getElementById('previewActionsBar');
+            if (existing) return;
+            
+            // Hide the original proceed button
+            const originalProceedBtn = document.getElementById('proceedPaymentBtn');
+            if (originalProceedBtn) {
+                originalProceedBtn.style.display = 'none';
+            }
+            
+            const bar = document.createElement('div');
+            bar.id = 'previewActionsBar';
+            bar.style.cssText = `
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 80px;
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                justify-content: stretch;
+                gap: 0;
+                z-index: 9999;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            `;
+            
+            const btnBack = document.createElement('button');
+            btnBack.className = 'btn-secondary';
+            btnBack.style.cssText = `
+                flex: 0 0 50%;
+                height: 100%;
+                border: none;
+                background: linear-gradient(135deg, #000000, #1a1a1a);
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                font-family: "Source Serif Pro", serif;
+                box-sizing: border-box;
+                width: 50%;
+                min-width: 0;          `;
+            btnBack.textContent = translations[currentLanguage] && translations[currentLanguage]['go-back-edit'] ? translations[currentLanguage]['go-back-edit'] : 'Go Back to Edit';
+            btnBack.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Go Back to Edit clicked');
+                // Go back enabling edit mode
+                const url = new URL(window.location.href);
+                url.searchParams.delete('fromPreview');
+                url.searchParams.set('edit', '1');
+                console.log('Navigating to:', url.toString());
+                window.location.href = url.toString();
+            });
+            
+            const btnProceed = document.createElement('button');
+            btnProceed.className = 'proceed-payment-btn';
+            btnProceed.style.cssText = `
+                flex: 0 0 50%;
+                height: 100%;
+                border: none;
+                background: linear-gradient(135deg, #000000, #1a1a1a);
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                font-family: "Source Serif Pro", serif;
+                box-sizing: border-box;
+                width: 50%;
+                min-width: 0;
+                margin: 0;
+                top: 0;
+                bottom: 0;
+                left: 50%;  
+            `;
+            // In preview mode, label should be "Proceed to Payment" (TR: "Ödemeye Geç")
+            try {
+                const proceedLabel = (typeof currentLanguage !== 'undefined' && currentLanguage === 'tr')
+                    ? 'Ödemeye Geç'
+                    : 'Proceed to Payment';
+                btnProceed.innerHTML = `<span>${proceedLabel}</span>`;
+            } catch (_) {
+                btnProceed.innerHTML = `<span>Proceed to Payment</span>`;
+            }
+            btnProceed.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Proceed to Payment clicked');
+                // Placeholder for payment; show toast for now
+                showNotification();
+            });
+            
+            bar.appendChild(btnBack);
+            bar.appendChild(btnProceed);
+            document.body.appendChild(bar);
+        }
+    } catch (e) {
+        console.warn('Failed to render preview actions:', e);
+    }
 }
 
 // Replace image function
@@ -1361,8 +1581,15 @@ function openMemoryLightbox(memory, index) {
         document.body.style.overflow = 'hidden';
         
         // Add basic content immediately so lightbox isn't empty
-        lightboxTitle.textContent = memory.title;
-        lightboxDescription.textContent = memory.description;
+        const translatedTitle = translations[currentLanguage] && translations[currentLanguage][memory.title] 
+            ? translations[currentLanguage][memory.title] 
+            : memory.title;
+        const translatedDescription = translations[currentLanguage] && translations[currentLanguage][memory.description] 
+            ? translations[currentLanguage][memory.description] 
+            : memory.description;
+        
+        lightboxTitle.textContent = translatedTitle;
+        lightboxDescription.textContent = translatedDescription;
         lightboxDate.textContent = formatDate(memory.date);
         
         // Stitch popup to initial center position
@@ -1517,8 +1744,15 @@ function updateLightboxContent(memory, index) {
     const lightboxDescription = document.getElementById('lightboxDescription');
     const lightboxDate = document.getElementById('lightboxDate');
     
-    if (lightboxTitle) lightboxTitle.textContent = memory.title;
-    if (lightboxDescription) lightboxDescription.textContent = memory.description;
+    const translatedTitle = translations[currentLanguage] && translations[currentLanguage][memory.title] 
+        ? translations[currentLanguage][memory.title] 
+        : memory.title;
+    const translatedDescription = translations[currentLanguage] && translations[currentLanguage][memory.description] 
+        ? translations[currentLanguage][memory.description] 
+        : memory.description;
+    
+    if (lightboxTitle) lightboxTitle.textContent = translatedTitle;
+    if (lightboxDescription) lightboxDescription.textContent = translatedDescription;
     if (lightboxDate) lightboxDate.textContent = formatDate(memory.date);
     
     // Update media content
@@ -1843,13 +2077,19 @@ function setupScrollAnimations() {
 
 // Language switching
 function setupLanguageSwitching() {
-    const languageSelect = document.getElementById('languageSelect');
-    if (languageSelect) {
-        languageSelect.addEventListener('change', function() {
-            currentLanguage = this.value;
+    const languageBtns = document.querySelectorAll('.language-btn');
+    
+    languageBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active state
+            languageBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update language
+            currentLanguage = this.dataset.lang;
             updateLanguage();
         });
-    }
+    });
 }
 
 function updateLanguage() {
@@ -1919,4 +2159,31 @@ document.addEventListener('DOMContentLoaded', function() {
     setupScrollAnimations();
     
     console.log('Valentine page initialized with scrolling enabled');
+
+    // Handle query params for returning from cover preview
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('edit') === '1') {
+            const bodyHasEdit = document.body.classList.contains('edit-mode');
+            if (!bodyHasEdit) {
+                const editBtn = document.getElementById('editStoryBtn');
+                if (editBtn) {
+                    editBtn.click();
+                }
+            }
+        }
+
+        // Hide edit button if in preview mode
+        if (params.get('fromPreview') === '1') {
+            const editStoryBtn = document.getElementById('editStoryBtn');
+            if (editStoryBtn) {
+                editStoryBtn.style.display = 'none';
+            }
+        }
+
+        // If came from preview, render two buttons: proceed and back to edit
+        renderPreviewActionsIfNeeded();
+    } catch (e) {
+        console.warn('Query param handling failed:', e);
+    }
 });

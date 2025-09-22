@@ -546,17 +546,17 @@ button:focus,
     background: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
-    padding: 8px;
+    padding: 4px;
     transition: 0.3s;
     margin: 0;
-    width: 36px;
-    height: 36px;
+    width: 18px;
+    height: 18px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
 .edit-icon {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     display: block;
 }
 

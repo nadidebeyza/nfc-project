@@ -35,12 +35,16 @@ const translations = {
     en: {
         "from-lover": "To my dearest love, on our special day",
         "hero-title": "Happy Anniversary, my forever Valentine",
-        "tap-to-continue": "Tap to continue"
+        "tap-to-continue": "Tap to continue",
+        "proceed-payment": "Preview & Finalize",
+        "go-back-edit": "Go Back to Edit"
     },
     tr: {
-        "from-lover": "En sevgili aşkıma, özel günümüzde",
-        "hero-title": "Mutlu Yıldönümü, sonsuz sevgilim",
-        "tap-to-continue": "Devam etmek için dokun"
+        "from-lover": "Canım sevgilim, bugün bizim özel günümüz",
+        "hero-title": "Yıldönümümüz kutlu olsun!",
+        "tap-to-continue": "Devam etmek için dokun",
+        "proceed-payment": "Önizleme & Son Hal",
+        "go-back-edit": "Düzenlemeye Geri Dön"
     }
 };
 
@@ -182,6 +186,8 @@ function handleIndicatorClick(e) {
     proceedToValentinePage();
 }
 
+let isPreviewMode = false;
+
 function proceedToValentinePage() {
     if (tapDetected) return;
     
@@ -204,7 +210,11 @@ function proceedToValentinePage() {
         localStorage.setItem('storyData', JSON.stringify(storyData));
         
         // Navigate to Valentine page
-        window.location.href = 'valentine.html';
+        if (isPreviewMode) {
+            window.location.href = 'valentine.html?fromPreview=1';
+        } else {
+            window.location.href = 'valentine.html';
+        }
     }, 500);
     
     console.log('Proceeding to Valentine page...');
@@ -231,6 +241,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize edit functionality
     initializeEditFunctionality();
+
+    // If opened in preview mode, disable editing (no buttons here)
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('preview') === '1') {
+            isPreviewMode = true;
+
+            // Hide edit button
+            const editStoryBtn = document.getElementById('editStoryBtn');
+            if (editStoryBtn) {
+                editStoryBtn.style.display = 'none';
+            }
+
+            // Ensure body is not in edit mode
+            document.body.classList.remove('edit-mode');
+            const editModeNotification = document.getElementById('editModeNotification');
+            if (editModeNotification) editModeNotification.classList.remove('show');
+        }
+    } catch (e) {
+        console.warn('Preview mode init failed:', e);
+    }
     
     console.log('Cover page initialized');
 });
