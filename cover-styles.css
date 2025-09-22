@@ -87,6 +87,38 @@ body {
     }
 }
 
+/* Quit Button */
+.quit-btn {
+    color: rgb(255, 255, 255);
+    font-family: "Source Serif Pro", serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 8px;
+    padding: 6px;
+    transition: 0.3s;
+    margin: 0;
+    width: 28px;
+    height: 28px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    margin-right: 4px;
+}
+
+.quit-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+.quit-btn:hover {
+    background: #333333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* Edit Story Button */
 .edit-story-btn {
     color: rgb(255, 255, 255);
@@ -98,17 +130,17 @@ body {
     background: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
-    padding: 8px;
+    padding: 6px;
     transition: 0.3s;
     margin: 0;
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
 .edit-icon {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     display: block;
 }
 
@@ -238,6 +270,7 @@ body {
     color: #000000;
     letter-spacing: 0.3px;
     transition: all 0.2s ease;
+    margin-right: 6px;
 }
 
 .logo-text:hover {
@@ -250,7 +283,7 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .language-selector {

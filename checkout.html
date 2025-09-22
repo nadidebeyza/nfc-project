@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - yourfavontheway</title>
+    <link rel="stylesheet" href="checkout-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="yourfav_logo.png" alt="yourfavontheway" class="logo-image">
+                <span class="logo-text">yourfavontheway</span>
+            </div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="en">EN</button>
+                    <button class="language-btn" data-lang="tr">TR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Process Steps Visual -->
+    <section class="process-steps">
+        <div class="process-container">
+            <div class="step completed" data-step="1">
+                <div class="step-circle">
+                    <span class="step-number">1</span>
+                    <svg class="step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+                    </svg>
+                </div>
+                <span class="step-label" data-translate="select-product">Select Product</span>
+            </div>
+            <div class="step-line completed"></div>
+            <div class="step completed" data-step="2">
+                <div class="step-circle">
+                    <span class="step-number">2</span>
+                    <svg class="step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+                    </svg>
+                </div>
+                <span class="step-label" data-translate="edit-content">Edit Content</span>
+            </div>
+            <div class="step-line completed"></div>
+            <div class="step completed" data-step="3">
+                <div class="step-circle">
+                    <span class="step-number">3</span>
+                    <svg class="step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+                    </svg>
+                </div>
+                <span class="step-label" data-translate="review-finalize">Review & Finalize</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step active" data-step="4">
+                <div class="step-circle">
+                    <span class="step-number">4</span>
+                </div>
+                <span class="step-label" data-translate="payment">Payment</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- Order Summary -->
+            <section class="order-summary">
+                <h2 class="section-title" data-translate="order-summary">Order Summary</h2>
+                
+                <div class="order-item">
+                    <div class="item-images">
+                        <div class="product-image">
+                            <img id="orderProductImage" src="" alt="Product">
+                            <span class="image-label" data-translate="product">Product</span>
+                        </div>
+                        <div class="design-image">
+                            <img id="orderDesignImage" src="" alt="Personalized Design">
+                            <span class="image-label" data-translate="design">Design</span>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <h3 id="orderProductTitle" class="item-title"></h3>
+                        <p id="orderProductSubtitle" class="item-subtitle"></p>
+                        <div class="item-features">
+                            <span class="feature-tag" data-translate="nfc-technology">NFC Technology</span>
+                            <span class="feature-tag" data-translate="personalized-content">Personalized Content</span>
+                            <span class="feature-tag" data-translate="premium-quality">Premium Quality</span>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <span class="base-price" id="orderBasePrice"></span>
+                    </div>
+                </div>
+
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span data-translate="base-price">Base Price</span>
+                        <span id="breakdownBasePrice"></span>
+                    </div>
+                    <div class="price-row">
+                        <span data-translate="personalization">Personalization</span>
+                        <span id="breakdownPersonalizationPrice"></span>
+                    </div>
+                    <div class="price-row">
+                        <span data-translate="shipping">Shipping</span>
+                        <span data-translate="free">Free</span>
+                    </div>
+                    <div class="price-row total">
+                        <span data-translate="total">Total</span>
+                        <span id="orderTotal"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Form -->
+            <section class="payment-section">
+                <h2 class="section-title" data-translate="payment-details">Payment Details</h2>
+                
+                <form class="payment-form" id="paymentForm">
+                    <div class="form-group">
+                        <label for="cardNumber" data-translate="card-number">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate" data-translate="expiry-date">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv" data-translate="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardName" data-translate="cardholder-name">Cardholder Name</label>
+                        <input type="text" id="cardName" placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" data-translate="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" data-translate="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+1 (555) 123-4567">
+                    </div>
+                </form>
+            </section>
+
+            <!-- Shipping Information -->
+            <section class="shipping-section">
+                <h2 class="section-title" data-translate="shipping-address">Shipping Address</h2>
+                
+                <form class="shipping-form" id="shippingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" data-translate="first-name">First Name</label>
+                            <input type="text" id="firstName" placeholder="John">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" data-translate="last-name">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Doe">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" data-translate="street-address">Street Address</label>
+                        <input type="text" id="address" placeholder="123 Main Street">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city" data-translate="city">City</label>
+                            <input type="text" id="city" placeholder="New York">
+                        </div>
+                        <div class="form-group">
+                            <label for="state" data-translate="state">State</label>
+                            <input type="text" id="state" placeholder="NY">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode" data-translate="zip-code">ZIP Code</label>
+                            <input type="text" id="zipCode" placeholder="10001">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country" data-translate="country">Country</label>
+                        <select id="country">
+                            <option value="US" data-translate="united-states">United States</option>
+                            <option value="CA" data-translate="canada">Canada</option>
+                            <option value="UK" data-translate="united-kingdom">United Kingdom</option>
+                            <option value="TR" data-translate="turkey">Turkey</option>
+                        </select>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Security & Trust -->
+            <section class="security-section">
+                <div class="security-badges">
+                    <div class="security-item">
+                        <svg class="security-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="currentColor"/>
+                        </svg>
+                        <span data-translate="secure-payment">Secure Payment</span>
+                    </div>
+                    <div class="security-item">
+                        <svg class="security-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" fill="currentColor"/>
+                        </svg>
+                        <span data-translate="ssl-encrypted">SSL Encrypted</span>
+                    </div>
+                    <div class="security-item">
+                        <svg class="security-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" fill="currentColor"/>
+                        </svg>
+                        <span data-translate="money-back">Money Back Guarantee</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Place Order -->
+            <section class="place-order-section">
+                <div class="order-actions">
+                    <button class="btn-secondary" id="backToReviewBtn" data-translate="back-to-review">
+                        Back to Review
+                    </button>
+                    <button class="btn-primary" id="placeOrderBtn" data-translate="place-order">
+                        Place Order
+                    </button>
+                </div>
+                
+                <p class="order-note" data-translate="order-note">
+                    By placing this order, you agree to our Terms of Service and Privacy Policy.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <script src="checkout-script.js"></script>
+</body>
+</html>

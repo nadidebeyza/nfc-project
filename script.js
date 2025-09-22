@@ -700,32 +700,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 
-// Function to redirect to Cover page (from product cards)
+// Function to redirect to How It Works page (from product cards)
 function goToCoverPage() {
-    console.log('goToCoverPage called - redirecting to cover.html');
-    window.location.href = 'cover.html';
-}
-
-// Function to redirect to Cover page (from modal with personal message)
-function goToValentinePage() {
-    console.log('goToValentinePage called - redirecting to cover.html');
-    
-    // Get the personal message from the textarea
-    const personalMessage = document.getElementById('personalMessage');
-    if (personalMessage && personalMessage.value.trim()) {
-        localStorage.setItem('personalMessage', personalMessage.value);
-        console.log('Personal message saved:', personalMessage.value);
-    }
-    
-    // Close the modal
-    const modalOverlay = document.getElementById('modalOverlay');
-    if (modalOverlay) {
-        modalOverlay.classList.remove('visible');
-        document.body.style.overflow = '';
-    }
-    
-    // Redirect to cover page
-    console.log('Redirecting to cover.html...');
-    window.location.href = 'cover.html';
+    console.log('goToCoverPage called - redirecting to how-it-works.html');
+    window.location.href = 'how-it-works.html';
 }
 

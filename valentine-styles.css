@@ -199,6 +199,7 @@ body.scrolling-enabled {
     color: #000000;
     letter-spacing: 0.3px;
     transition: all 0.2s ease;
+    margin-right: 6px;
 }
 
 .logo-text:hover {
@@ -211,7 +212,7 @@ body.scrolling-enabled {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .language-selector {
@@ -535,6 +536,38 @@ button:focus,
     font-size: 12px;
 }
 
+/* Go Back Button */
+.go-back-btn {
+    color: rgb(255, 255, 255);
+    font-family: "Source Serif Pro", serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 8px;
+    padding: 6px;
+    transition: 0.3s;
+    margin: 0;
+    width: 28px;
+    height: 28px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    margin-right: 4px;
+}
+
+.back-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+.go-back-btn:hover {
+    background: #333333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* Edit Story Button */
 .edit-story-btn {
     color: rgb(255, 255, 255);
@@ -546,17 +579,17 @@ button:focus,
     background: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
-    padding: 4px;
+    padding: 6px;
     transition: 0.3s;
     margin: 0;
-    width: 18px;
-    height: 18px;
+    width: 28px;
+    height: 28px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
 .edit-icon {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     display: block;
 }
 

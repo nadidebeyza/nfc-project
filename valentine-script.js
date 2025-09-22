@@ -177,21 +177,9 @@ function hideNotification() {
 
 // Proceed to payment function
 function proceedToPayment() {
-    // Get the current product selection from URL parameters or localStorage
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('product') || localStorage.getItem('selectedProduct');
-    
-    // Construct payment URL with product information
-    let paymentUrl = 'payment.html';
-    if (productId) {
-        paymentUrl += `?product=${productId}`;
-    }
-    
-    // Add story data to localStorage for payment page
-    localStorage.setItem('storyData', JSON.stringify(storyData));
-    
-    // Redirect to payment page
-    window.location.href = paymentUrl;
+    console.log('Proceed to Payment clicked');
+    // Navigate to checkout page
+    window.location.href = 'checkout.html';
 }
 
 // Improve scroll sensitivity - removed conflicting CSS
@@ -691,6 +679,25 @@ function setupEventListeners() {
     } else {
         console.error('Edit story button not found!');
     }
+
+    // Go back button
+    const goBackBtn = document.getElementById('goBackBtn');
+    if (goBackBtn) {
+        goBackBtn.addEventListener('click', () => {
+            // Check if we came from preview mode
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('fromPreview') === '1') {
+                console.log('Go back to preview cover clicked');
+                window.location.href = 'cover.html?preview=1';
+            } else {
+                console.log('Go back to edit cover clicked');
+                window.location.href = 'cover.html?edit=1';
+            }
+        });
+        console.log('Go back button listener added');
+    } else {
+        console.error('Go back button not found!');
+    }
     
     // Proceed to payment button
     const proceedPaymentBtn = document.getElementById('proceedPaymentBtn');
@@ -889,39 +896,10 @@ function renderPreviewActionsIfNeeded() {
                 border-top: 1px solid rgba(0, 0, 0, 0.1);
             `;
             
-            const btnBack = document.createElement('button');
-            btnBack.className = 'btn-secondary';
-            btnBack.style.cssText = `
-                flex: 0 0 50%;
-                height: 100%;
-                border: none;
-                background: linear-gradient(135deg, #000000, #1a1a1a);
-                color: white;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                border-right: 1px solid rgba(255, 255, 255, 0.2);
-                font-family: "Source Serif Pro", serif;
-                box-sizing: border-box;
-                width: 50%;
-                min-width: 0;          `;
-            btnBack.textContent = translations[currentLanguage] && translations[currentLanguage]['go-back-edit'] ? translations[currentLanguage]['go-back-edit'] : 'Go Back to Edit';
-            btnBack.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Go Back to Edit clicked');
-                // Go back enabling edit mode
-                const url = new URL(window.location.href);
-                url.searchParams.delete('fromPreview');
-                url.searchParams.set('edit', '1');
-                console.log('Navigating to:', url.toString());
-                window.location.href = url.toString();
-            });
-            
             const btnProceed = document.createElement('button');
             btnProceed.className = 'proceed-payment-btn';
             btnProceed.style.cssText = `
-                flex: 0 0 50%;
-                height: 100%;
+                flex: 1;
                 border: none;
                 background: linear-gradient(135deg, #000000, #1a1a1a);
                 color: white;
@@ -930,12 +908,7 @@ function renderPreviewActionsIfNeeded() {
                 cursor: pointer;
                 font-family: "Source Serif Pro", serif;
                 box-sizing: border-box;
-                width: 50%;
                 min-width: 0;
-                margin: 0;
-                top: 0;
-                bottom: 0;
-                left: 50%;  
             `;
             // In preview mode, label should be "Proceed to Payment" (TR: "Ödemeye Geç")
             try {
@@ -949,11 +922,10 @@ function renderPreviewActionsIfNeeded() {
             btnProceed.addEventListener('click', (e) => {
                 e.preventDefault();
                 console.log('Proceed to Payment clicked');
-                // Placeholder for payment; show toast for now
-                showNotification();
+                // Navigate to checkout page
+                window.location.href = 'checkout.html';
             });
             
-            bar.appendChild(btnBack);
             bar.appendChild(btnProceed);
             document.body.appendChild(bar);
         }
@@ -2178,6 +2150,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const editStoryBtn = document.getElementById('editStoryBtn');
             if (editStoryBtn) {
                 editStoryBtn.style.display = 'none';
+            }
+
+            // Hide language selector
+            const languageSelector = document.querySelector('.language-selector');
+            if (languageSelector) {
+                languageSelector.style.display = 'none';
             }
         }
 

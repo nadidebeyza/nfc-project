@@ -242,9 +242,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize edit functionality
     initializeEditFunctionality();
 
-    // If opened in preview mode, disable editing (no buttons here)
+    // Initialize quit/back button
+    const quitBtn = document.getElementById('quitBtn');
+    if (quitBtn) {
+        quitBtn.addEventListener('click', () => {
+            // Check if we're in preview mode
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('preview') === '1') {
+                console.log('Back button clicked in preview mode - returning to Valentine page');
+                window.location.href = 'valentine.html';
+            } else {
+                console.log('Quit button clicked - returning to how it works page');
+                window.location.href = 'how-it-works.html';
+            }
+        });
+    }
+
+    // Handle URL parameters
     try {
         const params = new URLSearchParams(window.location.search);
+        
+        // If opened in preview mode, disable editing
         if (params.get('preview') === '1') {
             isPreviewMode = true;
 
@@ -254,13 +272,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 editStoryBtn.style.display = 'none';
             }
 
+            // Hide language selector
+            const languageSelector = document.querySelector('.language-selector');
+            if (languageSelector) {
+                languageSelector.style.display = 'none';
+            }
+
+            // Change quit button to back button in preview mode
+            const quitBtn = document.getElementById('quitBtn');
+            if (quitBtn) {
+                quitBtn.title = 'Go Back to Valentine Page';
+                // Swap icon to a back arrow in preview mode
+                quitBtn.innerHTML = '<svg class="quit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="white"/></svg>';
+                quitBtn.setAttribute('aria-label', 'Back');
+            }
+
             // Ensure body is not in edit mode
             document.body.classList.remove('edit-mode');
             const editModeNotification = document.getElementById('editModeNotification');
             if (editModeNotification) editModeNotification.classList.remove('show');
         }
+        
+        // If opened with edit=1, auto-enable edit mode
+        if (params.get('edit') === '1') {
+            const editStoryBtn = document.getElementById('editStoryBtn');
+            if (editStoryBtn) {
+                editStoryBtn.click();
+            }
+        }
     } catch (e) {
-        console.warn('Preview mode init failed:', e);
+        console.warn('URL parameter handling failed:', e);
     }
     
     console.log('Cover page initialized');

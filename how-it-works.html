@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - yourfavontheway</title>
+    <link rel="stylesheet" href="how-it-works-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="yourfav_logo.png" alt="yourfavontheway" class="logo-image">
+                <span class="logo-text">yourfavontheway</span>
+            </div>
+            <div class="header-actions">
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="en">EN</button>
+                    <button class="language-btn" data-lang="tr">TR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Process Steps Visual -->
+    <section class="process-steps">
+        <div class="process-container">
+            <div class="step completed" data-step="1">
+                <div class="step-circle">
+                    <span class="step-number">1</span>
+                    <svg class="step-check" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
+                    </svg>
+                </div>
+                <span class="step-label" data-translate="select-product">Select Product</span>
+            </div>
+            <div class="step-line completed"></div>
+            <div class="step active" data-step="2">
+                <div class="step-circle">
+                    <span class="step-number">2</span>
+                </div>
+                <span class="step-label" data-translate="edit-content">Edit Content</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3">
+                <div class="step-circle">
+                    <span class="step-number">3</span>
+                </div>
+                <span class="step-label" data-translate="review-finalize">Review & Finalize</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="4">
+                <div class="step-circle">
+                    <span class="step-number">4</span>
+                </div>
+                <span class="step-label" data-translate="payment">Payment</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- Selected Product Showcase -->
+            <section class="product-showcase">
+                <h2 class="section-title" data-translate="your-selection">Your Selection</h2>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img id="productImage" src="" alt="Selected Product">
+                    </div>
+                    <div class="product-details">
+                        <h3 id="productTitle" class="product-title"></h3>
+                        <p id="productSubtitle" class="product-subtitle"></p>
+                        <div class="product-price">
+                            <span class="base-price" id="basePrice"></span>
+                            <span class="personalization-price" id="personalizationPrice"></span>
+                        </div>
+                        <div class="product-features">
+                            <div class="feature-item">
+                                <svg class="feature-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                                </svg>
+                                <span data-translate="nfc-technology">NFC Technology</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg class="feature-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                                </svg>
+                                <span data-translate="personalized-content">Personalized Content</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg class="feature-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                                </svg>
+                                <span data-translate="premium-quality">Premium Quality</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Explanation -->
+            <section class="how-it-works">
+                <h2 class="section-title" data-translate="how-it-works">How It Works</h2>
+                
+                <div class="steps-explanation">
+                    <div class="step-explanation">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 data-translate="step-1-title">1. Select Your Product</h3>
+                            <p data-translate="step-1-desc">Choose from our collection of beautiful NFC keepsakes designed for special moments and relationships.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 data-translate="step-2-title">2. Edit Your Content</h3>
+                            <p data-translate="step-2-desc">Personalize your keepsake with photos, stories, and memories that make it uniquely yours.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 data-translate="step-3-title">3. Review & Finalize</h3>
+                            <p data-translate="step-3-desc">Preview your personalized keepsake and make any final adjustments before placing your order.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3 data-translate="step-4-title">4. Secure Payment</h3>
+                            <p data-translate="step-4-desc">Complete your purchase with our secure payment system and receive confirmation of your order.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="next-steps">
+                <h2 class="section-title" data-translate="ready-to-start">Ready to Start?</h2>
+                <p class="next-steps-desc" data-translate="next-steps-desc">Your personalized keepsake is just a few steps away. Begin by creating your unique story and memories.</p>
+                
+                <div class="action-buttons">
+                    <button class="btn-primary" id="startPersonalizationBtn" data-translate="start-personalization">
+                        Start Personalization
+                    </button>
+                    <button class="btn-secondary" id="viewProductsBtn" data-translate="view-products">
+                        View All Products
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="how-it-works-script.js"></script>
+</body>
+</html>
